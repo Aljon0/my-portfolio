@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Function to handle smooth scrolling
   const handleScroll = (id) => {
-    const element = document.getElementById(id);
+    const element = document.getElementById(id.toLowerCase());
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setIsMenuOpen(false); // Close mobile menu after clicking
     }
   };
 
@@ -34,25 +37,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScrollPosition);
   }, []);
 
+  // Toggle menu for mobile view
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Fix section names - note the issue with "Stack" vs "skills"
+  const navItems = ["home", "about", "projects", "skills", "contact"];
+
   return (
-    <nav className="fixed top-0 w-full bg-[#fefffe] shadow-md z-50">
+    <nav className="fixed top-0 w-full bg-[#333333] shadow-md z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center font-[Poppins]">
         <a
           href="#home"
           onClick={() => handleScroll("home")}
-          className="text-[#12130F] text-xl font-bold"
+          className="text-white text-xl font-bold"
         >
           AS
         </a>
-        <ul className="flex space-x-6">
-          {["home", "about", "projects", "skills", "contact"].map((section) => (
+
+        {/* Desktop Navigation */}
+        <ul className="hidden md:flex space-x-6">
+          {navItems.map((section) => (
             <li key={section}>
               <a
                 href={`#${section}`}
                 onClick={() => handleScroll(section)}
-                className={`text-[#12130F] hover:text-[#226CE0] pb-1 transition-all duration-300 ${
+                className={`text-white hover:text-[#90D5FF] pb-1 transition-all duration-300 ${
                   activeSection === section
-                    ? "border-b-2 border-[#226CE0] text-[#226CE0]"
+                    ? "border-b-2 border-[#90D5FF] text-[#90D5FF]"
                     : ""
                 }`}
               >
@@ -61,7 +74,39 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button
+            onClick={toggleMenu}
+            className="text-white focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-[#333333] py-3">
+          <ul className="flex flex-col items-center">
+            {navItems.map((section) => (
+              <li key={section} className="py-2 w-full text-center">
+                <a
+                  href={`#${section}`}
+                  onClick={() => handleScroll(section)}
+                  className={`block text-white hover:text-[#90D5FF] transition-all duration-300 ${
+                    activeSection === section ? "text-[#90D5FF]" : ""
+                  }`}
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
