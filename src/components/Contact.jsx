@@ -10,7 +10,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-6 max-w-5xl">
         {/* Introduction container with text */}
-        <div className="bg-gradient-to-br from-[#333333] to-[#2a2a2a] rounded-xl shadow-lg p-6 flex items-center mb-6">
+        <div className="bg-gradient-to-br from-[#2a2a2a] to-[#333333] rounded-xl shadow-lg p-6 flex items-center mb-6">
           <div className="border-l-4 border-[#90D5FF] pl-4">
             <p className="text-lg text-white">
               Let's <span className="text-[#90D5FF]">connect!</span> Feel free
