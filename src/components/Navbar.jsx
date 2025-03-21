@@ -14,6 +14,29 @@ const Navbar = () => {
     }
   };
 
+  // Handle initial load and page refresh
+  useEffect(() => {
+    // Get the hash from the URL or default to "home"
+    const hash = window.location.hash.replace("#", "") || "home";
+
+    // Scroll to the appropriate section on load
+    const element = document.getElementById(hash.toLowerCase());
+    if (element) {
+      // Use a small timeout to ensure the page is fully loaded
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "auto" });
+        setActiveSection(hash);
+      }, 100);
+    } else {
+      // If the hash doesn't match any section, scroll to home
+      const homeElement = document.getElementById("home");
+      if (homeElement) {
+        homeElement.scrollIntoView({ behavior: "auto" });
+        setActiveSection("home");
+      }
+    }
+  }, []);
+
   // Function to detect active section based on scroll position
   useEffect(() => {
     const handleScrollPosition = () => {
@@ -30,6 +53,8 @@ const Navbar = () => {
 
       if (current) {
         setActiveSection(current);
+        // Update URL hash without scrolling
+        history.replaceState(null, null, `#${current}`);
       }
     };
 
@@ -50,7 +75,10 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center font-[Poppins]">
         <a
           href="#home"
-          onClick={() => handleScroll("home")}
+          onClick={(e) => {
+            e.preventDefault();
+            handleScroll("home");
+          }}
           className="text-white text-xl font-bold"
         >
           AS
@@ -62,7 +90,10 @@ const Navbar = () => {
             <li key={section}>
               <a
                 href={`#${section}`}
-                onClick={() => handleScroll(section)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScroll(section);
+                }}
                 className={`text-white hover:text-[#90D5FF] pb-1 transition-all duration-300 ${
                   activeSection === section
                     ? "border-b-2 border-[#90D5FF] text-[#90D5FF]"
@@ -95,7 +126,10 @@ const Navbar = () => {
               <li key={section} className="py-2 w-full text-center">
                 <a
                   href={`#${section}`}
-                  onClick={() => handleScroll(section)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScroll(section);
+                  }}
                   className={`block text-white hover:text-[#90D5FF] transition-all duration-300 ${
                     activeSection === section ? "text-[#90D5FF]" : ""
                   }`}

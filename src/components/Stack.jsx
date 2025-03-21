@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import {
   FaCss3Alt,
@@ -13,13 +14,14 @@ import {
   SiExpress,
   SiFirebase,
   SiMongodb,
+  SiMysql,
   SiSupabase,
   SiTailwindcss,
   SiThreedotjs,
   SiVite,
 } from "react-icons/si";
 
-const Stack = () => {
+const Stack = ({ isActive }) => {
   // Add state to track which skill is active on mobile
   const [activeSkill, setActiveSkill] = useState(null);
 
@@ -50,6 +52,7 @@ const Stack = () => {
       skills: [
         { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
         { name: "MongoDB", icon: SiMongodb, color: "#4DB33D" },
+        { name: "MySQL", icon: SiMysql, color: "#4479A1" },
         { name: "Supabase", icon: SiSupabase, color: "#3ECF8E" },
         { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
       ],
@@ -73,9 +76,14 @@ const Stack = () => {
       index === self.findIndex((s) => s.name === skill.name)
   );
 
-  // Split skills into two rows of 9 each
-  const firstRowSkills = uniqueSkills.slice(0, 9);
-  const secondRowSkills = uniqueSkills.slice(9, 18);
+  // Split skills into two rows
+  const firstRowSkills = uniqueSkills.slice(
+    0,
+    Math.ceil(uniqueSkills.length / 2)
+  );
+  const secondRowSkills = uniqueSkills.slice(
+    Math.ceil(uniqueSkills.length / 2)
+  );
 
   // Handle click on skill icon
   const handleSkillClick = (skillName) => {
@@ -83,116 +91,271 @@ const Stack = () => {
     setActiveSkill(activeSkill === skillName ? null : skillName);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const headerVariants = {
+    hidden: { y: -50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const introVariants = {
+    hidden: { x: -100, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.7, ease: "easeOut", delay: 0.2 },
+    },
+  };
+
+  const rowVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.05,
+      },
+    },
+  };
+
+  const skillVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: (i) => ({
+      scale: 1,
+      opacity: 1,
+      transition: {
+        delay: i * 0.03,
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    }),
+    hover: {
+      scale: 1.1,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  };
+
+  // New icon animation variants
+  const iconVariants = {
+    hidden: { rotate: 0, scale: 1 },
+    visible: (i) => ({
+      rotate: [0, 10, -10, 10, 0],
+      scale: [1, 1.2, 1],
+      transition: {
+        delay: i * 0.03 + 0.5,
+        duration: 0.5,
+        ease: "easeInOut",
+        times: [0, 0.2, 0.4, 0.6, 1],
+      },
+    }),
+    hover: {
+      rotate: [0, 10, -10, 10, 0],
+      scale: [1, 1.2, 1.1],
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+        times: [0, 0.2, 0.4, 0.6, 1],
+        repeat: Infinity,
+        repeatType: "reverse",
+        repeatDelay: 1,
+      },
+    },
+  };
+
+  // Floating animation for tooltip
+  const tooltipVariants = {
+    hidden: { opacity: 0, y: -5 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
       id="stack"
       className="min-h-screen flex flex-col items-center justify-center bg-[#333333] py-16"
     >
-      <h2 className="text-4xl font-bold text-white mb-10 text-center font-[poppins]">
-        Tech Stack
-      </h2>
+      <motion.div
+        className="w-full"
+        initial="hidden"
+        animate={isActive ? "visible" : "hidden"}
+        variants={containerVariants}
+        key={isActive ? "active" : "inactive"}
+      >
+        <motion.h2
+          className="text-4xl font-bold text-white mb-10 text-center font-[poppins]"
+          variants={headerVariants}
+        >
+          Tech Stack
+        </motion.h2>
 
-      <div className="container mx-auto px-6 max-w-5xl">
-        <div className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full">
-          <p className="text-lg leading-relaxed text-gray-300 text-center">
-            My{" "}
-            <span className="text-[#90D5FF] font-semibold">
-              technical expertise
-            </span>{" "}
-            spans across multiple domains of web development.
-          </p>
-        </div>
+        <div className="container mx-auto px-6 max-w-5xl">
+          <motion.div
+            className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full"
+            variants={introVariants}
+          >
+            <p className="text-lg leading-relaxed text-gray-300 text-center">
+              My{" "}
+              <span className="text-[#90D5FF] font-semibold">
+                technical expertise
+              </span>{" "}
+              spans across multiple domains of web development.
+            </p>
+          </motion.div>
 
-        <div className="space-y-10">
-          {/* First row of 9 icons */}
-          <div className="flex flex-wrap justify-center gap-6">
-            {firstRowSkills.map((skill, index) => (
-              <div
-                key={index}
-                className="group relative flex items-center justify-center bg-[#1e1e1e] text-gray-300 px-4 py-3 rounded-md transition-all duration-300 hover:scale-105"
-                style={{
-                  border: "1px solid #333333",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
-                  e.currentTarget.style.border = `1px solid ${skill.color}`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "none";
-                  e.currentTarget.style.border = "1px solid #333333";
-                }}
-                onClick={() => handleSkillClick(skill.name)}
-              >
-                <skill.icon
-                  color={skill.color}
-                  style={{ fontSize: "1.5rem" }}
-                  size={40}
-                />
-
-                <span
-                  className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap transition-opacity duration-200 z-50
-                  ${
-                    activeSkill === skill.name
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 pointer-events-none"
-                  }`}
+          <div className="space-y-10">
+            {/* First row of skills */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-6"
+              variants={rowVariants}
+            >
+              {firstRowSkills.map((skill, index) => (
+                <motion.div
+                  key={index}
+                  custom={index}
+                  variants={skillVariants}
+                  whileHover="hover"
+                  className="group relative flex items-center justify-center bg-[#1e1e1e] text-gray-300 px-4 py-3 rounded-md transition-all duration-300 hover:scale-105"
                   style={{
-                    boxShadow: `0 0 8px ${skill.color}40`,
-                    border: `1px solid ${skill.color}40`,
+                    border: "1px solid #333333",
+                    transition: "all 0.3s ease",
                   }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
+                    e.currentTarget.style.border = `1px solid ${skill.color}`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.border = "1px solid #333333";
+                  }}
+                  onClick={() => handleSkillClick(skill.name)}
                 >
-                  {skill.name}
-                </span>
-              </div>
-            ))}
-          </div>
+                  <motion.div
+                    custom={index}
+                    variants={iconVariants}
+                    whileHover="hover"
+                  >
+                    <skill.icon
+                      color={skill.color}
+                      style={{ fontSize: "1.5rem" }}
+                      size={40}
+                    />
+                  </motion.div>
 
-          {/* Second row of remaining icons */}
-          <div className="flex flex-wrap justify-center gap-6">
-            {secondRowSkills.map((skill, index) => (
-              <div
-                key={index}
-                className="group relative flex items-center justify-center bg-[#1e1e1e] text-gray-300 px-4 py-3 rounded-md transition-all duration-300 hover:scale-105"
-                style={{
-                  border: "1px solid #333333",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
-                  e.currentTarget.style.border = `1px solid ${skill.color}`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "none";
-                  e.currentTarget.style.border = "1px solid #333333";
-                }}
-                onClick={() => handleSkillClick(skill.name)}
-              >
-                <skill.icon
-                  color={skill.color}
-                  style={{ fontSize: "1.5rem" }}
-                  size={40}
-                />
+                  <motion.span
+                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50
+                    ${
+                      activeSkill === skill.name
+                        ? "block"
+                        : "hidden group-hover:block md:group-hover:block pointer-events-none"
+                    }`}
+                    style={{
+                      boxShadow: `0 0 8px ${skill.color}40`,
+                      border: `1px solid ${skill.color}40`,
+                    }}
+                    variants={tooltipVariants}
+                    initial="hidden"
+                    animate={
+                      activeSkill === skill.name || "hover"
+                        ? "visible"
+                        : "hidden"
+                    }
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
+              ))}
+            </motion.div>
 
-                <span
-                  className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap transition-opacity duration-200 z-50
-                  ${
-                    activeSkill === skill.name
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 pointer-events-none"
-                  }`}
+            {/* Second row of skills */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-6"
+              variants={rowVariants}
+            >
+              {secondRowSkills.map((skill, index) => (
+                <motion.div
+                  key={index}
+                  custom={index + firstRowSkills.length}
+                  variants={skillVariants}
+                  whileHover="hover"
+                  className="group relative flex items-center justify-center bg-[#1e1e1e] text-gray-300 px-4 py-3 rounded-md transition-all duration-300 hover:scale-105"
                   style={{
-                    boxShadow: `0 0 8px ${skill.color}40`,
-                    border: `1px solid ${skill.color}40`,
+                    border: "1px solid #333333",
+                    transition: "all 0.3s ease",
                   }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
+                    e.currentTarget.style.border = `1px solid ${skill.color}`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.border = "1px solid #333333";
+                  }}
+                  onClick={() => handleSkillClick(skill.name)}
                 >
-                  {skill.name}
-                </span>
-              </div>
-            ))}
+                  <motion.div
+                    custom={index + firstRowSkills.length}
+                    variants={iconVariants}
+                    whileHover="hover"
+                  >
+                    <skill.icon
+                      color={skill.color}
+                      style={{ fontSize: "1.5rem" }}
+                      size={40}
+                    />
+                  </motion.div>
+
+                  <motion.span
+                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50
+                    ${
+                      activeSkill === skill.name
+                        ? "block"
+                        : "hidden group-hover:block md:group-hover:block pointer-events-none"
+                    }`}
+                    style={{
+                      boxShadow: `0 0 8px ${skill.color}40`,
+                      border: `1px solid ${skill.color}40`,
+                    }}
+                    variants={tooltipVariants}
+                    initial="hidden"
+                    animate={
+                      activeSkill === skill.name || "hover"
+                        ? "visible"
+                        : "hidden"
+                    }
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
