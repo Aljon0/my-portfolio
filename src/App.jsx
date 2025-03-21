@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
-import Skills from "./components/Skills";
+import Stack from "./components/Stack";
 
 function App() {
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
       <Home />
       <About />
       <Projects />
-      <Skills />
+      <Stack />
       <Contact />
       <Footer />
     </div>

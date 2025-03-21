@@ -19,7 +19,7 @@ import {
   SiVite,
 } from "react-icons/si";
 
-const Skills = () => {
+const Stack = () => {
   // Add state to track which skill is active on mobile
   const [activeSkill, setActiveSkill] = useState(null);
 
@@ -85,7 +85,7 @@ const Skills = () => {
 
   return (
     <section
-      id="skills"
+      id="stack"
       className="min-h-screen flex flex-col items-center justify-center bg-[#333333] py-16"
     >
       <h2 className="text-4xl font-bold text-white mb-10 text-center font-[poppins]">
@@ -197,4 +197,4 @@ const Skills = () => {
   );
 };
 
-export default Skills;
+export default Stack;

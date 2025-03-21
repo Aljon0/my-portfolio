@@ -435,7 +435,7 @@ const Projects = () => {
 
         {/* Case Study Overlay */}
         {selectedProject && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4">
             <div
               className="bg-[#2a2a2a] rounded-lg max-w-2xl w-full p-6 relative shadow-xl"
               style={{ maxHeight: "85vh", overflowY: "auto" }}

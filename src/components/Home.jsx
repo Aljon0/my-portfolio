@@ -27,7 +27,7 @@ const Home = () => {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-2xl"
+            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-3xl"
           >
             <FaGithub />
           </a>
@@ -35,7 +35,7 @@ const Home = () => {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-2xl"
+            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-3xl"
           >
             <FaLinkedin />
           </a>
@@ -43,7 +43,7 @@ const Home = () => {
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-2xl"
+            className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-3xl"
           >
             <FaFacebook />
           </a>

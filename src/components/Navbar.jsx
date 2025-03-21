@@ -17,7 +17,7 @@ const Navbar = () => {
   // Function to detect active section based on scroll position
   useEffect(() => {
     const handleScrollPosition = () => {
-      const sections = ["home", "about", "projects", "skills", "contact"];
+      const sections = ["home", "about", "projects", "stack", "contact"];
 
       const current = sections.find((section) => {
         const element = document.getElementById(section);
@@ -42,8 +42,8 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Fix section names - note the issue with "Stack" vs "skills"
-  const navItems = ["home", "about", "projects", "skills", "contact"];
+  // Updated section names - changed "skills" to "stack"
+  const navItems = ["home", "about", "projects", "stack", "contact"];
 
   return (
     <nav className="fixed top-0 w-full bg-[#333333] shadow-md z-50">
