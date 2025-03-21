@@ -4,19 +4,17 @@ const Contact = () => {
       id="contact"
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] py-16"
     >
-      <h2 className="text-4xl font-bold text-white mb-10 text-center">
+      <h2 className="text-4xl font-bold text-white mb-10 text-center font-[poppins]">
         Contact
       </h2>
 
       <div className="container mx-auto px-6 max-w-5xl">
         {/* Introduction container with text */}
-        <div className="bg-gradient-to-br from-[#2a2a2a] to-[#333333] rounded-xl shadow-lg p-6 flex items-center mb-6">
-          <div className="border-l-4 border-[#90D5FF] pl-4">
-            <p className="text-lg text-white">
-              Let's <span className="text-[#90D5FF]">connect!</span> Feel free
-              to reach out for collaborations or inquiries.
-            </p>
-          </div>
+        <div className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full">
+          <p className="text-lg leading-relaxed text-gray-300 text-center">
+            Let's <span className="text-[#90D5FF] font-semibold">connect!</span>{" "}
+            Feel free to reach out for collaborations or inquiries.
+          </p>
         </div>
 
         {/* Form container */}

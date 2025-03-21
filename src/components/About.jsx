@@ -12,13 +12,14 @@ const About = () => {
 
       <div className="container mx-auto px-6 max-w-5xl space-y-6">
         {/* Introduction container with text on left side */}
-        <div className="bg-gradient-to-br from-[#333333] to-[#2a2a2a] rounded-xl shadow-lg p-6 flex items-center">
-          <div className="border-l-4 border-[#90D5FF] pl-4">
-            <p className="text-lg text-white">
-              Hello! I'm <span className="text-[#90D5FF]">Al-Jon Santiago</span>
-              , a Web Developer from General Trias, Cavite, Philippines.
-            </p>
-          </div>
+        <div className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full">
+          <p className="text-lg leading-relaxed text-gray-300 text-center">
+            Hello! I'm{" "}
+            <span className="text-[#90D5FF] font-semibold">
+              Al-Jon Santiago
+            </span>{" "}
+            , a Web Developer from General Trias, Cavite, Philippines.
+          </p>
         </div>
 
         {/* Two column layout for Expertise and Background */}
