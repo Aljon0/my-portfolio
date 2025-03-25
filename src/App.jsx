@@ -1,5 +1,5 @@
-import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useState, useRef } from "react";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -9,107 +9,127 @@ import Projects from "./components/Projects";
 import Stack from "./components/Stack";
 
 function App() {
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("home");
+  const scrollTimeout = useRef(null);
+  const isScrolling = useRef(false);
+  const sectionsRef = useRef({
+    home: null,
+    about: null,
+    projects: null,
+    stack: null,
+    contact: null,
+  });
 
   useEffect(() => {
-    // Get initial hash from URL or default to "home"
-    const initialHash = window.location.hash.replace("#", "") || "home";
-    setActiveSection(initialHash);
+    // Set initial active section from URL hash
+    const hash = window.location.hash.replace("#", "") || "home";
+    if (["home", "about", "projects", "stack", "contact"].includes(hash)) {
+      setActiveSection(hash);
+    }
 
-    // Handle hash changes
+    // Handle smooth scrolling to section
+    const scrollToSection = (id) => {
+      if (isScrolling.current) return;
+
+      const element = document.getElementById(id);
+      if (element) {
+        isScrolling.current = true;
+        element.scrollIntoView({ behavior: "smooth" });
+
+        // Update URL without causing navigation
+        window.history.replaceState(null, null, `#${id}`);
+
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 1000);
+      }
+    };
+
+    // Handle hash changes from URL or navigation
     const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
+      const hash = window.location.hash.replace("#", "") || "home";
+      if (hash !== activeSection) {
         setActiveSection(hash);
-      } else {
-        setActiveSection("home");
+        scrollToSection(hash);
       }
     };
 
+    // Handle scroll events to detect active section
+    const handleScroll = () => {
+      if (isScrolling.current) return;
+
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      scrollTimeout.current = setTimeout(() => {
+        const sections = ["home", "about", "projects", "stack", "contact"];
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const { offsetTop, offsetHeight } = element;
+            if (
+              scrollPosition >= offsetTop &&
+              scrollPosition < offsetTop + offsetHeight
+            ) {
+              if (activeSection !== section) {
+                setActiveSection(section);
+                window.history.replaceState(null, null, `#${section}`);
+              }
+              break;
+            }
+          }
+        }
+      }, 100);
+    };
+
+    // Set up event listeners
     window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("scroll", handleScroll);
 
-    // Handle anchor clicks for smooth scrolling
-    const handleAnchorClick = (e) => {
-      const target = e.target;
-      if (
-        target.tagName === "A" &&
-        target.getAttribute("href")?.startsWith("#")
-      ) {
-        e.preventDefault();
-        const id = target.getAttribute("href").substring(1);
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-          setActiveSection(id);
-          // Update URL without causing a page jump
-          history.pushState(null, null, `#${id}`);
-        }
-      }
-    };
-
-    document.addEventListener("click", handleAnchorClick);
-
-    // Detect which section is in view
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.6, // Section must be at least 60% visible
-    };
-
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          setActiveSection(id);
-          // Update URL hash without scrolling
-          history.replaceState(null, null, `#${id}`);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
-    // Observe all sections
-    document.querySelectorAll("section[id]").forEach((section) => {
-      observer.observe(section);
-    });
+    // Initial scroll to section if hash exists
+    const initialHash = window.location.hash.replace("#", "") || "home";
+    scrollToSection(initialHash);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
-      document.removeEventListener("click", handleAnchorClick);
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
     };
-  }, []);
+  }, [activeSection]);
 
   return (
     <div className="bg-[#fefffe]">
       <Navbar activeSection={activeSection} />
-      <AnimatePresence mode="wait">
-        <Home
-          key={`home-${activeSection === "home"}`}
-          isActive={activeSection === "home"}
-        />
-        <About
-          key={`about-${activeSection === "about"}`}
-          isActive={activeSection === "about"}
-        />
-        <Projects
-          key={`projects-${activeSection === "projects"}`}
-          isActive={activeSection === "projects"}
-        />
-        <Stack
-          key={`stack-${activeSection === "stack"}`}
-          isActive={activeSection === "stack"}
-        />
-        <Contact
-          key={`contact-${activeSection === "contact"}`}
-          isActive={activeSection === "contact"}
-        />
-      </AnimatePresence>
-      <Footer />
+
+      {/* All sections rendered with isActive prop */}
+      <section id="home" className="relative z-0">
+        <Home isActive={activeSection === "home"} />
+      </section>
+      <section id="about" className="relative z-10 bg-[#333333]">
+        <About isActive={activeSection === "about"} />
+      </section>
+      <section
+        id="projects"
+        className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] z-10 relative"
+      >
+        <Projects isActive={activeSection === "projects"} />
+      </section>
+      <section id="stack" className="bg-[#333333] relative z-10">
+        <Stack isActive={activeSection === "stack"} />
+      </section>
+      <section
+        id="contact"
+        className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] z-10 relative"
+      >
+        <Contact isActive={activeSection === "contact"} />
+      </section>
+
+      <Footer className="relative z-10 bg-[#333333]" />
     </div>
   );
 }

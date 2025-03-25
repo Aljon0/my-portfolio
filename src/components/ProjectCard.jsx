@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import { motion } from "framer-motion";
 import React from "react";
 import { FaChartBar, FaDatabase, FaNodeJs, FaReact } from "react-icons/fa";
 import {
@@ -22,22 +24,31 @@ const techIcons = {
 };
 
 const ProjectCard = ({ project, handleViewProject }) => (
-  <div className="project-card group bg-gradient-to-b from-[#2a2a2a] to-[#333333] rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105">
+  <motion.div
+    className="project-card group bg-gradient-to-b from-[#2a2a2a] to-[#333333] rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105"
+    whileHover={{ scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+  >
     <div className="h-32 bg-gradient-to-r from-[#2a2a2a] to-[#444444] relative overflow-hidden">
       {project.image ? (
-        <img
+        <motion.img
           src={project.image}
           alt={project.title}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          className="absolute inset-0 w-full h-full object-cover"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
         />
       ) : (
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#90D5FF_1px,transparent_1px)] bg-[size:16px_16px]"></div>
       )}
 
       {/* Project type badge */}
-      <div className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full">
+      <motion.div
+        className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full"
+        whileHover={{ scale: 1.05 }}
+      >
         {project.category}
-      </div>
+      </motion.div>
     </div>
 
     <div className="p-3">
@@ -51,9 +62,10 @@ const ProjectCard = ({ project, handleViewProject }) => (
         {project.technologies.map((tech, index) => {
           const techIcon = techIcons[tech];
           return (
-            <span
+            <motion.span
               key={index}
               className="bg-[#444444] text-gray-300 text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1"
+              whileHover={{ scale: 1.05 }}
             >
               {techIcon && (
                 <techIcon.icon
@@ -63,22 +75,24 @@ const ProjectCard = ({ project, handleViewProject }) => (
                 />
               )}
               {tech}
-            </span>
+            </motion.span>
           );
         })}
       </div>
 
       {/* Action buttons */}
       <div className="flex space-x-2">
-        <button
+        <motion.button
           onClick={() => handleViewProject(project)}
           className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff] transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           View Project
-        </button>
+        </motion.button>
       </div>
     </div>
-  </div>
+  </motion.div>
 );
 
 export default ProjectCard;

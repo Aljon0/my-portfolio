@@ -1,18 +1,30 @@
+/* eslint-disable no-unused-vars */
+import { motion } from "framer-motion";
 import React from "react";
 import ProjectCard from "./ProjectCard";
 
-const FeaturedProjects = ({ projects, handleViewProject }) => {
+const FeaturedProjects = ({ projects, handleViewProject, variants }) => {
   return (
     <div className="mb-8">
-      <h2 className="text-xl font-bold text-[#90D5FF] border-b border-gray-700 pb-2 mb-4">
+      <motion.h2
+        className="text-xl font-bold text-[#90D5FF] border-b border-gray-700 pb-2 mb-4"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         Featured Projects
-      </h2>
+      </motion.h2>
 
       <div className="overflow-x-auto pb-4 hide-scrollbar">
         <div className="flex space-x-4" style={{ minWidth: "min-content" }}>
-          {projects.map((project) => (
-            <div
+          {projects.map((project, index) => (
+            <motion.div
               key={project.id}
+              custom={index}
+              initial="hidden"
+              animate="visible"
+              variants={variants}
+              whileHover="hover"
               className="flex-shrink-0"
               style={{ width: "300px" }}
             >
@@ -20,7 +32,7 @@ const FeaturedProjects = ({ projects, handleViewProject }) => {
                 project={project}
                 handleViewProject={handleViewProject}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,15 +1,76 @@
+/* eslint-disable no-unused-vars */
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { HiChevronRight } from "react-icons/hi";
 import ProjectCard from "./ProjectCard";
 import FeaturedProjects from "./FeaturedProjects";
 import SmallProjects from "./SmallProjects";
 import Certificates from "./Certificates";
-
 import { featuredProjects, smallProjects, certificates } from "./projectsData";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeSection, setActiveSection] = useState("featured");
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  const titleVariants = {
+    hidden: { y: -50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const sectionNavVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 0.3 },
+    },
+  };
+
+  const projectCardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1 + 0.4,
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
+    hover: {
+      y: -5,
+      transition: { duration: 0.2 },
+    },
+  };
+
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.9 },
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -104,7 +165,10 @@ const Projects = () => {
     ];
 
     return (
-      <div className="flex justify-center mb-8">
+      <motion.div
+        className="flex justify-center mb-8"
+        variants={sectionNavVariants}
+      >
         <div className="flex bg-[#333333] rounded-lg overflow-hidden">
           {sections.map((section) => (
             <button
@@ -120,20 +184,28 @@ const Projects = () => {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
     );
   };
 
   return (
     <section
       id="projects"
-      className="min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] py-16"
+      className="min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] py-16 z-10"
     >
-      <div className="container mx-auto px-6">
+      <motion.div
+        className="container mx-auto px-6"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
         {/* Centered Projects title */}
-        <h2 className="text-4xl font-bold text-white mb-10 text-center font-[poppins]">
+        <motion.h2
+          className="text-4xl font-bold text-white mb-10 text-center font-[poppins]"
+          variants={titleVariants}
+        >
           Projects
-        </h2>
+        </motion.h2>
 
         {/* Section Navigation */}
         <SectionNav />
@@ -145,6 +217,7 @@ const Projects = () => {
               <FeaturedProjects
                 projects={featuredProjects}
                 handleViewProject={handleViewProject}
+                variants={projectCardVariants}
               />
 
               {/* "View All" links for quick navigation when in featured view */}
@@ -171,88 +244,91 @@ const Projects = () => {
             <SmallProjects
               projects={smallProjects}
               handleViewProject={handleViewProject}
+              variants={projectCardVariants}
             />
           )}
 
           {/* Certificates Section */}
           {activeSection === "certificates" && (
-            <Certificates certificates={certificates} />
+            <Certificates
+              certificates={certificates}
+              variants={projectCardVariants} // Passing the same variants
+            />
           )}
         </div>
 
         {/* Case Study Overlay */}
-        {selectedProject && (
-          <div className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-            <div
-              className="bg-[#2a2a2a] rounded-lg max-w-2xl w-full p-6 relative shadow-xl"
-              style={{ maxHeight: "85vh", overflowY: "auto" }}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+              variants={overlayVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              <button
-                onClick={closeOverlay}
-                className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition-colors z-10"
+              <motion.div
+                className="bg-[#2a2a2a] rounded-lg max-w-2xl w-full p-6 relative shadow-xl"
+                style={{ maxHeight: "85vh", overflowY: "auto" }}
+                variants={modalVariants}
               >
-                &times;
-              </button>
+                <button
+                  onClick={closeOverlay}
+                  className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition-colors z-10"
+                >
+                  &times;
+                </button>
 
-              {/* Large Project Image */}
-              {selectedProject.image && (
-                <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
-                  />
+                {/* Large Project Image */}
+                {selectedProject.image && (
+                  <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
+                    <img
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                {selectedProject.link && (
+                  <div className="mb-4 text-center">
+                    <a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-[#90D5FF] text-[#333333] px-4 py-2 rounded-md hover:bg-[#7bc8ff] transition-colors"
+                    >
+                      Visit Project
+                    </a>
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-bold text-white">
+                    {selectedProject.title}
+                  </h2>
+                  <p className="text-gray-300">{selectedProject.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {selectedProject.technologies &&
+                      selectedProject.technologies.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="bg-[#444444] text-gray-300 text-sm px-2 py-1 rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                  </div>
+
+                  {selectedProject.caseStudy &&
+                    renderCaseStudy(selectedProject.caseStudy)}
                 </div>
-              )}
-
-              {selectedProject.link && (
-                <div className="mb-4 text-center">
-                  <a
-                    href={selectedProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-[#90D5FF] text-[#333333] px-4 py-2 rounded-md hover:bg-[#7bc8ff] transition-colors"
-                  >
-                    Visit Project
-                  </a>
-                </div>
-              )}
-
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white">
-                  {selectedProject.title}
-                </h2>
-                <p className="text-gray-300">{selectedProject.description}</p>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {selectedProject.technologies &&
-                    selectedProject.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="bg-[#444444] text-gray-300 text-sm px-2 py-1 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                </div>
-
-                {selectedProject.caseStudy &&
-                  renderCaseStudy(selectedProject.caseStudy)}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </section>
   );
 };

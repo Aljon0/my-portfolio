@@ -1,73 +1,14 @@
 import { Menu, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("home");
+const Navbar = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Function to handle smooth scrolling
   const handleScroll = (id) => {
-    const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false); // Close mobile menu after clicking
-    }
+    window.location.hash = id;
+    setIsMenuOpen(false);
   };
 
-  // Handle initial load and page refresh
-  useEffect(() => {
-    // Get the hash from the URL or default to "home"
-    const hash = window.location.hash.replace("#", "") || "home";
-
-    // Scroll to the appropriate section on load
-    const element = document.getElementById(hash.toLowerCase());
-    if (element) {
-      // Use a small timeout to ensure the page is fully loaded
-      setTimeout(() => {
-        element.scrollIntoView({ behavior: "auto" });
-        setActiveSection(hash);
-      }, 100);
-    } else {
-      // If the hash doesn't match any section, scroll to home
-      const homeElement = document.getElementById("home");
-      if (homeElement) {
-        homeElement.scrollIntoView({ behavior: "auto" });
-        setActiveSection("home");
-      }
-    }
-  }, []);
-
-  // Function to detect active section based on scroll position
-  useEffect(() => {
-    const handleScrollPosition = () => {
-      const sections = ["home", "about", "projects", "stack", "contact"];
-
-      const current = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-
-      if (current) {
-        setActiveSection(current);
-        // Update URL hash without scrolling
-        history.replaceState(null, null, `#${current}`);
-      }
-    };
-
-    window.addEventListener("scroll", handleScrollPosition);
-    return () => window.removeEventListener("scroll", handleScrollPosition);
-  }, []);
-
-  // Toggle menu for mobile view
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Updated section names - changed "skills" to "stack"
   const navItems = ["home", "about", "projects", "stack", "contact"];
 
   return (
@@ -109,7 +50,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
-            onClick={toggleMenu}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-white focus:outline-none"
             aria-label="Toggle menu"
           >

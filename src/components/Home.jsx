@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
 import {
@@ -6,9 +7,10 @@ import {
   FaGithub,
   FaLinkedin,
 } from "react-icons/fa";
+import ParticlesBackground from "./ParticlesBackground";
 
 const Home = ({ isActive }) => {
-  // Animation variants
+  // Animation variants (unchanged from previous code)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,15 +69,21 @@ const Home = ({ isActive }) => {
   return (
     <section
       id="home"
-      className="h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] font-[]"
+      className="h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] font-[] relative overflow-hidden z-0"
     >
+      {/* Add ParticlesBackground with absolute positioning INSIDE the Home section */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <ParticlesBackground />
+      </div>
+
       <motion.div
-        className="text-center"
+        className="text-center z-10 relative" // Add z-10 to ensure content is above particles
         initial="hidden"
         animate={isActive ? "visible" : "hidden"}
         variants={containerVariants}
         key={isActive ? "active" : "inactive"}
       >
+        {/* Rest of the component remains the same */}
         <motion.h1
           className="text-5xl font-bold text-white"
           variants={itemVariants}

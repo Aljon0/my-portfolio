@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import {
@@ -280,7 +281,7 @@ const Stack = ({ isActive }) => {
                     variants={tooltipVariants}
                     initial="hidden"
                     animate={
-                      activeSkill === skill.name || "hover"
+                      activeSkill === skill.name && "visible"
                         ? "visible"
                         : "hidden"
                     }
@@ -342,11 +343,7 @@ const Stack = ({ isActive }) => {
                     }}
                     variants={tooltipVariants}
                     initial="hidden"
-                    animate={
-                      activeSkill === skill.name || "hover"
-                        ? "visible"
-                        : "hidden"
-                    }
+                    animate={activeSkill === skill.name ? "visible" : "hidden"}
                   >
                     {skill.name}
                   </motion.span>
