@@ -9,6 +9,7 @@ import {
   FaJsSquare,
   FaNodeJs,
   FaReact,
+  FaPython,
 } from "react-icons/fa";
 import {
   SiAppwrite,
@@ -23,7 +24,6 @@ import {
 } from "react-icons/si";
 
 const Stack = ({ isActive }) => {
-  // Add state to track which skill is active on mobile
   const [activeSkill, setActiveSkill] = useState(null);
 
   const skillCategories = [
@@ -35,7 +35,7 @@ const Stack = ({ isActive }) => {
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
         { name: "React", icon: FaReact, color: "#61DAFB" },
         { name: "Tailwind", icon: SiTailwindcss, color: "#38B2AC" },
-        { name: "Three.js", icon: SiThreedotjs, color: "#000000" },
+        { name: "Three.js", icon: SiThreedotjs, color: "#FAFAFA" },
       ],
     },
     {
@@ -43,9 +43,10 @@ const Stack = ({ isActive }) => {
       skills: [
         { name: "Node.js", icon: FaNodeJs, color: "#68A063" },
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
-        { name: "Express", icon: SiExpress, color: "#000000" },
+        { name: "Express", icon: SiExpress, color: "#FAFAFA" },
         { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
         { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
+        { name: "Python", icon: FaPython, color: "#3776AB" },
       ],
     },
     {
@@ -61,23 +62,19 @@ const Stack = ({ isActive }) => {
     {
       category: "Tools",
       skills: [
-        { name: "GitHub", icon: FaGithub, color: "#181717" },
+        { name: "GitHub", icon: FaGithub, color: "#FAFAFA" },
         { name: "Vite", icon: SiVite, color: "#646CFF" },
         { name: "Docker", icon: FaDocker, color: "#2496ED" },
       ],
     },
   ];
 
-  // Flatten all skills into a single array and remove duplicates
   const allSkills = skillCategories.flatMap((category) => category.skills);
-
-  // Remove duplicate skills (like JavaScript appearing in both Frontend and Backend)
   const uniqueSkills = allSkills.filter(
     (skill, index, self) =>
       index === self.findIndex((s) => s.name === skill.name)
   );
 
-  // Split skills into two rows
   const firstRowSkills = uniqueSkills.slice(
     0,
     Math.ceil(uniqueSkills.length / 2)
@@ -86,9 +83,7 @@ const Stack = ({ isActive }) => {
     Math.ceil(uniqueSkills.length / 2)
   );
 
-  // Handle click on skill icon
   const handleSkillClick = (skillName) => {
-    // Toggle active skill
     setActiveSkill(activeSkill === skillName ? null : skillName);
   };
 
@@ -262,17 +257,21 @@ const Stack = ({ isActive }) => {
                   >
                     <skill.icon
                       color={skill.color}
-                      style={{ fontSize: "1.5rem" }}
+                      style={{
+                        fontSize: "1.5rem",
+                        filter:
+                          skill.color === "#FFFFFF" ? "invert(1)" : "none",
+                      }}
                       size={40}
                     />
                   </motion.div>
 
                   <motion.span
-                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50
+                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50 opacity-100 
                     ${
                       activeSkill === skill.name
-                        ? "block"
-                        : "hidden group-hover:block md:group-hover:block pointer-events-none"
+                        ? "visible"
+                        : "invisible group-hover:visible"
                     }`}
                     style={{
                       boxShadow: `0 0 8px ${skill.color}40`,
@@ -280,11 +279,7 @@ const Stack = ({ isActive }) => {
                     }}
                     variants={tooltipVariants}
                     initial="hidden"
-                    animate={
-                      activeSkill === skill.name && "visible"
-                        ? "visible"
-                        : "hidden"
-                    }
+                    animate={activeSkill === skill.name ? "visible" : "hidden"}
                   >
                     {skill.name}
                   </motion.span>
@@ -325,17 +320,21 @@ const Stack = ({ isActive }) => {
                   >
                     <skill.icon
                       color={skill.color}
-                      style={{ fontSize: "1.5rem" }}
+                      style={{
+                        fontSize: "1.5rem",
+                        filter:
+                          skill.color === "#FFFFFF" ? "invert(1)" : "none",
+                      }}
                       size={40}
                     />
                   </motion.div>
 
                   <motion.span
-                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50
+                    className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50 opacity-100
                     ${
                       activeSkill === skill.name
-                        ? "block"
-                        : "hidden group-hover:block md:group-hover:block pointer-events-none"
+                        ? "visible"
+                        : "invisible group-hover:visible"
                     }`}
                     style={{
                       boxShadow: `0 0 8px ${skill.color}40`,
