@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -73,7 +72,8 @@ const About = ({ isActive }) => {
               <span className="text-[#90D5FF] font-semibold">
                 Al-Jon Santiago
               </span>{" "}
-              , a Web Developer from General Trias, Cavite, Philippines.
+              , a Full Stack & Mobile Developer from General Trias, Cavite,
+              Philippines.
             </p>
           </motion.div>
 
@@ -89,9 +89,10 @@ const About = ({ isActive }) => {
                 Expertise
               </h3>
               <p className="text-white leading-relaxed">
-                I specialize in building secure, responsive web applications
-                using modern technologies like React, Node.js, and implementing
-                best practices for web security.
+                I specialize in building secure, responsive web applications and
+                intuitive mobile solutions using modern technologies like React,
+                React Native, Node.js, and implementing best practices for
+                application security and performance.
               </p>
             </motion.div>
 
@@ -105,9 +106,10 @@ const About = ({ isActive }) => {
                 Background
               </h3>
               <p className="text-white leading-relaxed">
-                With a background in both development, I bring a unique
-                perspective to projects, ensuring they're not only functional
-                and user-friendly.
+                With a background in both web and mobile development, I bring a
+                versatile skillset to projects, ensuring they're not only
+                functional but also deliver seamless experiences across all
+                devices and platforms.
               </p>
             </motion.div>
           </div>
@@ -122,9 +124,10 @@ const About = ({ isActive }) => {
               Off-Screen Time
             </h3>
             <p className="text-white leading-relaxed">
-              When I'm not coding, you can find me researching new security
-              trends, contributing to open-source projects, or enjoying the
-              beautiful beaches of the Philippines.
+              When I'm not coding, you can find me exploring new technologies,
+              contributing to open-source projects, or enjoying the beautiful
+              beaches of the Philippines while sketching ideas for my next
+              application.
             </p>
           </motion.div>
         </div>

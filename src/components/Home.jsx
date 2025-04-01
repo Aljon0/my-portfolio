@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
 import {
@@ -10,7 +9,7 @@ import {
 import ParticlesBackground from "./ParticlesBackground";
 
 const Home = ({ isActive }) => {
-  // Animation variants (unchanged from previous code)
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -77,25 +76,32 @@ const Home = ({ isActive }) => {
       </div>
 
       <motion.div
-        className="text-center z-10 relative" // Add z-10 to ensure content is above particles
+        className="text-center z-10 relative"
         initial="hidden"
         animate={isActive ? "visible" : "hidden"}
         variants={containerVariants}
         key={isActive ? "active" : "inactive"}
       >
-        {/* Rest of the component remains the same */}
         <motion.h1
           className="text-5xl font-bold text-white"
           variants={itemVariants}
         >
-          Hi, I'm <span>Al-jon Santiago</span>
+          Hi, I'm <span className="text-[#90D5FF]">Al-jon Santiago</span>
         </motion.h1>
+
+        <motion.h2
+          className="mt-4 text-xl text-[#90D5FF] font-medium max-w-lg mx-auto"
+          variants={itemVariants}
+        >
+          Full Stack & Mobile Developer
+        </motion.h2>
+
         <motion.p
           className="mt-4 text-xl text-white max-w-lg mx-auto"
           variants={itemVariants}
         >
-          Full Stack Web Developer passionate about creating responsive and
-          interactive web experiences with modern technologies.
+          Crafting responsive web applications and intuitive mobile experiences
+          with modern technologies.
         </motion.p>
 
         {/* Social Icons */}
