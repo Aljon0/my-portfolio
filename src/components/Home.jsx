@@ -112,9 +112,9 @@ const Home = ({ isActive }) => {
               animate={isActive ? "visible" : "hidden"}
               href={
                 [
-                  "https://github.com",
-                  "https://linkedin.com",
-                  "https://facebook.com",
+                  "https://github.com/Aljon0",
+                  "https://www.linkedin.com/in/santiago-al-jon-b-31a478281/",
+                  "https://www.facebook.com/aljon.santiago.528",
                 ][index]
               }
               target="_blank"
