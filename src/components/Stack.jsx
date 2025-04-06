@@ -9,15 +9,14 @@ import {
   FaJsSquare,
   FaMobileAlt,
   FaNodeJs,
-  FaPython,
   FaReact,
 } from "react-icons/fa";
 import {
   SiAppwrite,
+  SiChakraui,
   SiExpress,
   SiFirebase,
   SiMongodb,
-  SiMysql,
   SiSupabase,
   SiTailwindcss,
   SiThreedotjs,
@@ -60,17 +59,6 @@ const Stack = ({ isActive }) => {
       ],
     },
     {
-      category: "Mobile Development",
-      title: "Mobile Stack",
-      description: "Firebase, Express, React Native, Node.js",
-      skills: [
-        { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
-        { name: "Express", icon: SiExpress, color: "#FAFAFA" },
-        { name: "React Native", icon: ReactNativeIcon, color: "#61DAFB" },
-        { name: "Node.js", icon: FaNodeJs, color: "#68A063" },
-      ],
-    },
-    {
       category: "Other Technologies",
       title: "Other Tech I Use",
       description: "Additional technologies in my toolkit",
@@ -79,12 +67,11 @@ const Stack = ({ isActive }) => {
         { name: "CSS", icon: FaCss3Alt, color: "#1572B6" },
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
         { name: "Tailwind", icon: SiTailwindcss, color: "#38B2AC" },
+        { name: "Chakra UI", icon: SiChakraui, color: "#319795" },
         { name: "Three.js", icon: SiThreedotjs, color: "#FAFAFA" },
         { name: "MongoDB", icon: SiMongodb, color: "#4DB33D" },
-        { name: "MySQL", icon: SiMysql, color: "#4479A1" },
         { name: "Supabase", icon: SiSupabase, color: "#3ECF8E" },
         { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
-        { name: "Python", icon: FaPython, color: "#3776AB" },
         { name: "GitHub", icon: FaGithub, color: "#FAFAFA" },
         { name: "Vite", icon: SiVite, color: "#646CFF" },
         { name: "Docker", icon: FaDocker, color: "#2496ED" },
@@ -247,7 +234,7 @@ const Stack = ({ isActive }) => {
               <span className="text-[#90D5FF] font-semibold">
                 technical expertise
               </span>{" "}
-              spans across both web and mobile app development.
+              spans across web development.
             </p>
           </motion.div>
 
@@ -322,31 +309,15 @@ const Stack = ({ isActive }) => {
                         variants={iconVariants}
                         whileHover="hover"
                       >
-                        {skill.name === "React Native" ? (
-                          <skill.icon
-                            color={skill.color}
-                            size={40}
-                            style={{
-                              fontSize: "1.5rem",
-                              filter:
-                                skill.color === "#FFFFFF"
-                                  ? "invert(1)"
-                                  : "none",
-                            }}
-                          />
-                        ) : (
-                          <skill.icon
-                            color={skill.color}
-                            style={{
-                              fontSize: "1.5rem",
-                              filter:
-                                skill.color === "#FFFFFF"
-                                  ? "invert(1)"
-                                  : "none",
-                            }}
-                            size={40}
-                          />
-                        )}
+                        <skill.icon
+                          color={skill.color}
+                          style={{
+                            fontSize: "1.5rem",
+                            filter:
+                              skill.color === "#FFFFFF" ? "invert(1)" : "none",
+                          }}
+                          size={40}
+                        />
                       </motion.div>
 
                       <motion.span
@@ -373,8 +344,7 @@ const Stack = ({ isActive }) => {
                 </motion.div>
 
                 {/* Special emphasis for FERN stack categories */}
-                {(selectedCategory.category === "Web Development" ||
-                  selectedCategory.category === "Mobile Development") && (
+                {selectedCategory.category === "Web Development" && (
                   <motion.div
                     className="mt-10 bg-[#1e1e1e] p-4 rounded-lg border-l-4 border-[#90D5FF]"
                     initial={{ opacity: 0, y: 20 }}
@@ -383,17 +353,10 @@ const Stack = ({ isActive }) => {
                   >
                     <p className="text-gray-300 text-center">
                       <span className="text-[#90D5FF] font-semibold">
-                        {selectedCategory.category === "Web Development"
-                          ? "FERN"
-                          : "Mobile FERN"}{" "}
-                        Stack
+                        FERN Stack
                       </span>{" "}
                       provides a powerful foundation for building scalable,
-                      real-time
-                      {selectedCategory.category === "Web Development"
-                        ? " web applications"
-                        : " mobile applications"}
-                      .
+                      real-time web applications.
                     </p>
                   </motion.div>
                 )}
