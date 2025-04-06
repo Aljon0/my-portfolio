@@ -72,7 +72,7 @@ const About = ({ isActive }) => {
               <span className="text-[#90D5FF] font-semibold">
                 Al-Jon Santiago
               </span>{" "}
-              , a Full Stack & Mobile Developer from General Trias, Cavite,
+              , a Full Stack Web Developer from General Trias, Cavite,
               Philippines.
             </p>
           </motion.div>
@@ -89,10 +89,10 @@ const About = ({ isActive }) => {
                 Expertise
               </h3>
               <p className="text-white leading-relaxed">
-                I specialize in building secure, responsive web applications and
-                intuitive mobile solutions using modern technologies like React,
-                React Native, Node.js, and implementing best practices for
-                application security and performance.
+                I specialize in building secure, responsive web applications
+                solutions using modern technologies like React, React Native,
+                Node.js, and implementing best practices for application
+                security and performance.
               </p>
             </motion.div>
 
@@ -106,10 +106,9 @@ const About = ({ isActive }) => {
                 Background
               </h3>
               <p className="text-white leading-relaxed">
-                With a background in both web and mobile development, I bring a
-                versatile skillset to projects, ensuring they're not only
-                functional but also deliver seamless experiences across all
-                devices and platforms.
+                With a background in both web, I bring a versatile skillset to
+                projects, ensuring they're not only functional but also deliver
+                seamless experiences across all devices and platforms.
               </p>
             </motion.div>
           </div>

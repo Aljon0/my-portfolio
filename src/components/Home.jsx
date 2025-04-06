@@ -93,15 +93,14 @@ const Home = ({ isActive }) => {
           className="mt-4 text-xl text-[#90D5FF] font-medium max-w-lg mx-auto"
           variants={itemVariants}
         >
-          Full Stack & Mobile Developer
+          Full Stack Web Developer
         </motion.h2>
 
         <motion.p
           className="mt-4 text-xl text-white max-w-lg mx-auto"
           variants={itemVariants}
         >
-          Crafting responsive web applications and intuitive mobile experiences
-          with modern technologies.
+          Crafting responsive web applications with modern technologies.
         </motion.p>
 
         {/* Social Icons */}
