@@ -1,11 +1,104 @@
-/* eslint-disable no-unused-vars */
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import React from "react";
-// Import icons from a common library
-import { Phone, Mail, MapPin } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+} from "lucide-react";
+import React, { useRef, useState } from "react";
 
 const Contact = ({ isActive }) => {
-  // Animation variants
+  const form = useRef();
+  const [formData, setFormData] = useState({
+    from_name: "",
+    reply_to: "",
+    subject: "",
+    message: "",
+  });
+  const [status, setStatus] = useState({
+    submitted: false,
+    submitting: false,
+    info: { error: false, msg: null },
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus({
+      submitted: false,
+      submitting: true,
+      info: { error: false, msg: null },
+    });
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    // Get current date and time formatted nicely
+    const now = new Date();
+    const dateOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    const formattedDate = now.toLocaleDateString("en-US", dateOptions);
+
+    // Prepare the template parameters based on the form data
+    const templateParams = {
+      from_name: formData.from_name,
+      reply_to: formData.reply_to,
+      subject: formData.subject,
+      message: formData.message,
+      sent_date: formattedDate,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((result) => {
+        console.log("Email sent successfully:", result.text);
+        setStatus({
+          submitted: true,
+          submitting: false,
+          info: {
+            error: false,
+            msg: "Message sent successfully! I will get back to you soon.",
+          },
+        });
+        // Reset form
+        setFormData({
+          from_name: "",
+          reply_to: "",
+          subject: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        console.error("EmailJS error:", error);
+        setStatus({
+          submitted: false,
+          submitting: false,
+          info: {
+            error: true,
+            msg: "Something went wrong. Please try again later.",
+          },
+        });
+      });
+  };
+
+  // Animation variants...
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -83,7 +176,6 @@ const Contact = ({ isActive }) => {
     },
   };
 
-  // New animation variants for contact info items
   const contactInfoItemVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: (i) => ({
@@ -244,67 +336,135 @@ const Contact = ({ isActive }) => {
               className="lg:w-3/5 bg-[#333333] rounded-xl shadow-lg p-6"
               variants={formContainerVariants}
             >
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Name Input */}
-                  <motion.div custom={0} variants={formItemVariants}>
-                    <label className="block text-[#90D5FF] mb-2">Name</label>
-                    <input
-                      type="text"
-                      placeholder="Your Name"
-                      className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#333333] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
-                    />
-                  </motion.div>
-
-                  {/* Email Input */}
-                  <motion.div custom={1} variants={formItemVariants}>
-                    <label className="block text-[#90D5FF] mb-2">Email</label>
-                    <input
-                      type="email"
-                      placeholder="Your Email"
-                      className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#333333] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
-                    />
-                  </motion.div>
-                </div>
-
-                {/* Subject Input */}
-                <motion.div custom={2} variants={formItemVariants}>
-                  <label className="block text-[#90D5FF] mb-2">Subject</label>
-                  <input
-                    type="text"
-                    placeholder="What is this regarding?"
-                    className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#333333] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
-                  />
-                </motion.div>
-
-                {/* Message Input */}
-                <motion.div custom={3} variants={formItemVariants}>
-                  <label className="block text-[#90D5FF] mb-2">Message</label>
-                  <textarea
-                    placeholder="Your message here..."
-                    className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#333333] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
-                    rows="4"
-                  ></textarea>
-                </motion.div>
-
-                {/* Submit Button */}
+              {status.submitted ? (
                 <motion.div
-                  className="pt-2"
-                  custom={4}
-                  variants={formItemVariants}
+                  className="h-full flex flex-col items-center justify-center p-8 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
                 >
+                  <CheckCircle size={64} className="text-green-400 mb-4" />
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    Thank You!
+                  </h3>
+                  <p className="text-gray-300 mb-6">
+                    Your message has been sent successfully. I'll get back to
+                    you soon!
+                  </p>
                   <motion.button
-                    type="submit"
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    className="px-6 py-3 bg-[#90D5FF] text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden"
+                    onClick={() => setStatus({ ...status, submitted: false })}
+                    whileHover={{ scale: 1.05 }}
+                    className="px-6 py-3 bg-[#90D5FF] text-white rounded-lg hover:bg-opacity-90 transition-all duration-300"
                   >
-                    <span className="relative z-10">Send Message</span>
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 bg-[#90D5FF] shadow-[0_0_15px_5px_rgba(144,213,255,0.5)] transition-all duration-300 group-hover:shadow-none"></div>
+                    Send Another Message
                   </motion.button>
                 </motion.div>
-              </form>
+              ) : (
+                <form ref={form} onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Name Input */}
+                    <motion.div custom={0} variants={formItemVariants}>
+                      <label className="block text-[#90D5FF] mb-2">Name</label>
+                      <input
+                        type="text"
+                        name="from_name"
+                        value={formData.from_name}
+                        onChange={handleChange}
+                        placeholder="Your Name"
+                        required
+                        className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#444444] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
+                      />
+                    </motion.div>
+
+                    {/* Email Input */}
+                    <motion.div custom={1} variants={formItemVariants}>
+                      <label className="block text-[#90D5FF] mb-2">Email</label>
+                      <input
+                        type="email"
+                        name="reply_to"
+                        value={formData.reply_to}
+                        onChange={handleChange}
+                        placeholder="Your Email"
+                        required
+                        className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#444444] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
+                      />
+                    </motion.div>
+                  </div>
+
+                  {/* Subject Input - Important for your template */}
+                  <motion.div custom={2} variants={formItemVariants}>
+                    <label className="block text-[#90D5FF] mb-2">Subject</label>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      placeholder="What is this regarding?"
+                      required
+                      className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#444444] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
+                    />
+                  </motion.div>
+
+                  {/* Message Input */}
+                  <motion.div custom={3} variants={formItemVariants}>
+                    <label className="block text-[#90D5FF] mb-2">Message</label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Your message here..."
+                      required
+                      className="w-full px-4 py-2 bg-[#1e1e1e] border border-[#444444] rounded-lg text-white focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300"
+                      rows="4"
+                    ></textarea>
+                  </motion.div>
+
+                  {/* Status Message */}
+                  {status.info.msg && (
+                    <motion.div
+                      className={`flex items-center gap-2 p-3 rounded-lg ${
+                        status.info.error
+                          ? "bg-red-900/50 text-red-200 border border-red-700"
+                          : "bg-green-900/50 text-green-200 border border-green-700"
+                      }`}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {status.info.error ? (
+                        <AlertCircle size={20} className="text-red-300" />
+                      ) : (
+                        <CheckCircle size={20} className="text-green-300" />
+                      )}
+                      <span>{status.info.msg}</span>
+                    </motion.div>
+                  )}
+
+                  {/* Submit Button */}
+                  <motion.div
+                    className="pt-2"
+                    custom={4}
+                    variants={formItemVariants}
+                  >
+                    <motion.button
+                      type="submit"
+                      disabled={status.submitting}
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      className="w-full sm:w-auto px-6 py-3 bg-[#90D5FF] text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 disabled:opacity-70"
+                    >
+                      <span className="relative z-10">
+                        {status.submitting ? "Sending..." : "Send Message"}
+                      </span>
+                      {!status.submitting && (
+                        <Send size={18} className="relative z-10" />
+                      )}
+                      {/* Glow effect */}
+                      <div className="absolute inset-0 bg-[#90D5FF] shadow-[0_0_15px_5px_rgba(144,213,255,0.5)] transition-all duration-300 group-hover:shadow-none"></div>
+                    </motion.button>
+                  </motion.div>
+                </form>
+              )}
             </motion.div>
           </div>
         </div>
