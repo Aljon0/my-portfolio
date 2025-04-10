@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react";
-import About from "./components/About";
+import About from "./pages/About";
 import ChatBot from "./components/ChatBot";
-import Contact from "./components/Contact";
+import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Projects from "./components/Projects";
-import Stack from "./components/Stack";
+import Projects from "./pages/Projects";
+import Stack from "./pages/Stack";
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");

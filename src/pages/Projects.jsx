@@ -2,11 +2,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { HiChevronRight } from "react-icons/hi";
-import ProjectCard from "./ProjectCard";
-import FeaturedProjects from "./FeaturedProjects";
-import SmallProjects from "./SmallProjects";
-import Certificates from "./Certificates";
-import { featuredProjects, smallProjects, certificates } from "./projectsData";
+import ProjectCard from "../components/ProjectCard";
+import FeaturedProjects from "../components/FeaturedProjects";
+import SmallProjects from "../components/SmallProjects";
+import Certificates from "../components/Certificates";
+import {
+  featuredProjects,
+  smallProjects,
+  certificates,
+} from "../components/projectsData";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);

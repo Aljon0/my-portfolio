@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
 import {
@@ -6,7 +7,7 @@ import {
   FaGithub,
   FaLinkedin,
 } from "react-icons/fa";
-import ParticlesBackground from "./ParticlesBackground";
+import ParticlesBackground from "../components/ParticlesBackground";
 
 const Home = ({ isActive }) => {
   // Animation variants
