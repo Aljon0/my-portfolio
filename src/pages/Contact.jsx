@@ -1,4 +1,4 @@
-import emailjs from "@emailjs/browser";
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import {
   AlertCircle,
@@ -33,69 +33,51 @@ const Contact = ({ isActive }) => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     setStatus({
       submitted: false,
       submitting: true,
       info: { error: false, msg: null },
     });
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    try {
+      const response = await fetch("http://localhost:5000/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Get current date and time formatted nicely
-    const now = new Date();
-    const dateOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    const formattedDate = now.toLocaleDateString("en-US", dateOptions);
+      const data = await response.json();
 
-    // Prepare the template parameters based on the form data
-    const templateParams = {
-      from_name: formData.from_name,
-      reply_to: formData.reply_to,
-      subject: formData.subject,
-      message: formData.message,
-      sent_date: formattedDate,
-    };
-
-    emailjs
-      .send(serviceId, templateId, templateParams, publicKey)
-      .then((result) => {
-        console.log("Email sent successfully:", result.text);
+      if (response.ok) {
         setStatus({
           submitted: true,
           submitting: false,
-          info: {
-            error: false,
-            msg: "Message sent successfully! I will get back to you soon.",
-          },
+          info: { error: false, msg: data.message },
         });
-        // Reset form
+
+        // Reset form data
         setFormData({
           from_name: "",
           reply_to: "",
           subject: "",
           message: "",
         });
-      })
-      .catch((error) => {
-        console.error("EmailJS error:", error);
-        setStatus({
-          submitted: false,
-          submitting: false,
-          info: {
-            error: true,
-            msg: "Something went wrong. Please try again later.",
-          },
-        });
+      } else {
+        throw new Error(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setStatus({
+        submitted: false,
+        submitting: false,
+        info: { error: true, msg: error.message },
       });
+    }
   };
 
   // Animation variants...
@@ -232,7 +214,6 @@ const Contact = ({ isActive }) => {
         </motion.h2>
 
         <div className="container mx-auto px-6 max-w-5xl">
-          {/* Introduction container with text */}
           <motion.div
             className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full"
             variants={introVariants}
@@ -244,9 +225,7 @@ const Contact = ({ isActive }) => {
             </p>
           </motion.div>
 
-          {/* Contact content container - flex layout for side by side */}
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Contact Info Section - LEFT SIDE */}
             <motion.div
               className="lg:w-2/5 bg-[#2a2a2a] rounded-xl shadow-lg p-6 flex flex-col justify-center"
               variants={formContainerVariants}
@@ -255,9 +234,7 @@ const Contact = ({ isActive }) => {
                 Get in Touch
               </h3>
 
-              {/* Contact Info Items */}
               <div className="space-y-6">
-                {/* Phone */}
                 <motion.div
                   className="flex items-center gap-4"
                   custom={0}
@@ -277,7 +254,6 @@ const Contact = ({ isActive }) => {
                   </div>
                 </motion.div>
 
-                {/* Email */}
                 <motion.div
                   className="flex items-center gap-4"
                   custom={1}
@@ -297,7 +273,6 @@ const Contact = ({ isActive }) => {
                   </div>
                 </motion.div>
 
-                {/* Location */}
                 <motion.div
                   className="flex items-center gap-4"
                   custom={2}
@@ -320,7 +295,6 @@ const Contact = ({ isActive }) => {
                 </motion.div>
               </div>
 
-              {/* Decorative element */}
               <motion.div
                 className="mt-8 border-t border-[#444444] pt-6"
                 variants={introVariants}
@@ -331,7 +305,6 @@ const Contact = ({ isActive }) => {
               </motion.div>
             </motion.div>
 
-            {/* Form container - RIGHT SIDE */}
             <motion.div
               className="lg:w-3/5 bg-[#333333] rounded-xl shadow-lg p-6"
               variants={formContainerVariants}
@@ -362,7 +335,6 @@ const Contact = ({ isActive }) => {
               ) : (
                 <form ref={form} onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Name Input */}
                     <motion.div custom={0} variants={formItemVariants}>
                       <label className="block text-[#90D5FF] mb-2">Name</label>
                       <input
@@ -376,7 +348,6 @@ const Contact = ({ isActive }) => {
                       />
                     </motion.div>
 
-                    {/* Email Input */}
                     <motion.div custom={1} variants={formItemVariants}>
                       <label className="block text-[#90D5FF] mb-2">Email</label>
                       <input
@@ -391,7 +362,6 @@ const Contact = ({ isActive }) => {
                     </motion.div>
                   </div>
 
-                  {/* Subject Input - Important for your template */}
                   <motion.div custom={2} variants={formItemVariants}>
                     <label className="block text-[#90D5FF] mb-2">Subject</label>
                     <input
@@ -405,7 +375,6 @@ const Contact = ({ isActive }) => {
                     />
                   </motion.div>
 
-                  {/* Message Input */}
                   <motion.div custom={3} variants={formItemVariants}>
                     <label className="block text-[#90D5FF] mb-2">Message</label>
                     <textarea
@@ -419,7 +388,6 @@ const Contact = ({ isActive }) => {
                     ></textarea>
                   </motion.div>
 
-                  {/* Status Message */}
                   {status.info.msg && (
                     <motion.div
                       className={`flex items-center gap-2 p-3 rounded-lg ${
@@ -440,7 +408,6 @@ const Contact = ({ isActive }) => {
                     </motion.div>
                   )}
 
-                  {/* Submit Button */}
                   <motion.div
                     className="pt-2"
                     custom={4}
@@ -459,7 +426,6 @@ const Contact = ({ isActive }) => {
                       {!status.submitting && (
                         <Send size={18} className="relative z-10" />
                       )}
-                      {/* Glow effect */}
                       <div className="absolute inset-0 bg-[#90D5FF] shadow-[0_0_15px_5px_rgba(144,213,255,0.5)] transition-all duration-300 group-hover:shadow-none"></div>
                     </motion.button>
                   </motion.div>
