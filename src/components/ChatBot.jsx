@@ -59,64 +59,36 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
-      // Mock API response - replace with your actual API call
-      setTimeout(() => {
-        // Simulated response based on questions
-        let response = "";
-        const lowerInput = input.toLowerCase();
+      // Use your API endpoint
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: input }),
+      });
 
-        if (lowerInput.includes("project") || lowerInput.includes("work")) {
-          response =
-            "Al-Jon has worked on several projects, including an E-Commerce Platform, Security Dashboard, Portfolio Website, and Task Management App. All of these are built with React, Node.js, and Tailwind CSS.";
-        } else if (
-          lowerInput.includes("skill") ||
-          lowerInput.includes("tech")
-        ) {
-          response =
-            "Al-Jon's technical expertise spans across multiple domains of web development and security. He works with technologies like React, Node.js, Vue.js, Express, and has security experience including Penetration Testing and Authentication Systems.";
-        } else if (
-          lowerInput.includes("contact") ||
-          lowerInput.includes("email") ||
-          lowerInput.includes("reach")
-        ) {
-          response =
-            "You can contact Al-Jon via email at aljon.media0@gmail.com or by phone at +63 906 920 8512. He's based in General Trias, Cavite, Philippines.";
-        } else if (
-          lowerInput.includes("location") ||
-          lowerInput.includes("based") ||
-          lowerInput.includes("live")
-        ) {
-          response = "Al-Jon is based in General Trias, Cavite, Philippines.";
-        } else if (
-          lowerInput.includes("hello") ||
-          lowerInput.includes("hi") ||
-          lowerInput.includes("hey")
-        ) {
-          response =
-            "Hello! I'm Al-Jon's virtual assistant. How can I help you today?";
-        } else if (
-          lowerInput.includes("background") ||
-          lowerInput.includes("experience")
-        ) {
-          response =
-            "Al-Jon has a background in both development and security. He brings a unique perspective to projects, ensuring they're not only functional but also user-friendly and secure.";
-        } else {
-          response =
-            "Thanks for your message. I'm Al-Jon's virtual assistant. If you have questions about his projects, skills, or would like to get in touch, feel free to ask!";
-        }
+      const data = await response.json();
 
-        setMessages((prev) => [...prev, { text: response, sender: "bot" }]);
-        setLoading(false);
-      }, 1000);
+      if (response.ok) {
+        // Add bot message with AI response
+        setMessages((prev) => [
+          ...prev,
+          { text: data.response, sender: "bot" },
+        ]);
+      } else {
+        throw new Error(data.error || "Failed to get response");
+      }
     } catch (error) {
       console.error("Error getting response:", error);
       setMessages((prev) => [
         ...prev,
         {
-          text: "Sorry, I couldn't process your request right now.",
+          text: "Sorry, I couldn't process your request right now. Please try again later.",
           sender: "bot",
         },
       ]);
+    } finally {
       setLoading(false);
     }
   };
@@ -208,7 +180,7 @@ const ChatBot = () => {
       {isOpen && (
         <div
           className={`fixed bottom-20 right-6 w-80 sm:w-96 bg-[#333333] rounded-lg shadow-xl overflow-hidden z-50 transition-all duration-300 ${
-            isMinimized ? "h-14" : "h-[#500px]"
+            isMinimized ? "h-14" : "h-[500px]"
           }`}
         >
           {/* Chat header - Now always visible */}
