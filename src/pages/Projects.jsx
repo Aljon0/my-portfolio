@@ -2,7 +2,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { HiChevronRight } from "react-icons/hi";
-import ProjectCard from "../components/ProjectCard";
 import FeaturedProjects from "../components/FeaturedProjects";
 import SmallProjects from "../components/SmallProjects";
 import Certificates from "../components/Certificates";
@@ -139,11 +138,6 @@ const Projects = () => {
           </ul>
         </div>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-white mb-2">Impact</h2>
-          <p className="text-gray-300 text-justify">{caseStudy.impact}</p>
-        </div>
-
         {caseStudy.ownerAccount && (
           <div>
             <h2 className="text-2xl font-semibold text-white mb-2">
@@ -265,7 +259,7 @@ const Projects = () => {
         <AnimatePresence>
           {selectedProject && (
             <motion.div
-              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 mt-8"
               variants={overlayVariants}
               initial="hidden"
               animate="visible"

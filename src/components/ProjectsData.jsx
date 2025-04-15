@@ -25,12 +25,6 @@ export const featuredProjects = [
         "3D Rendering: Three.js",
         "Backend & Database: Firebase",
       ],
-      impact:
-        "The platform significantly reduces design iteration time and enhances client satisfaction by providing instant visualization and comprehensive design control.",
-      ownerAccount: {
-        username: "owner@gmail.com",
-        password: "123456",
-      },
     },
   },
   {
@@ -75,27 +69,50 @@ export const featuredProjects = [
 export const smallProjects = [
   {
     id: 5,
-    title: "Weather App",
+    title: "Expense Tracker",
     description:
-      "Simple weather forecasting application using real-time weather data API.",
-    image: "/path-to-weather-img.jpg",
+      "A streamlined expense tracking application built with React and Appwrite to help users manage their personal finances effectively.",
+    image: "/ExpenseTracker.png",
     category: "Web App",
-    technologies: ["React", "Weather API"],
-    link: "#",
+    technologies: ["React", "Appwrite"],
+    link: "https://expensetracker-hrws.onrender.com",
     featured: false,
-    caseStudy: "Case study content for Weather App",
+    caseStudy: {
+      title: "Expense Tracker",
+      overview:
+        "ExpenseTracker is a simple yet powerful web application that allows users to track and manage their expenses. With intuitive user interface and seamless integration with Appwrite backend services, users can easily categorize expenses, perform CRUD operations, and gain insights into their spending habits.",
+      features: [
+        "User Authentication: Secure login and registration system powered by Appwrite Auth",
+        "Expense Management: Create, read, update, and delete expense records",
+        "Categorization: Organize expenses into categories (food, travel, bills, etc.)",
+        "Responsive Design: Works seamlessly across desktop and mobile devices",
+        "Real-time Updates: Changes reflect immediately with Appwrite's real-time capabilities",
+      ],
+      technologyStack: ["Frontend: React.js", "Backend/Database: Appwrite"],
+    },
   },
   {
     id: 6,
-    title: "Markdown Editor",
+    title: "Chat Sphere",
     description:
-      "Lightweight markdown editing tool with live preview functionality.",
-    image: "/path-to-markdown-img.jpg",
-    category: "Web Tool",
-    technologies: ["React", "Tailwind"],
-    link: "#",
+      "ChatSphere is a sleek, responsive chat app built with React, Vite, and Tailwind CSS, showcasing real-time messaging powered by Firebase. Designed with user experience at its core, it features intuitive authentication, instant communication, and a polished UI that adapts seamlessly across devices. From dark mode and emoji support to file sharing and group chats, ChatSphere demonstrates best practices in modern frontend development, efficient state management, and scalable backend integration.",
+    image: "/ChatSphere.png",
+    category: "Web App",
+    technologies: ["React", "Tailwind", "Firebase"],
+    link: "https://chat-web-app-1c91d.web.app/",
     featured: false,
-    caseStudy: "Case study content for Markdown Editor",
+    caseStudy: {
+      title: "Chat Sphere",
+      overview:
+        "ChatSphere is a modern, responsive real-time chat application built with React, Vite, and Tailwind CSS. This project demonstrates how to create an elegant messaging interface with a focus on user experience and design.",
+      features: [
+        "User Authentication: Email/Password login and registration, google authentication integration",
+        "Real-time Messaging: instant message delivery, message status indicators (sent, delivered, seen), Timestamp display",
+        "Contacts & Conversations: Contact list with search functionality, Online status indicators, Unread message counters, Online only filtering",
+        "Rich User Interface: Dark/light mode toggle, Responsive design for all device sizes, Emoji picker",
+      ],
+      technologyStack: ["Frontend: React.js", "Backend/Database: Firebase"],
+    },
   },
   {
     id: 7,
