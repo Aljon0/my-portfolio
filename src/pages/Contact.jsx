@@ -42,6 +42,7 @@ const Contact = ({ isActive }) => {
       info: { error: false, msg: null },
     });
 
+    console.log("Form submitted successfully:", formData);
     try {
       const response = await fetch("http://localhost:5000/api/send-email", {
         method: "POST",

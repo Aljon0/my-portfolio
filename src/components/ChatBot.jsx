@@ -179,7 +179,7 @@ const ChatBot = () => {
       {/* Chat window */}
       {isOpen && (
         <div
-          className={`fixed bottom-20 right-6 w-80 sm:w-96 bg-[#333333] rounded-lg shadow-xl overflow-hidden z-50 transition-all duration-300 ${
+          className={`fixed bottom-20 right-6 w-80 sm:w-96 bg-[#333333] rounded-lg shadow-xl overflow-hidden z-50 transition-all duration-300 flex flex-col ${
             isMinimized ? "h-14" : "h-[500px]"
           }`}
         >
@@ -222,7 +222,7 @@ const ChatBot = () => {
               {/* Messages area with custom scrollbar */}
               <div
                 ref={messagesContainerRef}
-                className="h-72 overflow-y-auto px-4 py-3 bg-[#2a2a2a] custom-scrollbar"
+                className="flex-1 overflow-y-auto px-4 py-3 bg-[#2a2a2a] custom-scrollbar"
               >
                 {messages.map((message, index) => (
                   <div
@@ -286,7 +286,7 @@ const ChatBot = () => {
               {/* Input area */}
               <form
                 onSubmit={handleSubmit}
-                className="p-4 bg-[#222222] border-t border-[#444444]"
+                className="p-4 bg-[#222222] border-t border-[#444444] mt-auto"
               >
                 <div className="flex items-center space-x-2">
                   <input
@@ -315,5 +315,4 @@ const ChatBot = () => {
     </>
   );
 };
-
 export default ChatBot;
