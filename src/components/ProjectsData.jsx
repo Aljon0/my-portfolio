@@ -74,7 +74,7 @@ export const smallProjects = [
       "A streamlined expense tracking application built with React and Appwrite to help users manage their personal finances effectively.",
     image: "/ExpenseTracker.png",
     category: "Web App",
-    technologies: ["React", "Appwrite"],
+    technologies: ["React", "Tailwind", "Appwrite"],
     link: "https://expensetracker-hrws.onrender.com",
     featured: false,
     caseStudy: {
@@ -121,8 +121,8 @@ export const smallProjects = [
       "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
     image: "/TaskManager.png",
     category: "Web Tool",
-    technologies: ["React", "Supabase"],
-    link: "#",
+    technologies: ["React", "Tailwind", "Supabase"],
+    link: "https://task-manager-app-cwgb.onrender.com",
     featured: false,
     caseStudy: {
       title: "Task Master",
