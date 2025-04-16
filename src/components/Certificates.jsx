@@ -2,12 +2,17 @@
 import { motion } from "framer-motion";
 import React from "react";
 import CertificateCard from "./CertificateCard";
+import { useTheme } from "../context/ThemeContext";
 
 const Certificates = ({ certificates, variants }) => {
+  const { theme } = useTheme();
+
   return (
     <div className="mb-8">
       <motion.h2
-        className="text-xl font-bold text-[#90D5FF] border-b border-gray-700 pb-2 mb-4"
+        className={`text-xl font-bold text-[#90D5FF] border-b pb-2 mb-4 ${
+          theme === "light" ? "border-gray-300" : "border-gray-700"
+        }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

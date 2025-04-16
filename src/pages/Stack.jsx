@@ -21,12 +21,13 @@ import {
   SiThreedotjs,
   SiVite,
 } from "react-icons/si";
+import { useTheme } from "../context/ThemeContext";
 
 const Stack = ({ isActive }) => {
+  const { theme } = useTheme();
   const [activeSkill, setActiveSkill] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Web Development");
 
-  // Custom component for React Native icon (using FaReact as base)
   const ReactNativeIcon = ({ color, size, style }) => {
     return (
       <div className="relative">
@@ -52,7 +53,7 @@ const Stack = ({ isActive }) => {
       description: "Firebase, Express, React, Node.js",
       skills: [
         { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
-        { name: "Express", icon: SiExpress, color: "#FAFAFA" },
+        { name: "Express", icon: SiExpress, color: "#333333" },
         { name: "React", icon: FaReact, color: "#61DAFB" },
         { name: "Node.js", icon: FaNodeJs, color: "#68A063" },
       ],
@@ -67,10 +68,10 @@ const Stack = ({ isActive }) => {
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
         { name: "Tailwind", icon: SiTailwindcss, color: "#38B2AC" },
         { name: "Chakra UI", icon: SiChakraui, color: "#319795" },
-        { name: "Three.js", icon: SiThreedotjs, color: "#FAFAFA" },
+        { name: "Three.js", icon: SiThreedotjs, color: "#333333" },
         { name: "Supabase", icon: SiSupabase, color: "#3ECF8E" },
         { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
-        { name: "GitHub", icon: FaGithub, color: "#FAFAFA" },
+        { name: "GitHub", icon: FaGithub, color: "#333333" },
         { name: "Vite", icon: SiVite, color: "#646CFF" },
         { name: "Docker", icon: FaDocker, color: "#2496ED" },
       ],
@@ -85,7 +86,6 @@ const Stack = ({ isActive }) => {
     setActiveCategory(category);
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -206,7 +206,11 @@ const Stack = ({ isActive }) => {
   return (
     <section
       id="stack"
-      className="min-h-screen flex flex-col items-center justify-center bg-[#333333] py-16"
+      className={`min-h-screen flex flex-col items-center justify-center py-16 transition-colors duration-300 ${
+        theme === "light"
+          ? "bg-gradient-to-br from-gray-100 to-gray-200"
+          : "bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]"
+      }`}
     >
       <motion.div
         className="w-full"
@@ -216,7 +220,9 @@ const Stack = ({ isActive }) => {
         key={isActive ? "active" : "inactive"}
       >
         <motion.h2
-          className="text-4xl font-bold text-white mb-10 text-center font-[poppins]"
+          className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
           variants={headerVariants}
         >
           Tech Stack
@@ -224,10 +230,18 @@ const Stack = ({ isActive }) => {
 
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div
-            className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full"
+            className={`p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full ${
+              theme === "light"
+                ? "bg-gradient-to-r from-gray-100 to-gray-200"
+                : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
+            }`}
             variants={introVariants}
           >
-            <p className="text-lg leading-relaxed text-gray-300 text-center">
+            <p
+              className={`text-lg leading-relaxed text-center ${
+                theme === "light" ? "text-gray-700" : "text-gray-300"
+              }`}
+            >
               My{" "}
               <span className="text-[#90D5FF] font-semibold">
                 technical expertise
@@ -236,16 +250,25 @@ const Stack = ({ isActive }) => {
             </p>
           </motion.div>
 
-          {/* Category Tabs */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             {skillCategories.map((cat) => (
               <motion.button
                 key={cat.category}
                 onClick={() => handleCategoryClick(cat.category)}
-                className={`px-4 py-2 rounded-lg text-white font-medium transition-all duration-300 border ${
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 border ${
                   activeCategory === cat.category
-                    ? "border-[#90D5FF] bg-[#1e1e1e]"
-                    : "border-[#444444] bg-[#2a2a2a]"
+                    ? "border-[#90D5FF]"
+                    : theme === "light"
+                    ? "border-gray-300"
+                    : "border-[#444444]"
+                } ${
+                  theme === "light"
+                    ? activeCategory === cat.category
+                      ? "bg-white text-gray-800"
+                      : "bg-gray-100 text-gray-700"
+                    : activeCategory === cat.category
+                    ? "bg-[#1e1e1e] text-white"
+                    : "bg-[#2a2a2a] text-gray-300"
                 }`}
                 variants={tabVariants}
                 animate={
@@ -258,7 +281,6 @@ const Stack = ({ isActive }) => {
             ))}
           </div>
 
-          {/* Display selected category */}
           {skillCategories
             .filter((cat) => cat.category === activeCategory)
             .map((selectedCategory) => (
@@ -269,10 +291,18 @@ const Stack = ({ isActive }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h3 className="text-2xl font-bold text-[#90D5FF] mb-2">
+                  <h3
+                    className={`text-2xl font-bold text-[#90D5FF] mb-2 ${
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }`}
+                  >
                     {selectedCategory.title}
                   </h3>
-                  <p className="text-gray-300">
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-600" : "text-gray-300"
+                    }
+                  >
                     {selectedCategory.description}
                   </p>
                 </motion.div>
@@ -287,18 +317,21 @@ const Stack = ({ isActive }) => {
                       custom={index}
                       variants={skillVariants}
                       whileHover="hover"
-                      className="group relative flex items-center justify-center bg-[#1e1e1e] text-gray-300 px-4 py-3 rounded-md transition-all duration-300 hover:scale-105"
-                      style={{
-                        border: "1px solid #333333",
-                        transition: "all 0.3s ease",
-                      }}
+                      className={`group relative flex items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 ${
+                        theme === "light"
+                          ? "bg-white border border-gray-200"
+                          : "bg-[#1e1e1e] border border-[#333333]"
+                      }`}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
                         e.currentTarget.style.border = `1px solid ${skill.color}`;
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.boxShadow = "none";
-                        e.currentTarget.style.border = "1px solid #333333";
+                        e.currentTarget.style.border =
+                          theme === "light"
+                            ? "1px solid #e5e7eb"
+                            : "1px solid #333333";
                       }}
                       onClick={() => handleSkillClick(skill.name)}
                     >
@@ -341,15 +374,22 @@ const Stack = ({ isActive }) => {
                   ))}
                 </motion.div>
 
-                {/* Special emphasis for FERN stack categories */}
                 {selectedCategory.category === "Web Development" && (
                   <motion.div
-                    className="mt-10 bg-[#1e1e1e] p-4 rounded-lg border-l-4 border-[#90D5FF]"
+                    className={`mt-10 p-4 rounded-lg border-l-4 border-[#90D5FF] ${
+                      theme === "light"
+                        ? "bg-white border border-gray-200"
+                        : "bg-[#1e1e1e] border border-[#333333]"
+                    }`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <p className="text-gray-300 text-center">
+                    <p
+                      className={`text-center ${
+                        theme === "light" ? "text-gray-600" : "text-gray-300"
+                      }`}
+                    >
                       <span className="text-[#90D5FF] font-semibold">
                         FERN Stack
                       </span>{" "}

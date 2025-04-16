@@ -6,12 +6,14 @@ import FeaturedProjects from "../components/FeaturedProjects";
 import SmallProjects from "../components/SmallProjects";
 import Certificates from "../components/Certificates";
 import {
+  certificates,
   featuredProjects,
   smallProjects,
-  certificates,
-} from "../components/projectsData";
+} from "../components/ProjectsData";
+import { useTheme } from "../context/ThemeContext";
 
 const Projects = () => {
+  const { theme } = useTheme();
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeSection, setActiveSection] = useState("featured");
 
@@ -101,24 +103,47 @@ const Projects = () => {
 
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold text-white mb-4 text-center">
+        <h1
+          className={`text-3xl font-bold mb-4 text-center ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
+        >
           {caseStudy.title}
         </h1>
 
         <div>
-          <h2 className="text-2xl font-semibold text-white mb-2">
+          <h2
+            className={`text-2xl font-semibold mb-2 ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
             Project Overview
           </h2>
-          <p className="text-gray-300 text-justify">{caseStudy.overview}</p>
+          <p
+            className={`text-justify ${
+              theme === "light" ? "text-gray-700" : "text-gray-300"
+            }`}
+          >
+            {caseStudy.overview}
+          </p>
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold text-white mb-2">
+          <h2
+            className={`text-2xl font-semibold mb-2 ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
             Key Features
           </h2>
-          <ul className="list-disc pl-5 text-gray-300">
+          <ul className="list-disc pl-5">
             {caseStudy.features.map((feature, index) => (
-              <li key={index} className="text-justify">
+              <li
+                key={index}
+                className={`text-justify ${
+                  theme === "light" ? "text-gray-700" : "text-gray-300"
+                }`}
+              >
                 {feature}
               </li>
             ))}
@@ -126,12 +151,21 @@ const Projects = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold text-white mb-2">
+          <h2
+            className={`text-2xl font-semibold mb-2 ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
             Technology Stack
           </h2>
-          <ul className="list-disc pl-5 text-gray-300">
+          <ul className="list-disc pl-5">
             {caseStudy.technologyStack.map((tech, index) => (
-              <li key={index} className="text-justify">
+              <li
+                key={index}
+                className={`text-justify ${
+                  theme === "light" ? "text-gray-700" : "text-gray-300"
+                }`}
+              >
                 {tech}
               </li>
             ))}
@@ -140,10 +174,16 @@ const Projects = () => {
 
         {caseStudy.ownerAccount && (
           <div>
-            <h2 className="text-2xl font-semibold text-white mb-2">
+            <h2
+              className={`text-2xl font-semibold mb-2 ${
+                theme === "light" ? "text-gray-800" : "text-white"
+              }`}
+            >
               Owner Account
             </h2>
-            <p className="text-gray-300">
+            <p
+              className={theme === "light" ? "text-gray-700" : "text-gray-300"}
+            >
               Username: {caseStudy.ownerAccount.username}
               <br />
               Password: {caseStudy.ownerAccount.password}
@@ -167,7 +207,11 @@ const Projects = () => {
         className="flex justify-center mb-8"
         variants={sectionNavVariants}
       >
-        <div className="flex bg-[#333333] rounded-lg overflow-hidden">
+        <div
+          className={`flex rounded-lg overflow-hidden ${
+            theme === "light" ? "bg-gray-200" : "bg-[#333333]"
+          }`}
+        >
           {sections.map((section) => (
             <button
               key={section.id}
@@ -175,6 +219,8 @@ const Projects = () => {
               className={`px-4 py-2 text-sm font-medium transition-colors ${
                 activeSection === section.id
                   ? "bg-[#90D5FF] text-[#333333]"
+                  : theme === "light"
+                  ? "text-gray-800 hover:bg-gray-300"
                   : "text-white hover:bg-[#444444]"
               }`}
             >
@@ -189,7 +235,11 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] py-16 z-10"
+      className={`min-h-screen py-16 z-10 transition-colors duration-300 ${
+        theme === "light"
+          ? "bg-gradient-to-br from-gray-100 to-gray-200"
+          : "bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]"
+      }`}
     >
       <motion.div
         className="container mx-auto px-6"
@@ -199,7 +249,9 @@ const Projects = () => {
       >
         {/* Centered Projects title */}
         <motion.h2
-          className="text-4xl font-bold text-white mb-10 text-center font-[poppins]"
+          className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
           variants={titleVariants}
         >
           Projects
@@ -250,7 +302,7 @@ const Projects = () => {
           {activeSection === "certificates" && (
             <Certificates
               certificates={certificates}
-              variants={projectCardVariants} // Passing the same variants
+              variants={projectCardVariants}
             />
           )}
         </div>
@@ -259,20 +311,24 @@ const Projects = () => {
         <AnimatePresence>
           {selectedProject && (
             <motion.div
-              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 mt-8"
+              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 mt-10"
               variants={overlayVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
             >
               <motion.div
-                className="bg-[#2a2a2a] rounded-lg max-w-2xl w-full p-6 relative shadow-xl"
+                className={`rounded-lg max-w-2xl w-full p-6 relative shadow-xl ${
+                  theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
+                }`}
                 style={{ maxHeight: "85vh", overflowY: "auto" }}
                 variants={modalVariants}
               >
                 <button
                   onClick={closeOverlay}
-                  className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition-colors z-10"
+                  className={`absolute top-4 right-4 text-2xl transition-colors z-10 ${
+                    theme === "light" ? "text-gray-800" : "text-white"
+                  }`}
                 >
                   &times;
                 </button>
@@ -302,17 +358,31 @@ const Projects = () => {
                 )}
 
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2
+                    className={`text-2xl font-bold ${
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }`}
+                  >
                     {selectedProject.title}
                   </h2>
-                  <p className="text-gray-300">{selectedProject.description}</p>
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-700" : "text-gray-300"
+                    }
+                  >
+                    {selectedProject.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {selectedProject.technologies &&
                       selectedProject.technologies.map((tech, index) => (
                         <span
                           key={index}
-                          className="bg-[#444444] text-gray-300 text-sm px-2 py-1 rounded-full"
+                          className={`text-sm px-2 py-1 rounded-full ${
+                            theme === "light"
+                              ? "bg-gray-200 text-gray-700"
+                              : "bg-[#444444] text-gray-300"
+                          }`}
                         >
                           {tech}
                         </span>

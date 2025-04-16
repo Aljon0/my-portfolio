@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 
-const ParticlesBackground = ({ show = true }) => {
+const ParticlesBackground = ({ show = true, theme = "dark" }) => {
   const options = useMemo(
     () => ({
       particles: {
@@ -14,13 +14,13 @@ const ParticlesBackground = ({ show = true }) => {
           },
         },
         color: {
-          value: "#90D5FF", // Matching the theme's light blue color
+          value: theme === "light" ? "#3B82F6" : "#90D5FF", // Adjusted color for light mode
         },
         shape: {
           type: "circle",
         },
         opacity: {
-          value: 0.5,
+          value: theme === "light" ? 0.3 : 0.5, // Reduced opacity for light mode
           random: false,
           anim: {
             enable: false,
@@ -36,8 +36,8 @@ const ParticlesBackground = ({ show = true }) => {
         line_linked: {
           enable: true,
           distance: 150,
-          color: "#90D5FF",
-          opacity: 0.4,
+          color: theme === "light" ? "#3B82F6" : "#90D5FF",
+          opacity: theme === "light" ? 0.3 : 0.4,
           width: 1,
         },
         move: {
@@ -66,7 +66,7 @@ const ParticlesBackground = ({ show = true }) => {
       },
       retina_detect: true,
     }),
-    []
+    [theme]
   );
 
   if (!show) return null;

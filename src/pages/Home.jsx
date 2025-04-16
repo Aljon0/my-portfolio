@@ -8,8 +8,11 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/ThemeContext";
 
 const Home = ({ isActive }) => {
+  const { theme } = useTheme();
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -69,11 +72,15 @@ const Home = ({ isActive }) => {
   return (
     <section
       id="home"
-      className="h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] font-[] relative overflow-hidden z-0"
+      className={`h-screen flex items-center justify-center relative overflow-hidden z-0 transition-colors duration-500 ${
+        theme === "light"
+          ? "bg-gradient-to-br from-gray-100 to-gray-200"
+          : "bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]"
+      }`}
     >
       {/* Add ParticlesBackground with absolute positioning INSIDE the Home section */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <ParticlesBackground />
+        <ParticlesBackground theme={theme} />
       </div>
 
       <motion.div
@@ -84,7 +91,9 @@ const Home = ({ isActive }) => {
         key={isActive ? "active" : "inactive"}
       >
         <motion.h1
-          className="text-5xl font-bold text-white"
+          className={`text-5xl font-bold ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
           variants={itemVariants}
         >
           Hi, I'm <span className="text-[#90D5FF]">Al-jon Santiago</span>
@@ -98,7 +107,9 @@ const Home = ({ isActive }) => {
         </motion.h2>
 
         <motion.p
-          className="mt-4 text-xl text-white max-w-lg mx-auto"
+          className={`mt-4 text-xl max-w-lg mx-auto ${
+            theme === "light" ? "text-gray-700" : "text-white"
+          }`}
           variants={itemVariants}
         >
           Crafting responsive web applications with modern technologies.
@@ -125,7 +136,11 @@ const Home = ({ isActive }) => {
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-[#90D5FF] transition-colors duration-300 text-3xl"
+              className={`transition-colors duration-300 text-3xl ${
+                theme === "light"
+                  ? "text-gray-700 hover:text-[#90D5FF]"
+                  : "text-white hover:text-[#90D5FF]"
+              }`}
               whileHover={{ y: -5, color: "#90D5FF" }}
             >
               <Icon />

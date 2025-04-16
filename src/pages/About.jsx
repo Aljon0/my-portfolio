@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const About = ({ isActive }) => {
+  const { theme } = useTheme();
+
   // Animation variants for the About section
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -45,7 +49,11 @@ const About = ({ isActive }) => {
   return (
     <section
       id="about"
-      className="min-h-screen flex flex-col items-center justify-center bg-[#333333] py-16"
+      className={`min-h-screen flex flex-col items-center justify-center py-16 transition-colors duration-300 ${
+        theme === "light"
+          ? "bg-gradient-to-br from-gray-100 to-gray-200"
+          : "bg-[#333333]"
+      }`}
     >
       <motion.div
         className="w-full"
@@ -55,7 +63,9 @@ const About = ({ isActive }) => {
         key={isActive ? "active" : "inactive"}
       >
         <motion.h2
-          className="text-4xl font-bold text-white mb-10 text-center font-[poppins]"
+          className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
           variants={titleVariants}
         >
           About Me
@@ -64,10 +74,18 @@ const About = ({ isActive }) => {
         <div className="container mx-auto px-6 max-w-5xl space-y-6">
           {/* Introduction container with text on left side */}
           <motion.div
-            className="bg-gradient-to-r from-[#2a2a2a] to-[#333333] p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full"
+            className={`p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full ${
+              theme === "light"
+                ? "bg-gradient-to-r from-gray-100 to-gray-200"
+                : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
+            }`}
             variants={introVariants}
           >
-            <p className="text-lg leading-relaxed text-gray-300 text-center">
+            <p
+              className={`text-lg leading-relaxed text-center ${
+                theme === "light" ? "text-gray-700" : "text-gray-300"
+              }`}
+            >
               Hello! I'm{" "}
               <span className="text-[#90D5FF] font-semibold">
                 Al-Jon Santiago
@@ -81,16 +99,22 @@ const About = ({ isActive }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Expertise Container */}
             <motion.div
-              className="bg-[#2a2a2a] rounded-xl shadow-lg p-6"
+              className={`rounded-xl shadow-lg p-6 ${
+                theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
+              }`}
               variants={cardVariants}
               custom={0}
             >
               <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
                 Expertise
               </h3>
-              <p className="text-white leading-relaxed">
+              <p
+                className={`leading-relaxed ${
+                  theme === "light" ? "text-gray-700" : "text-white"
+                }`}
+              >
                 I specialize in building secure, responsive web applications
-                solutions using modern technologies like React, React Native,
+                solutions using modern technologies like React, Express.js,
                 Node.js, and implementing best practices for application
                 security and performance.
               </p>
@@ -98,31 +122,44 @@ const About = ({ isActive }) => {
 
             {/* Background Container */}
             <motion.div
-              className="bg-[#2a2a2a] rounded-xl shadow-lg p-6"
+              className={`rounded-xl shadow-lg p-6 ${
+                theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
+              }`}
               variants={cardVariants}
               custom={1}
             >
               <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
                 Background
               </h3>
-              <p className="text-white leading-relaxed">
-                With a background in both web, I bring a versatile skillset to
-                projects, ensuring they're not only functional but also deliver
-                seamless experiences across all devices and platforms.
+              <p
+                className={`leading-relaxed ${
+                  theme === "light" ? "text-gray-700" : "text-white"
+                }`}
+              >
+                With a background in web development, I bring a versatile
+                skillset to projects, ensuring they're not only functional but
+                also deliver seamless experiences across all devices and
+                platforms.
               </p>
             </motion.div>
           </div>
 
           {/* Off-Screen Time Container */}
           <motion.div
-            className="bg-[#2a2a2a] rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${
+              theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
+            }`}
             variants={cardVariants}
             custom={2}
           >
             <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
               Off-Screen Time
             </h3>
-            <p className="text-white leading-relaxed">
+            <p
+              className={`leading-relaxed ${
+                theme === "light" ? "text-gray-700" : "text-white"
+              }`}
+            >
               When I'm not coding, you can find me exploring new technologies,
               contributing to open-source projects, or enjoying the beautiful
               beaches of the Philippines while sketching ideas for my next

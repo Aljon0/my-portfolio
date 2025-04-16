@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Projects from "./pages/Projects";
 import Stack from "./pages/Stack";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -104,37 +105,43 @@ function App() {
   }, [activeSection]);
 
   return (
-    <div className="bg-[#fefffe]">
-      <Navbar activeSection={activeSection} />
+    <ThemeProvider>
+      <div className="bg-[#fefffe] transition-colors duration-300">
+        <Navbar activeSection={activeSection} />
 
-      {/* All sections rendered with isActive prop */}
-      <section id="home" className="relative z-0">
-        <Home isActive={activeSection === "home"} />
-      </section>
-      <section id="about" className="relative z-10 bg-[#333333]">
-        <About isActive={activeSection === "about"} />
-      </section>
-      <section
-        id="projects"
-        className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] z-10 relative"
-      >
-        <Projects isActive={activeSection === "projects"} />
-      </section>
-      <section id="stack" className="bg-[#333333] relative z-10">
-        <Stack isActive={activeSection === "stack"} />
-      </section>
-      <section
-        id="contact"
-        className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] z-10 relative"
-      >
-        <Contact isActive={activeSection === "contact"} />
-      </section>
+        {/* All sections rendered with isActive prop */}
+        <section id="home" className="relative z-0">
+          <Home isActive={activeSection === "home"} />
+        </section>
+        <section
+          id="about"
+          className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-100"
+        >
+          <About isActive={activeSection === "about"} />
+        </section>
+        <section
+          id="projects"
+          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+        >
+          <Projects isActive={activeSection === "projects"} />
+        </section>
+        <section
+          id="stack"
+          className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
+        >
+          <Stack isActive={activeSection === "stack"} />
+        </section>
+        <section
+          id="contact"
+          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+        >
+          <Contact isActive={activeSection === "contact"} />
+        </section>
 
-      <Footer className="relative z-10 bg-[#333333]" />
-      <ChatBot />
-    </div>
-
-    // <ChatBot />
+        <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
+        <ChatBot />
+      </div>
+    </ThemeProvider>
   );
 }
 
