@@ -103,7 +103,7 @@ const Home = ({ isActive }) => {
           className="mt-4 text-xl text-[#90D5FF] font-medium max-w-lg mx-auto"
           variants={itemVariants}
         >
-          Full Stack Web Developer
+          Web Developer
         </motion.h2>
 
         <motion.p
