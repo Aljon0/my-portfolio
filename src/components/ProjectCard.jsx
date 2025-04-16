@@ -8,6 +8,7 @@ import {
   SiMongodb,
   SiTailwindcss,
   SiAppwrite,
+  SiSupabase,
 } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
 
@@ -23,6 +24,7 @@ const techIcons = {
   Express: { icon: SiExpress, color: "#303030" },
   "Weather API": { icon: FaDatabase, color: "#5F9EA0" },
   Appwrite: { icon: SiAppwrite, color: "#F02E65" },
+  Supabase: { icon: SiSupabase, color: "#3ECF8E" },
 };
 
 const ProjectCard = ({ project, handleViewProject }) => (

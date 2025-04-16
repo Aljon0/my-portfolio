@@ -116,15 +116,29 @@ export const smallProjects = [
   },
   {
     id: 7,
-    title: "Budget Calculator",
+    title: "Task Master",
     description:
-      "Personal finance tracking tool for expense management and budget planning.",
-    image: "/path-to-budget-img.jpg",
+      "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
+    image: "/TaskManager.png",
     category: "Web Tool",
-    technologies: ["React", "Chart.js"],
+    technologies: ["React", "Supabase"],
     link: "#",
     featured: false,
-    caseStudy: "Case study content for Budget Calculator",
+    caseStudy: {
+      title: "Task Master",
+      overview:
+        "The Task Manager App is a modern productivity tool designed to help users manage daily tasks with ease. With an intuitive interface and mobile-first responsive design, the app supports creating, updating, filtering, and deleting tasks. Built using a Supabase and React, it focuses on speed, simplicity, and functionality.",
+      features: [
+        "Task Dashboard: Overview of tasks with categorized and prioritized lists.",
+        "CRUD Functionality: Create, read, update, and delete tasks with detailed attributes (title, description, due date, priority, category, and status).",
+        "Task Filtering: Easily filter tasks by category to stay focused.",
+        "Responsive Design: Fully optimized for both desktop and mobile screens.",
+      ],
+      technologyStack: [
+        "Frontend: React + Vite, TailwindCSS",
+        "Backend: Supabase",
+      ],
+    },
   },
 ];
 
