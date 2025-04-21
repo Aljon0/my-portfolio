@@ -44,6 +44,17 @@ const Stack = () => {
     );
   };
 
+  // Function to get appropriate icon color based on theme and icon
+  const getIconColor = (baseColor, name) => {
+    // Icons that need special handling in dark mode
+    if (theme === "dark") {
+      if (name === "Three.js") return "#FFFFFF"; // White for Three.js in dark mode
+      if (name === "Express") return "#FFFFFF"; // White for Express in dark mode
+      if (name === "GitHub") return "#FFFFFF"; // White for GitHub in dark mode
+    }
+    return baseColor; // Default color for all other cases
+  };
+
   const skillCategories = [
     {
       category: "Web Development",
@@ -155,9 +166,10 @@ const Stack = () => {
               <div key={selectedCategory.category} className="space-y-6">
                 <div className="text-center mb-8">
                   <h3
-                    className={`text-2xl font-bold text-[#90D5FF] mb-2 ${
+                    className={`text-2xl font-bold mb-2 ${
                       theme === "light" ? "text-gray-800" : "text-white"
                     }`}
+                    style={{ color: "#90D5FF" }}
                   >
                     {selectedCategory.title}
                   </h3>
@@ -171,52 +183,66 @@ const Stack = () => {
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-6">
-                  {selectedCategory.skills.map((skill, index) => (
-                    <div
-                      key={index}
-                      className={`group relative flex items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 ${
-                        theme === "light"
-                          ? "bg-white border border-gray-200"
-                          : "bg-[#1e1e1e] border border-[#333333]"
-                      }`}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
-                        e.currentTarget.style.border = `1px solid ${skill.color}`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = "none";
-                        e.currentTarget.style.border =
-                          theme === "light"
-                            ? "1px solid #e5e7eb"
-                            : "1px solid #333333";
-                      }}
-                      onClick={() => handleSkillClick(skill.name)}
-                    >
-                      <skill.icon
-                        color={skill.color}
-                        style={{
-                          fontSize: "1.5rem",
-                          filter:
-                            skill.color === "#FFFFFF" ? "invert(1)" : "none",
-                        }}
-                        size={40}
-                      />
+                  {selectedCategory.skills.map((skill, index) => {
+                    // Get the appropriate color based on theme and icon name
+                    const iconColor = getIconColor(skill.color, skill.name);
 
-                      <span
-                        className={`absolute bg-[#1a1a1a] text-white px-2 py-1 rounded-md -top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-50 ${
-                          activeSkill === skill.name
-                            ? "visible"
-                            : "invisible group-hover:visible"
+                    return (
+                      <div
+                        key={index}
+                        className={`group relative flex flex-col items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 animate-bounce-slow cursor-pointer w-24 h-24 ${
+                          theme === "light"
+                            ? "bg-white border border-gray-200"
+                            : "bg-[#1e1e1e] border border-[#333333]"
                         }`}
                         style={{
-                          boxShadow: `0 0 8px ${skill.color}40`,
-                          border: `1px solid ${skill.color}40`,
+                          animationDuration: `${3 + index * 0.2}s`,
+                          animationDelay: `${index * 0.1}s`,
                         }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
+                          e.currentTarget.style.border = `1px solid ${skill.color}`;
+                          e.currentTarget.style.animationPlayState = "paused";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.border =
+                            theme === "light"
+                              ? "1px solid #e5e7eb"
+                              : "1px solid #333333";
+                          e.currentTarget.style.animationPlayState = "running";
+                        }}
+                        onClick={() => handleSkillClick(skill.name)}
                       >
-                        {skill.name}
-                      </span>
-                    </div>
-                  ))}
+                        <div className="flex items-center justify-center mb-2">
+                          <skill.icon
+                            color={iconColor}
+                            style={{
+                              fontSize: "1.5rem",
+                              filter:
+                                skill.color === "#FFFFFF"
+                                  ? "invert(1)"
+                                  : "none",
+                            }}
+                            size={40}
+                          />
+                        </div>
+
+                        <span
+                          className={`text-xs font-medium text-center ${
+                            theme === "light"
+                              ? "text-gray-700"
+                              : "text-gray-300"
+                          }`}
+                          style={{
+                            color: iconColor,
+                          }}
+                        >
+                          {skill.name}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {selectedCategory.category === "Web Development" && (
