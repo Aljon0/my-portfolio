@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import About from "./pages/About";
-import ChatBot from "./components/ChatBot";
 import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -139,7 +138,6 @@ function App() {
         </section>
 
         <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
-        <ChatBot />
       </div>
     </ThemeProvider>
   );
