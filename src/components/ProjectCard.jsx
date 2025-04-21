@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { motion } from "framer-motion";
 import React from "react";
 import { FaChartBar, FaDatabase, FaNodeJs, FaReact } from "react-icons/fa";
 import {
@@ -13,7 +11,6 @@ import {
 import { TbBrandThreejs } from "react-icons/tb";
 import { useTheme } from "../context/ThemeContext";
 
-// Map of technology icons with colors
 const techIcons = {
   React: { icon: FaReact, color: "#61DAFB" },
   "Node.js": { icon: FaNodeJs, color: "#68A063" },
@@ -32,14 +29,12 @@ const ProjectCard = ({ project, handleViewProject }) => {
   const { theme } = useTheme();
 
   return (
-    <motion.div
-      className={`project-card group rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 ${
+    <div
+      className={`project-card group rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.03] ${
         theme === "light"
           ? "bg-gradient-to-b from-gray-100 to-gray-200"
           : "bg-gradient-to-b from-[#2a2a2a] to-[#333333]"
       }`}
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
       <div
         className={`h-32 relative overflow-hidden ${
@@ -49,12 +44,10 @@ const ProjectCard = ({ project, handleViewProject }) => {
         }`}
       >
         {project.image ? (
-          <motion.img
+          <img
             src={project.image}
             alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3 }}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.1] transition-transform duration-300"
           />
         ) : (
           <div
@@ -66,13 +59,9 @@ const ProjectCard = ({ project, handleViewProject }) => {
           ></div>
         )}
 
-        {/* Project type badge */}
-        <motion.div
-          className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full"
-          whileHover={{ scale: 1.05 }}
-        >
+        <div className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full hover:scale-[1.05] transition-transform">
           {project.category}
-        </motion.div>
+        </div>
       </div>
 
       <div className="p-3">
@@ -91,19 +80,17 @@ const ProjectCard = ({ project, handleViewProject }) => {
           {project.description}
         </p>
 
-        {/* Technologies used with colored icons */}
         <div className="flex flex-wrap gap-1 mb-2">
           {project.technologies.map((tech, index) => {
             const techIcon = techIcons[tech];
             return (
-              <motion.span
+              <span
                 key={index}
-                className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 ${
+                className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 hover:scale-[1.05] transition-transform ${
                   theme === "light"
                     ? "bg-gray-200 text-gray-700"
                     : "bg-[#444444] text-gray-300"
                 }`}
-                whileHover={{ scale: 1.05 }}
               >
                 {techIcon && (
                   <techIcon.icon
@@ -113,24 +100,21 @@ const ProjectCard = ({ project, handleViewProject }) => {
                   />
                 )}
                 {tech}
-              </motion.span>
+              </span>
             );
           })}
         </div>
 
-        {/* Action buttons */}
         <div className="flex space-x-2">
-          <motion.button
+          <button
             onClick={() => handleViewProject(project)}
-            className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff] transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff] transition-colors hover:scale-[1.05]"
           >
             View Project
-          </motion.button>
+          </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
