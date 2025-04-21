@@ -30,7 +30,7 @@ const Navbar = ({ activeSection }) => {
             theme === "light" ? "text-gray-800" : "text-white"
           }`}
         >
-          AS
+          Portfolio
         </a>
 
         {/* Desktop Navigation */}
