@@ -1,50 +1,8 @@
-/* eslint-disable no-unused-vars */
-import { motion } from "framer-motion";
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
 
-const About = ({ isActive }) => {
+const About = () => {
   const { theme } = useTheme();
-
-  // Animation variants for the About section
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.2,
-        when: "beforeChildren",
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { y: -50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const introVariants = {
-    hidden: { x: -100, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.7, ease: "easeOut", delay: 0.3 },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: (custom) => ({
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, delay: custom * 0.2 + 0.5 },
-    }),
-  };
 
   return (
     <section
@@ -55,31 +13,23 @@ const About = ({ isActive }) => {
           : "bg-[#333333]"
       }`}
     >
-      <motion.div
-        className="w-full"
-        initial="hidden"
-        animate={isActive ? "visible" : "hidden"}
-        variants={sectionVariants}
-        key={isActive ? "active" : "inactive"}
-      >
-        <motion.h2
+      <div className="w-full">
+        <h2
           className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
             theme === "light" ? "text-gray-800" : "text-white"
           }`}
-          variants={titleVariants}
         >
           About Me
-        </motion.h2>
+        </h2>
 
         <div className="container mx-auto px-6 max-w-5xl space-y-6">
           {/* Introduction container with text on left side */}
-          <motion.div
+          <div
             className={`p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full ${
               theme === "light"
                 ? "bg-gradient-to-r from-gray-100 to-gray-200"
                 : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
             }`}
-            variants={introVariants}
           >
             <p
               className={`text-lg leading-relaxed text-center ${
@@ -93,17 +43,15 @@ const About = ({ isActive }) => {
               , a Full Stack Web Developer from General Trias, Cavite,
               Philippines.
             </p>
-          </motion.div>
+          </div>
 
           {/* Two column layout for Expertise and Background */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Expertise Container */}
-            <motion.div
+            <div
               className={`rounded-xl shadow-lg p-6 ${
                 theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
               }`}
-              variants={cardVariants}
-              custom={0}
             >
               <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
                 Expertise
@@ -118,15 +66,13 @@ const About = ({ isActive }) => {
                 Node.js, and implementing best practices for application
                 security and performance.
               </p>
-            </motion.div>
+            </div>
 
             {/* Background Container */}
-            <motion.div
+            <div
               className={`rounded-xl shadow-lg p-6 ${
                 theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
               }`}
-              variants={cardVariants}
-              custom={1}
             >
               <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
                 Background
@@ -141,16 +87,14 @@ const About = ({ isActive }) => {
                 also deliver seamless experiences across all devices and
                 platforms.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           {/* Off-Screen Time Container */}
-          <motion.div
+          <div
             className={`rounded-xl shadow-lg p-6 ${
               theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
             }`}
-            variants={cardVariants}
-            custom={2}
           >
             <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
               Off-Screen Time
@@ -165,9 +109,9 @@ const About = ({ isActive }) => {
               beaches of the Philippines while sketching ideas for my next
               application.
             </p>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
