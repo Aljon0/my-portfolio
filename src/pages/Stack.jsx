@@ -18,6 +18,7 @@ import {
   SiTailwindcss,
   SiThreedotjs,
   SiVite,
+  SiTypescript,
 } from "react-icons/si";
 import { useTheme } from "../context/ThemeContext";
 
@@ -75,6 +76,7 @@ const Stack = () => {
         { name: "HTML", icon: FaHtml5, color: "#E34F26" },
         { name: "CSS", icon: FaCss3Alt, color: "#1572B6" },
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
+        { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
         { name: "Tailwind", icon: SiTailwindcss, color: "#38B2AC" },
         { name: "Chakra UI", icon: SiChakraui, color: "#319795" },
         { name: "Three.js", icon: SiThreedotjs, color: "#333333" },

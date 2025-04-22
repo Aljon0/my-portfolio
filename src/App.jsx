@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Projects from "./pages/Projects";
 import Stack from "./pages/Stack";
+import ChatBot from "./components/Chatbot";
 import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
@@ -139,6 +140,7 @@ function App() {
 
         <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
       </div>
+      <ChatBot />
     </ThemeProvider>
   );
 }
