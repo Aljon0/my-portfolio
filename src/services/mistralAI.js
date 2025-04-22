@@ -1,6 +1,6 @@
 const API_URL = "https://api.mistral.ai/v1/chat/completions";
 const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY;
-
+// fGlyi6INuDMvU4wypjo86rxFjck32IQO
 // Al-Jon's information for context
 const AL_JON_INFO = `
 Al-Jon is a developer with skills in React, Node.js, Express, and has security experience 
