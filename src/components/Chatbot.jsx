@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { getMistralResponse } from "../services/MistralAI";
+import Lottie from "lottie-react";
 
 const ChatBot = () => {
   const { theme } = useTheme();
@@ -16,11 +18,25 @@ const ChatBot = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
+  const [animationData, setAnimationData] = useState(null);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const messagesContainerRef = useRef(null);
-  const AIicon = "/AI-Icon.jpeg";
+  const lottieRef = useRef(null);
+
+  // Path to your Lottie animation JSON file in the public folder
+  const robotAnimationPath = "/robotAnimation.json";
+
+  // Fetch the Lottie animation data
+  useEffect(() => {
+    fetch(robotAnimationPath)
+      .then((response) => response.json())
+      .then((data) => setAnimationData(data))
+      .catch((error) =>
+        console.error("Error loading Lottie animation:", error)
+      );
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -61,7 +77,7 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
-      // Use our Mistral AI service instead of the backend API
+      // Use our Mistral AI service
       const conversationHistory = messages.filter(
         (msg) => msg.sender === "user" || msg.sender === "bot"
       );
@@ -83,6 +99,20 @@ const ChatBot = () => {
     }
   };
 
+  // Lottie animation component for reuse
+  const RobotAnimation = ({ size = "full" }) => {
+    if (!animationData) return null;
+
+    return (
+      <Lottie
+        animationData={animationData}
+        loop={true}
+        autoplay={true}
+        style={{ width: "100%", height: "100%" }}
+      />
+    );
+  };
+
   const FirstTimeGreeting = () => {
     if (!isOpen && messages.length === 1 && showGreeting) {
       return (
@@ -94,11 +124,7 @@ const ChatBot = () => {
         >
           <div className="flex items-start space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-              <img
-                src={AIicon}
-                alt="AI Assistant"
-                className="w-full h-full object-cover"
-              />
+              <RobotAnimation />
             </div>
             <div>
               <p
@@ -161,9 +187,9 @@ const ChatBot = () => {
 
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 p-4 rounded-full bg-[#90D5FF] text-[#1a1a1a] shadow-lg hover:bg-[#7BC0EA] transition-all duration-300 z-50 flex items-center justify-center"
+        className="fixed bottom-6 right-6 p-2 rounded-full bg-[#90D5FF] text-[#1a1a1a] shadow-lg hover:bg-[#7BC0EA] transition-all duration-300 z-50 flex items-center justify-center w-16 h-16"
       >
-        <MessageCircle size={24} />
+        {animationData ? <RobotAnimation /> : <MessageCircle size={24} />}
       </button>
 
       <FirstTimeGreeting />
@@ -187,11 +213,11 @@ const ChatBot = () => {
           >
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-full overflow-hidden">
-                <img
-                  src={AIicon}
-                  alt="AI Assistant"
-                  className="w-full h-full object-cover"
-                />
+                {animationData ? (
+                  <RobotAnimation />
+                ) : (
+                  <div className="w-8 h-8 bg-[#90D5FF] rounded-full"></div>
+                )}
               </div>
               <h3
                 className={`font-semibold ${
@@ -250,11 +276,11 @@ const ChatBot = () => {
                   >
                     {message.sender === "bot" && (
                       <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0 self-end">
-                        <img
-                          src={AIicon}
-                          alt="AI Assistant"
-                          className="w-full h-full object-cover"
-                        />
+                        {animationData ? (
+                          <RobotAnimation />
+                        ) : (
+                          <div className="w-8 h-8 bg-[#90D5FF] rounded-full"></div>
+                        )}
                       </div>
                     )}
                     <div
@@ -273,11 +299,26 @@ const ChatBot = () => {
                 {loading && (
                   <div className="mb-3 flex justify-start">
                     <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0 self-end">
-                      <img
-                        src={AIicon}
-                        alt="AI Assistant"
-                        className="w-full h-full object-cover"
-                      />
+                      {animationData ? (
+                        <RobotAnimation />
+                      ) : (
+                        <div className="w-8 h-8 bg-[#90D5FF] rounded-full">
+                          <div className="flex space-x-1 justify-center items-center h-full">
+                            <div
+                              className="w-1.5 h-1.5 rounded-full animate-bounce"
+                              style={{ animationDelay: "0s" }}
+                            ></div>
+                            <div
+                              className="w-1.5 h-1.5 rounded-full animate-bounce"
+                              style={{ animationDelay: "0.2s" }}
+                            ></div>
+                            <div
+                              className="w-1.5 h-1.5 rounded-full animate-bounce"
+                              style={{ animationDelay: "0.4s" }}
+                            ></div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <div
                       className={`p-3 rounded-lg ${
@@ -355,4 +396,5 @@ const ChatBot = () => {
     </>
   );
 };
+
 export default ChatBot;

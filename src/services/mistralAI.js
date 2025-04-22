@@ -3,7 +3,7 @@ const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY;
 
 // Al-Jon's information for context
 const AL_JON_INFO = `
-Al-Jon is a developer with skills in React, Node.js, Vue.js, Express, and has security experience 
+Al-Jon is a developer with skills in React, Node.js, Express, and has security experience 
 including Authentication Systems. He's worked on projects including 
 an E-Commerce Platform, Security Dashboard, Portfolio Website, and Task Management App.
 He's based in General Trias, Cavite, Philippines and can be contacted at aljon.media0@gmail.com
