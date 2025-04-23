@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
@@ -13,17 +12,25 @@ const ChatBot = () => {
     {
       text: "Hi there! I'm Al-Jon's virtual assistant. How can I help you?",
       sender: "bot",
+      fullText: "Hi there! I'm Al-Jon's virtual assistant. How can I help you?",
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
   const [animationData, setAnimationData] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const messagesContainerRef = useRef(null);
-  const lottieRef = useRef(null);
+  const typingIntervalRef = useRef(null);
+  const messagesRef = useRef(messages); // Add a ref to track messages
+
+  // Update messagesRef whenever messages state changes
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   // Path to your Lottie animation JSON file in the public folder
   const robotAnimationPath = "/robotAnimation.json";
@@ -67,40 +74,97 @@ const ChatBot = () => {
     toggleChat();
   };
 
+  // Simple typewriter function that updates the message text gradually
+  const typeMessage = (response) => {
+    setIsTyping(true);
+
+    // Add the bot message with empty initial text
+    const currentMessages = [...messagesRef.current];
+    const newMessage = { text: "", sender: "bot", fullText: response };
+
+    // Update state with the new message
+    setMessages([...currentMessages, newMessage]);
+
+    let charIndex = 0;
+
+    // Clear any existing interval
+    if (typingIntervalRef.current) {
+      clearInterval(typingIntervalRef.current);
+    }
+
+    // Set up the typing interval
+    typingIntervalRef.current = setInterval(() => {
+      if (charIndex <= response.length) {
+        const currentText = response.substring(0, charIndex);
+
+        // Get the current messages state
+        const updatedMessages = [...messagesRef.current];
+
+        // Update the last message's text
+        if (updatedMessages.length > 0) {
+          updatedMessages[updatedMessages.length - 1].text = currentText;
+          setMessages(updatedMessages);
+        }
+
+        charIndex++;
+        scrollToBottom();
+      } else {
+        // Typing complete
+        clearInterval(typingIntervalRef.current);
+        setIsTyping(false);
+      }
+    }, 30); // 30ms per character
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
     const userMessage = { text: input, sender: "user" };
-    setMessages((prev) => [...prev, userMessage]);
+
+    // Use the messagesRef to get the current messages
+    const currentMessages = [...messagesRef.current];
+    const updatedMessages = [...currentMessages, userMessage];
+
+    // Update both the state and the ref
+    setMessages(updatedMessages);
+    messagesRef.current = updatedMessages;
+
     setInput("");
     setLoading(true);
 
     try {
       // Use our Mistral AI service
-      const conversationHistory = messages.filter(
+      const conversationHistory = updatedMessages.filter(
         (msg) => msg.sender === "user" || msg.sender === "bot"
       );
 
       const response = await getMistralResponse(input, conversationHistory);
 
-      setMessages((prev) => [...prev, { text: response, sender: "bot" }]);
+      // Start typing effect
+      setLoading(false);
+      typeMessage(response);
     } catch (error) {
       console.error("Error getting response:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: "Sorry, I couldn't process your request right now. Please try again later.",
-          sender: "bot",
-        },
-      ]);
-    } finally {
       setLoading(false);
+
+      const errorMessage =
+        "Sorry, I couldn't process your request right now. Please try again later.";
+      typeMessage(errorMessage);
     }
   };
 
+  // Clean up interval on unmount
+  useEffect(() => {
+    return () => {
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
+      }
+    };
+  }, []);
+
   // Lottie animation component for reuse
-  const RobotAnimation = ({ size = "full" }) => {
+  const RobotAnimation = () => {
     if (!animationData) return null;
 
     return (
@@ -178,6 +242,17 @@ const ChatBot = () => {
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .typing-cursor::after {
+      content: '|';
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
     }
   `;
 
@@ -292,7 +367,17 @@ const ChatBot = () => {
                           : "bg-[#444444] text-white"
                       }`}
                     >
-                      {message.text}
+                      <span
+                        className={
+                          index === messages.length - 1 &&
+                          message.sender === "bot" &&
+                          isTyping
+                            ? "typing-cursor"
+                            : ""
+                        }
+                      >
+                        {message.text}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -372,16 +457,16 @@ const ChatBot = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask me about Al-Jon..."
-                    className={`flex-1 p-2.5 rounded-l-md border-none focus:outline-none focus:ring-1 focus:ring-[#90D5FF] ${
+                    className={`flex-1 p-2.5 rounded-l-md border focus:outline-none focus:ring-1 focus:ring-[#90D5FF] ${
                       theme === "light"
-                        ? "bg-white text-gray-800 border border-gray-300"
-                        : "bg-[#444444] text-white"
+                        ? "bg-white text-gray-800 border-gray-300"
+                        : "bg-[#444444] text-white border-[#555555]"
                     }`}
-                    disabled={loading}
+                    disabled={loading || isTyping}
                   />
                   <button
                     type="submit"
-                    disabled={loading || !input.trim()}
+                    disabled={loading || !input.trim() || isTyping}
                     className="p-2.5 rounded-r-md bg-[#90D5FF] text-[#1a1a1a] hover:bg-[#7BC0EA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Send message"
                   >
