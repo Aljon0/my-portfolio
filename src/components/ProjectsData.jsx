@@ -148,7 +148,7 @@ export const smallProjects = [
     image: "/AI-MR.png",
     category: "Web App",
     technologies: ["React", "Tailwind", "Express"],
-    link: "https://your-movie-chatbot-link.com",
+    link: "https://ai-movie.onrender.com",
     featured: false,
     caseStudy: {
       title: "AI-Powered Movie Recommendation Chatbot",
