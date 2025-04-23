@@ -140,6 +140,36 @@ export const smallProjects = [
       ],
     },
   },
+  {
+    id: 8,
+    title: "Movie Recommendation Chatbot",
+    description:
+      "An AI-powered movie recommendation chatbot built with React that lets users chat and receive personalized movie suggestions in real-time, no account required.",
+    image: "/AI-MR.png",
+    category: "Web App",
+    technologies: ["React", "Tailwind", "Express"],
+    link: "https://your-movie-chatbot-link.com",
+    featured: false,
+    caseStudy: {
+      title: "AI-Powered Movie Recommendation Chatbot",
+      overview:
+        "This chatbot web app provides users with personalized movie recommendations through an AI-driven conversational interface. By leveraging Hugging Face’s natural language processing capabilities and real-time movie data from TMDB, the chatbot delivers intelligent and engaging suggestions. Users can interact freely without needing an account, and favorites are saved locally for convenience.",
+      features: [
+        "Conversational UI: Chat-based interface for a natural and engaging user experience",
+        "AI-Driven Suggestions: Uses Hugging Face API to understand context and deliver tailored movie recommendations",
+        "Rich Movie Data: Pulls movie details including titles, posters, and summaries from TMDB",
+        "Local Favorites: Users can save favorite movies to local storage with no login required",
+        "Responsive Design: Fully responsive layout optimized for both desktop and mobile users",
+      ],
+      technologyStack: [
+        "Frontend: React.js with Tailwind CSS",
+        "AI Integration: Hugging Face Inference API",
+        "Movie Data: TMDB (The Movie Database) API",
+        "Storage: Browser Local Storage",
+        "Backend: Express.js (Node.js)",
+      ],
+    },
+  },
 ];
 
 // Certificates data
