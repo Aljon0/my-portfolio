@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState, useRef } from "react";
 import { HiChevronRight } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 import FeaturedProjects from "../components/FeaturedProjects";
 import SmallProjects from "../components/SmallProjects";
 import Certificates from "../components/Certificates";
@@ -14,6 +16,8 @@ const Projects = () => {
   const { theme } = useTheme();
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeSection, setActiveSection] = useState("featured");
+  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  const clickPositionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     if (selectedProject) {
@@ -27,7 +31,25 @@ const Projects = () => {
     };
   }, [selectedProject]);
 
-  const handleViewProject = (project) => {
+  const handleViewProject = (project, event) => {
+    // Store the click position for the animation origin
+    if (event) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      clickPositionRef.current = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      };
+
+      // Calculate center position of the screen for the final position
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      setModalPosition({
+        x: viewportWidth / 2 - clickPositionRef.current.x,
+        y: viewportHeight / 2 - clickPositionRef.current.y,
+      });
+    }
+
     setSelectedProject(project);
   };
 
@@ -231,86 +253,120 @@ const Projects = () => {
           )}
         </div>
 
-        {/* Case Study Overlay */}
-        {selectedProject && (
-          <div className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 mt-10">
-            <div
-              className={`rounded-lg max-w-2xl w-full p-6 relative shadow-xl ${
-                theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
-              }`}
-              style={{ maxHeight: "85vh", overflowY: "auto" }}
+        {/* Case Study Overlay with Framer Motion */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              className="fixed inset-0 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 mt-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) closeOverlay();
+              }}
             >
-              <button
-                onClick={closeOverlay}
-                className={`absolute top-4 right-4 text-2xl transition-colors z-10 ${
-                  theme === "light" ? "text-gray-800" : "text-white"
+              <motion.div
+                className={`rounded-lg max-w-2xl w-full p-6 relative shadow-xl ${
+                  theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
                 }`}
+                style={{ maxHeight: "85vh", overflowY: "auto" }}
+                initial={{
+                  scale: 0.2,
+                  x: -modalPosition.x,
+                  y: -modalPosition.y,
+                  opacity: 0,
+                }}
+                animate={{
+                  scale: 1,
+                  x: 0,
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                  },
+                }}
+                exit={{
+                  scale: 0.2,
+                  x: -modalPosition.x,
+                  y: -modalPosition.y,
+                  opacity: 0,
+                  transition: { duration: 0.2 },
+                }}
               >
-                &times;
-              </button>
-
-              {/* Large Project Image */}
-              {selectedProject.image && (
-                <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-
-              {selectedProject.link && (
-                <div className="mb-4 text-center">
-                  <a
-                    href={selectedProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-[#90D5FF] text-[#333333] px-4 py-2 rounded-md hover:bg-[#7bc8ff] transition-colors"
-                  >
-                    Visit Project
-                  </a>
-                </div>
-              )}
-
-              <div className="space-y-4">
-                <h2
-                  className={`text-2xl font-bold ${
+                <button
+                  onClick={closeOverlay}
+                  className={`absolute top-4 right-4 text-2xl transition-colors z-10 ${
                     theme === "light" ? "text-gray-800" : "text-white"
                   }`}
                 >
-                  {selectedProject.title}
-                </h2>
-                <p
-                  className={
-                    theme === "light" ? "text-gray-700" : "text-gray-300"
-                  }
-                >
-                  {selectedProject.description}
-                </p>
+                  &times;
+                </button>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {selectedProject.technologies &&
-                    selectedProject.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className={`text-sm px-2 py-1 rounded-full ${
-                          theme === "light"
-                            ? "bg-gray-200 text-gray-700"
-                            : "bg-[#444444] text-gray-300"
-                        }`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                {/* Large Project Image */}
+                {selectedProject.image && (
+                  <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
+                    <img
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                {selectedProject.link && (
+                  <div className="mb-4 text-center">
+                    <a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-[#90D5FF] text-[#333333] px-4 py-2 rounded-md hover:bg-[#7bc8ff] transition-colors"
+                    >
+                      Visit Project
+                    </a>
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <h2
+                    className={`text-2xl font-bold ${
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }`}
+                  >
+                    {selectedProject.title}
+                  </h2>
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-700" : "text-gray-300"
+                    }
+                  >
+                    {selectedProject.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {selectedProject.technologies &&
+                      selectedProject.technologies.map((tech, index) => (
+                        <span
+                          key={index}
+                          className={`text-sm px-2 py-1 rounded-full ${
+                            theme === "light"
+                              ? "bg-gray-200 text-gray-700"
+                              : "bg-[#444444] text-gray-300"
+                          }`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                  </div>
+
+                  {selectedProject.caseStudy &&
+                    renderCaseStudy(selectedProject.caseStudy)}
                 </div>
-
-                {selectedProject.caseStudy &&
-                  renderCaseStudy(selectedProject.caseStudy)}
-              </div>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

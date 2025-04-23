@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { FaChartBar, FaDatabase, FaNodeJs, FaReact } from "react-icons/fa";
 import {
@@ -10,6 +11,7 @@ import {
 } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
 import { useTheme } from "../context/ThemeContext";
+import { motion } from "framer-motion";
 
 const techIcons = {
   React: { icon: FaReact, color: "#61DAFB" },
@@ -29,12 +31,14 @@ const ProjectCard = ({ project, handleViewProject }) => {
   const { theme } = useTheme();
 
   return (
-    <div
-      className={`project-card group rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.03] ${
+    <motion.div
+      className={`project-card group rounded-lg overflow-hidden shadow-lg ${
         theme === "light"
           ? "bg-gradient-to-b from-gray-100 to-gray-200"
           : "bg-gradient-to-b from-[#2a2a2a] to-[#333333]"
       }`}
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
     >
       <div
         className={`h-32 relative overflow-hidden ${
@@ -44,10 +48,12 @@ const ProjectCard = ({ project, handleViewProject }) => {
         }`}
       >
         {project.image ? (
-          <img
+          <motion.img
             src={project.image}
             alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.1] transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.3 }}
           />
         ) : (
           <div
@@ -59,9 +65,12 @@ const ProjectCard = ({ project, handleViewProject }) => {
           ></div>
         )}
 
-        <div className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full hover:scale-[1.05] transition-transform">
+        <motion.div
+          className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full"
+          whileHover={{ scale: 1.05 }}
+        >
           {project.category}
-        </div>
+        </motion.div>
       </div>
 
       <div className="p-3">
@@ -84,13 +93,14 @@ const ProjectCard = ({ project, handleViewProject }) => {
           {project.technologies.map((tech, index) => {
             const techIcon = techIcons[tech];
             return (
-              <span
+              <motion.span
                 key={index}
-                className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 hover:scale-[1.05] transition-transform ${
+                className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 ${
                   theme === "light"
                     ? "bg-gray-200 text-gray-700"
                     : "bg-[#444444] text-gray-300"
                 }`}
+                whileHover={{ scale: 1.05 }}
               >
                 {techIcon && (
                   <techIcon.icon
@@ -100,21 +110,23 @@ const ProjectCard = ({ project, handleViewProject }) => {
                   />
                 )}
                 {tech}
-              </span>
+              </motion.span>
             );
           })}
         </div>
 
         <div className="flex space-x-2">
-          <button
-            onClick={() => handleViewProject(project)}
-            className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff] transition-colors hover:scale-[1.05]"
+          <motion.button
+            onClick={(e) => handleViewProject(project, e)}
+            className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff]"
+            whileHover={{ scale: 1.05, backgroundColor: "#7bc8ff" }}
+            whileTap={{ scale: 0.95 }}
           >
             View Project
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
