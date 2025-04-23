@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Projects from "./pages/Projects";
 import Stack from "./pages/Stack";
+import Testimonials from "./pages/Testimonials"; // Import the new component
 import ChatBot from "./components/Chatbot";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -19,13 +20,23 @@ function App() {
     about: null,
     projects: null,
     stack: null,
+    testimonials: null, // Add reference for testimonials section
     contact: null,
   });
 
   useEffect(() => {
     // Set initial active section from URL hash
     const hash = window.location.hash.replace("#", "") || "home";
-    if (["home", "about", "projects", "stack", "contact"].includes(hash)) {
+    if (
+      [
+        "home",
+        "about",
+        "projects",
+        "stack",
+        "testimonials",
+        "contact",
+      ].includes(hash)
+    ) {
       setActiveSection(hash);
     }
 
@@ -65,7 +76,14 @@ function App() {
       }
 
       scrollTimeout.current = setTimeout(() => {
-        const sections = ["home", "about", "projects", "stack", "contact"];
+        const sections = [
+          "home",
+          "about",
+          "projects",
+          "stack",
+          "testimonials",
+          "contact",
+        ];
         const scrollPosition = window.scrollY + window.innerHeight / 2;
 
         for (const section of sections) {
@@ -131,9 +149,16 @@ function App() {
         >
           <Stack isActive={activeSection === "stack"} />
         </section>
+        {/* Add Testimonials section */}
+        <section
+          id="testimonials"
+          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+        >
+          <Testimonials isActive={activeSection === "testimonials"} />
+        </section>
         <section
           id="contact"
-          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+          className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
         >
           <Contact isActive={activeSection === "contact"} />
         </section>
