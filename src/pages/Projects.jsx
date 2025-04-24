@@ -131,25 +131,6 @@ const Projects = () => {
             ))}
           </ul>
         </div>
-
-        {caseStudy.ownerAccount && (
-          <div>
-            <h2
-              className={`text-2xl font-semibold mb-2 ${
-                theme === "light" ? "text-gray-800" : "text-white"
-              }`}
-            >
-              Owner Account
-            </h2>
-            <p
-              className={theme === "light" ? "text-gray-700" : "text-gray-300"}
-            >
-              Username: {caseStudy.ownerAccount.username}
-              <br />
-              Password: {caseStudy.ownerAccount.password}
-            </p>
-          </div>
-        )}
       </div>
     );
   };
