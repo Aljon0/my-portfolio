@@ -5,7 +5,7 @@ export const featuredProjects = [
     title: "ED3C: Memorial Design Platform",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
-    image: "/path-to-memorial-design-img.jpg",
+    image: "/public/projects/ED3C.png",
     category: "Web App",
     technologies: ["React", "Three.js", "Firebase"],
     link: "#",

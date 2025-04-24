@@ -117,23 +117,23 @@ const Home = () => {
         <ParticlesBackground theme={theme} />
       </div>
 
-      <div className="container mx-auto px-8 md:px-12 py-16 flex flex-col lg:flex-row items-center justify-between gap-12 z-10 relative">
+      <div className="container mx-auto px-4 sm:px-8 md:px-12 py-8 md:py-16 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 z-10 relative">
         {/* Left side - Introduction */}
-        <div className="lg:w-1/2 text-center lg:text-left max-w-lg">
+        <div className="w-full lg:w-1/2 text-center lg:text-left max-w-lg mx-auto lg:mx-0">
           <h1
-            className={`text-4xl md:text-5xl font-bold ${
+            className={`text-3xl sm:text-4xl md:text-5xl font-bold ${
               theme === "light" ? "text-gray-800" : "text-white"
             }`}
           >
             Hi, I'm <span className="text-[#90D5FF]">Al-jon Santiago</span>
           </h1>
 
-          <h2 className="mt-4 text-xl text-[#90D5FF] font-medium">
+          <h2 className="mt-3 md:mt-4 text-xl text-[#90D5FF] font-medium">
             Web Developer
           </h2>
 
           <p
-            className={`mt-4 text-lg md:text-xl ${
+            className={`mt-3 md:mt-4 text-base sm:text-lg md:text-xl ${
               theme === "light" ? "text-gray-700" : "text-white"
             }`}
           >
@@ -141,7 +141,7 @@ const Home = () => {
           </p>
 
           {/* Social Icons */}
-          <div className="flex justify-center lg:justify-start mt-6 space-x-4">
+          <div className="flex justify-center lg:justify-start mt-4 md:mt-6 space-x-4">
             {[FaGithub, FaLinkedin, FaFacebook].map((Icon, index) => (
               <a
                 key={`social-${index}`}
@@ -154,7 +154,7 @@ const Home = () => {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`transition-colors duration-300 text-3xl ${
+                className={`transition-colors duration-300 text-2xl sm:text-3xl ${
                   theme === "light"
                     ? "text-gray-700 hover:text-[#90D5FF]"
                     : "text-white hover:text-[#90D5FF]"
@@ -167,9 +167,9 @@ const Home = () => {
 
           {/* Download CV Button */}
           <button
-            className={`mt-8 px-6 py-3 shadow-md ${
+            className={`mt-6 md:mt-8 px-5 sm:px-6 py-2 sm:py-3 shadow-md ${
               theme === "light" ? "shadow-blue-300" : "shadow-[#7ac1f0]"
-            } bg-[#90D5FF] text-white rounded-lg font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer hover:scale-105 transition-transform`}
+            } bg-[#90D5FF] text-white rounded-lg font-medium sm:font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer hover:scale-105 transition-transform mx-auto lg:mx-0`}
           >
             <span className="flex items-center relative z-10">
               <FaFileDownload className="mr-2" /> Download CV
@@ -184,9 +184,9 @@ const Home = () => {
         {/* Right side - ID Card */}
         <motion.div
           layout
-          className="lg:w-1/2 flex justify-center"
+          className="w-full lg:w-1/2 flex justify-center mt-8 lg:mt-0"
           animate={{
-            width: contactExpanded ? "100%" : "50%",
+            width: contactExpanded ? "100%" : undefined,
             transition: { duration: 0.5 },
           }}
         >
@@ -201,14 +201,14 @@ const Home = () => {
                   scale: 1.05,
                   transition: { duration: 0.3 },
                 }}
-                className={`w-full max-w-lg rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${cardBgColor} border border-[#90D5FF] ${cardShadow}`}
+                className={`w-full max-w-sm sm:max-w-md md:max-w-lg rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${cardBgColor} border border-[#90D5FF] ${cardShadow}`}
               >
-                {/* Card Content - Keeping original layout */}
-                <div className="p-6">
-                  <div className="flex flex-row gap-6">
+                {/* Card Content - Responsive layout */}
+                <div className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     {/* Left side - Photo */}
-                    <div className="flex items-center">
-                      <div className="w-40 h-40 rounded-lg overflow-hidden bg-gray-300">
+                    <div className="flex items-center justify-center sm:justify-start">
+                      <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-lg overflow-hidden bg-gray-300">
                         <img
                           src="/Toji.jpg"
                           alt="Al-jon Santiago"
@@ -218,16 +218,16 @@ const Home = () => {
                     </div>
 
                     {/* Right side - Details */}
-                    <div className="flex-1 flex flex-col justify-between">
+                    <div className="flex-1 flex flex-col justify-between text-center sm:text-left">
                       {/* Name and Title */}
                       <div>
                         <h3
-                          className={`text-2xl font-bold ${textColor} uppercase`}
+                          className={`text-xl sm:text-2xl font-bold ${textColor} uppercase`}
                         >
                           AL-JON SANTIAGO
                         </h3>
-                        <div className="mt-1 mb-4">
-                          <h4 className="text-xl text-[#90D5FF] uppercase font-medium">
+                        <div className="mt-1 mb-3 sm:mb-4">
+                          <h4 className="text-lg sm:text-xl text-[#90D5FF] uppercase font-medium">
                             WEB DEVELOPER
                           </h4>
                           <div className="h-px w-full bg-[#90D5FF] mt-1"></div>
@@ -235,32 +235,36 @@ const Home = () => {
                       </div>
 
                       {/* Contact Details */}
-                      <div className="space-y-4 py-2">
-                        <div className="flex items-center gap-4">
-                          <Phone size={20} className="text-[#90D5FF]" />
-                          <p className={textColor}>+63 9669206512</p>
+                      <div className="space-y-2 sm:space-y-4 py-2">
+                        <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                          <Phone size={18} className="text-[#90D5FF]" />
+                          <p className={`${textColor} text-sm sm:text-base`}>
+                            +63 9669206512
+                          </p>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                          <Mail size={20} className="text-[#90D5FF]" />
-                          <p className={textColor}>aljon.media08@gmail.com</p>
+                        <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                          <Mail size={18} className="text-[#90D5FF]" />
+                          <p className={`${textColor} text-sm sm:text-base`}>
+                            aljon.media08@gmail.com
+                          </p>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                          <MapPin size={20} className="text-[#90D5FF]" />
-                          <p className={textColor}>
+                        <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                          <MapPin size={18} className="text-[#90D5FF]" />
+                          <p className={`${textColor} text-sm sm:text-base`}>
                             General Trias Cavite, Philippines
                           </p>
                         </div>
                       </div>
 
                       {/* Contact Me Button */}
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-center sm:justify-end">
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => setContactExpanded(true)}
-                          className="px-6 py-2 bg-[#90D5FF] text-white rounded-lg font-medium flex items-center justify-center group relative overflow-hidden transition-all duration-300"
+                          className="px-4 sm:px-6 py-2 bg-[#90D5FF] text-white rounded-lg font-medium flex items-center justify-center group relative overflow-hidden transition-all duration-300"
                         >
                           <span className="flex items-center gap-2 relative z-10">
                             Contact Me <Send size={16} />
@@ -286,16 +290,16 @@ const Home = () => {
                   },
                 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className={`w-full max-w-6xl rounded-xl ${cardBgColor} border border-[#90D5FF] overflow-hidden ${cardShadow}`}
+                className={`w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-6xl rounded-xl ${cardBgColor} border border-[#90D5FF] overflow-hidden ${cardShadow}`}
               >
                 {/* Expanded Contact Form */}
-                <div className="p-6 relative">
+                <div className="p-4 sm:p-6 relative">
                   {/* Close button */}
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setContactExpanded(false)}
-                    className={`absolute top-4 right-4 w-8 h-8 rounded-full ${
+                    className={`absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 rounded-full ${
                       theme === "light" ? "bg-gray-200" : "bg-[#444444]"
                     } flex items-center justify-center ${textColor} z-10`}
                   >
@@ -303,12 +307,12 @@ const Home = () => {
                   </motion.button>
 
                   <h2
-                    className={`text-2xl font-bold ${textColor} mb-6 text-center`}
+                    className={`text-xl sm:text-2xl font-bold ${textColor} mb-4 sm:mb-6 text-center`}
                   >
                     Get In Touch
                   </h2>
 
-                  <div className="flex flex-col md:flex-row gap-8">
+                  <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
                     {/* Left side - Personal Info */}
                     <motion.div
                       initial={{ x: -20, opacity: 0 }}
@@ -317,14 +321,14 @@ const Home = () => {
                         opacity: 1,
                         transition: { delay: 0.2 },
                       }}
-                      className="md:w-1/3"
+                      className="w-full md:w-1/3"
                     >
                       {/* Profile Card */}
                       <div
-                        className={`${innerCardBgColor} rounded-lg p-6 mb-6 border ${borderColor}`}
+                        className={`${innerCardBgColor} rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 border ${borderColor}`}
                       >
                         <div className="flex flex-col items-center mb-4">
-                          <div className="w-20 h-20 rounded-lg overflow-hidden mb-4">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden mb-3 sm:mb-4">
                             <img
                               src="/Toji.jpg"
                               alt="Al-jon Santiago"
@@ -332,23 +336,29 @@ const Home = () => {
                             />
                           </div>
                           <div className="text-center">
-                            <h3 className={`text-xl font-bold ${textColor}`}>
+                            <h3
+                              className={`text-lg sm:text-xl font-bold ${textColor}`}
+                            >
                               AL-JON SANTIAGO
                             </h3>
-                            <p className="text-[#90D5FF]">Web Developer</p>
+                            <p className="text-[#90D5FF] text-sm sm:text-base">
+                              Web Developer
+                            </p>
                           </div>
                         </div>
                       </div>
 
                       {/* Connect With Me */}
                       <div
-                        className={`${innerCardBgColor} rounded-lg p-6 border ${borderColor}`}
+                        className={`${innerCardBgColor} rounded-lg p-4 sm:p-6 border ${borderColor}`}
                       >
-                        <h3 className={`${textColor} font-semibold mb-4`}>
+                        <h3
+                          className={`${textColor} font-semibold mb-3 sm:mb-4 text-center md:text-left`}
+                        >
                           Connect With Me
                         </h3>
-                        <div className="space-y-4">
-                          <div className="flex items-center gap-3">
+                        <div className="space-y-3 sm:space-y-4">
+                          <div className="flex items-center gap-3 justify-center md:justify-start">
                             <div
                               className={`p-2 rounded-lg ${
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
@@ -356,10 +366,14 @@ const Home = () => {
                             >
                               <Phone size={16} className="text-[#90D5FF]" />
                             </div>
-                            <p className={secondaryTextColor}>+63 9669206512</p>
+                            <p
+                              className={`${secondaryTextColor} text-sm sm:text-base`}
+                            >
+                              +63 9669206512
+                            </p>
                           </div>
 
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 justify-center md:justify-start">
                             <div
                               className={`p-2 rounded-lg ${
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
@@ -367,12 +381,14 @@ const Home = () => {
                             >
                               <Mail size={16} className="text-[#90D5FF]" />
                             </div>
-                            <p className={secondaryTextColor}>
+                            <p
+                              className={`${secondaryTextColor} text-sm sm:text-base`}
+                            >
                               aljon.media08@gmail.com
                             </p>
                           </div>
 
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 justify-center md:justify-start">
                             <div
                               className={`p-2 rounded-lg ${
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
@@ -380,7 +396,9 @@ const Home = () => {
                             >
                               <MapPin size={16} className="text-[#90D5FF]" />
                             </div>
-                            <p className={secondaryTextColor}>
+                            <p
+                              className={`${secondaryTextColor} text-sm sm:text-base`}
+                            >
                               General Trias Cavite, Philippines
                             </p>
                           </div>
@@ -396,20 +414,22 @@ const Home = () => {
                         opacity: 1,
                         transition: { delay: 0.3 },
                       }}
-                      className={`md:w-2/3 ${innerCardBgColor} rounded-lg p-6 border ${borderColor}`}
+                      className={`w-full md:w-2/3 ${innerCardBgColor} rounded-lg p-4 sm:p-6 border ${borderColor}`}
                     >
                       {status.submitted ? (
-                        <div className="h-full flex flex-col items-center justify-center p-8 text-center">
+                        <div className="h-full flex flex-col items-center justify-center p-4 sm:p-8 text-center">
                           <CheckCircle
-                            size={64}
-                            className="text-green-400 mb-4"
+                            size={48}
+                            className="text-green-400 mb-3 sm:mb-4"
                           />
                           <h3
-                            className={`text-2xl font-semibold mb-4 ${textColor}`}
+                            className={`text-xl sm:text-2xl font-semibold mb-2 sm:mb-4 ${textColor}`}
                           >
                             Thank You!
                           </h3>
-                          <p className={secondaryTextColor}>
+                          <p
+                            className={`${secondaryTextColor} text-sm sm:text-base`}
+                          >
                             Your message has been sent successfully. I'll get
                             back to you soon!
                           </p>
@@ -417,16 +437,19 @@ const Home = () => {
                             onClick={() =>
                               setStatus({ ...status, submitted: false })
                             }
-                            className="px-6 py-3 bg-[#90D5FF] text-white rounded-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105 mt-4"
+                            className="px-4 sm:px-6 py-2 sm:py-3 bg-[#90D5FF] text-white rounded-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105 mt-4"
                           >
                             Send Another Message
                           </button>
                         </div>
                       ) : (
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <form
+                          onSubmit={handleSubmit}
+                          className="space-y-3 sm:space-y-4"
+                        >
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             <div>
-                              <label className="block text-[#90D5FF] mb-2">
+                              <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
                                 Name
                               </label>
                               <input
@@ -436,12 +459,12 @@ const Home = () => {
                                 onChange={handleChange}
                                 placeholder="Your Name"
                                 required
-                                className={`w-full px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor}`}
+                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               />
                             </div>
 
                             <div>
-                              <label className="block text-[#90D5FF] mb-2">
+                              <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
                                 Email
                               </label>
                               <input
@@ -451,13 +474,13 @@ const Home = () => {
                                 onChange={handleChange}
                                 placeholder="Your Email"
                                 required
-                                className={`w-full px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor}`}
+                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               />
                             </div>
                           </div>
 
                           <div>
-                            <label className="block text-[#90D5FF] mb-2">
+                            <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
                               Subject
                             </label>
                             <input
@@ -467,12 +490,12 @@ const Home = () => {
                               onChange={handleChange}
                               placeholder="What is this regarding?"
                               required
-                              className={`w-full px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor}`}
+                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                             />
                           </div>
 
                           <div>
-                            <label className="block text-[#90D5FF] mb-2">
+                            <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
                               Message
                             </label>
                             <textarea
@@ -481,14 +504,14 @@ const Home = () => {
                               onChange={handleChange}
                               placeholder="Your message here..."
                               required
-                              className={`w-full px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor}`}
+                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               rows="4"
                             ></textarea>
                           </div>
 
                           {status.info.msg && (
                             <div
-                              className={`flex items-center gap-2 p-3 rounded-lg ${
+                              className={`flex items-center gap-2 p-2 sm:p-3 rounded-lg text-sm sm:text-base ${
                                 status.info.error
                                   ? "bg-red-900/50 text-red-200 border border-red-700"
                                   : "bg-green-900/50 text-green-200 border border-green-700"
@@ -496,12 +519,12 @@ const Home = () => {
                             >
                               {status.info.error ? (
                                 <AlertCircle
-                                  size={20}
+                                  size={18}
                                   className="text-red-300"
                                 />
                               ) : (
                                 <CheckCircle
-                                  size={20}
+                                  size={18}
                                   className="text-green-300"
                                 />
                               )}
@@ -509,11 +532,11 @@ const Home = () => {
                             </div>
                           )}
 
-                          <div className="pt-2">
+                          <div className="pt-1 sm:pt-2">
                             <button
                               type="submit"
                               disabled={status.submitting}
-                              className="w-full px-6 py-3 bg-[#90D5FF] text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 disabled:opacity-70 hover:scale-105"
+                              className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-[#90D5FF] text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 disabled:opacity-70 hover:scale-105 text-sm sm:text-base"
                             >
                               <span className="relative z-10">
                                 {status.submitting
@@ -521,7 +544,7 @@ const Home = () => {
                                   : "Send Message"}
                               </span>
                               {!status.submitting && (
-                                <Send size={18} className="relative z-10" />
+                                <Send size={16} className="relative z-10" />
                               )}
                               <div
                                 className={`absolute inset-0 bg-[#90D5FF] ${buttonShadow} transition-all duration-300`}
