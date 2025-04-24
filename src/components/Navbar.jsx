@@ -12,14 +12,7 @@ const Navbar = ({ activeSection }) => {
   };
 
   // Updated nav items array to include testimonials
-  const navItems = [
-    "home",
-    "about",
-    "projects",
-    "stack",
-    "testimonials",
-    "contact",
-  ];
+  const navItems = ["home", "about", "projects", "stack", "testimonials"];
 
   return (
     <nav

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -155,12 +154,6 @@ function App() {
           className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
         >
           <Testimonials isActive={activeSection === "testimonials"} />
-        </section>
-        <section
-          id="contact"
-          className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
-        >
-          <Contact isActive={activeSection === "contact"} />
         </section>
 
         <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
