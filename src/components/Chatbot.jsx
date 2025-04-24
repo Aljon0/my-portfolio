@@ -25,7 +25,7 @@ const ChatBot = () => {
   const inputRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const typingIntervalRef = useRef(null);
-  const messagesRef = useRef(messages); // Add a ref to track messages
+  const messagesRef = useRef(messages);
 
   // Update messagesRef whenever messages state changes
   useEffect(() => {
@@ -254,6 +254,35 @@ const ChatBot = () => {
       from, to { opacity: 1; }
       50% { opacity: 0; }
     }
+
+    /* Markdown list styling */
+    .markdown-content ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .markdown-content ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .markdown-content li {
+      margin-bottom: 0.25rem;
+    }
+    
+    .markdown-content li:last-child {
+      margin-bottom: 0;
+    }
+    
+    .markdown-content p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .markdown-content p:last-child {
+      margin-bottom: 0;
+    }
   `;
 
   return (
@@ -365,7 +394,7 @@ const ChatBot = () => {
                           : theme === "light"
                           ? "bg-gray-100 text-gray-800"
                           : "bg-[#444444] text-white"
-                      }`}
+                      } ${message.sender === "bot" ? "markdown-content" : ""}`}
                     >
                       <span
                         className={

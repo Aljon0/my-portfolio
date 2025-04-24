@@ -5,7 +5,7 @@ export const featuredProjects = [
     title: "ED3C: Memorial Design Platform",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
-    image: "/public/projects/ED3C.png",
+    image: "/projects/ED3C.png",
     category: "Web App",
     technologies: ["React", "Three.js", "Firebase"],
     link: "#",
@@ -72,7 +72,7 @@ export const smallProjects = [
     title: "Expense Tracker",
     description:
       "A streamlined expense tracking application built with React and Appwrite to help users manage their personal finances effectively.",
-    image: "/public/projects/ExpenseTracker.png",
+    image: "/projects/ExpenseTracker.png",
     category: "Web App",
     technologies: ["React", "Tailwind", "Appwrite"],
     link: "https://expensetracker-hrws.onrender.com",
@@ -96,7 +96,7 @@ export const smallProjects = [
     title: "Chat Sphere",
     description:
       "ChatSphere is a sleek, responsive chat app built with React, Vite, and Tailwind CSS, showcasing real-time messaging powered by Firebase. Designed with user experience at its core, it features intuitive authentication, instant communication, and a polished UI that adapts seamlessly across devices. From dark mode and emoji support to file sharing and group chats, ChatSphere demonstrates best practices in modern frontend development, efficient state management, and scalable backend integration.",
-    image: "/public/projects/ChatSphere.png",
+    image: "/projects/ChatSphere.png",
     category: "Web App",
     technologies: ["React", "Tailwind", "Firebase"],
     link: "https://chat-web-app-1c91d.web.app/",
@@ -119,7 +119,7 @@ export const smallProjects = [
     title: "Task Master",
     description:
       "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
-    image: "/public/projects/TaskManager.png",
+    image: "/projects/TaskManager.png",
     category: "Web Tool",
     technologies: ["React", "Tailwind", "Supabase"],
     link: "https://task-manager-app-cwgb.onrender.com",
@@ -145,7 +145,7 @@ export const smallProjects = [
     title: "Movie Recommendation Chatbot",
     description:
       "An AI-powered movie recommendation chatbot built with React that lets users chat and receive personalized movie suggestions in real-time, no account required.",
-    image: "/public/projects/AI-MR.png",
+    image: "/projects/AI-MR.png",
     category: "Web App",
     technologies: ["React", "Tailwind", "Express"],
     link: "https://ai-movie.onrender.com",

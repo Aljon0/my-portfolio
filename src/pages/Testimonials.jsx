@@ -19,11 +19,11 @@ const Testimonials = () => {
     {
       id: 1,
       comment:
-        "Working with this developer was an absolute pleasure. Their attention to detail and technical expertise helped us launch our platform ahead of schedule.",
-      name: "Sarah Johnson",
-      company: "TechFusion Inc.",
-      rating: 5,
-      contact: "sarah@techfusion.com",
+        "Aljon is diligent and hardworking. Another good thing about him is that he knows how to listen. Whenever i have requests for revisions, he listens carefully and makes sure to meet expectations.",
+      name: "Ethel Magsaysay",
+      company: "Double Seven Lapida",
+      rating: 4.8, // Updated from 5 to 4.8
+      contact: "double7lapidamaker@gmail.com",
     },
     {
       id: 2,
@@ -46,11 +46,11 @@ const Testimonials = () => {
     {
       id: 4,
       comment:
-        "Aljon is diligent and hardworking. Another good thing about him is that he knows how to listen. Whenever i have requests for revisions, he listens carefully and makes sure to meet expectations.",
-      name: "Ethel Magsaysay",
-      company: "Double Seven Lapida",
-      rating: 4.8, // Updated from 5 to 4.8
-      contact: "double7lapidamaker@gmail.com",
+        "Working with this developer was an absolute pleasure. Their attention to detail and technical expertise helped us launch our platform ahead of schedule.",
+      name: "Sarah Johnson",
+      company: "TechFusion Inc.",
+      rating: 5,
+      contact: "sarah@techfusion.com",
     },
     {
       id: 5,

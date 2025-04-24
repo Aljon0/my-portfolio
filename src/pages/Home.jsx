@@ -219,17 +219,14 @@ const Home = () => {
 
                     {/* Right side - Details */}
                     <div className="flex-1 flex flex-col justify-between text-center sm:text-left">
-                      {/* Name and Title */}
+                      {/* Get In Touch - Replaced name and title */}
                       <div>
                         <h3
-                          className={`text-xl sm:text-2xl font-bold ${textColor} uppercase`}
+                          className={`text-xl sm:text-2xl font-bold ${textColor}`}
                         >
-                          AL-JON SANTIAGO
+                          GET IN TOUCH
                         </h3>
                         <div className="mt-1 mb-3 sm:mb-4">
-                          <h4 className="text-lg sm:text-xl text-[#90D5FF] uppercase font-medium">
-                            WEB DEVELOPER
-                          </h4>
                           <div className="h-px w-full bg-[#90D5FF] mt-1"></div>
                         </div>
                       </div>
@@ -306,11 +303,14 @@ const Home = () => {
                     <X size={16} />
                   </motion.button>
 
-                  <h2
-                    className={`text-xl sm:text-2xl font-bold ${textColor} mb-4 sm:mb-6 text-center`}
-                  >
-                    Get In Touch
-                  </h2>
+                  {/* Changed header text to a formatted quote */}
+                  <div className="text-center mb-4 sm:mb-6">
+                    <p
+                      className={`text-xl sm:text-2xl font-serif italic ${textColor}`}
+                    >
+                      &ldquo;Looking forward to working with you!&rdquo;
+                    </p>
+                  </div>
 
                   <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
                     {/* Left side - Personal Info */}
