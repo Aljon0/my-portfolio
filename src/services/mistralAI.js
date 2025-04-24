@@ -34,6 +34,9 @@ necessary. He values transparent communication with team members or supervisors 
 During his 3D gravestone project, he successfully met deadlines despite learning new technologies by 
 setting daily goals and maintaining consistency.
 
+Most of my projects use Firebase due to limitations in my internship environment, 
+but I’ve also explored Supabase and Appwrite in small-scale apps to stay flexible with tools and understand their pros/cons.
+
 Additional Skills and Experience:
 - Proficient in building secure authentication systems
 - Skilled in analyzing and solving problems
