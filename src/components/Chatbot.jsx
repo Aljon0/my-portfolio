@@ -1,7 +1,7 @@
 import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { getMistralResponse } from "../services/MistralAI";
+import { getMistralResponse } from "../services/mistralAI";
 import Lottie from "lottie-react";
 
 const ChatBot = () => {
