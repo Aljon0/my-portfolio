@@ -14,7 +14,6 @@ const Testimonials = () => {
   const [visibleCards, setVisibleCards] = useState(1);
   const totalCards = 8; // Total number of testimonials
 
-  // Sample testimonials data with varying lengths but optimized for card height
   const testimonials = [
     {
       id: 1,
@@ -22,8 +21,9 @@ const Testimonials = () => {
         "Aljon is diligent and hardworking. Another good thing about him is that he knows how to listen. Whenever i have requests for revisions, he listens carefully and makes sure to meet expectations.",
       name: "Ethel Magsaysay",
       company: "Double Seven Lapida",
-      rating: 4.8, // Updated from 5 to 4.8
+      rating: 4.8,
       contact: "double7lapidamaker@gmail.com",
+      image: "/testimonials/DoubleSeven.png",
     },
     {
       id: 2,
@@ -33,6 +33,7 @@ const Testimonials = () => {
       company: "Innovate Solutions",
       rating: 5,
       contact: "mchen@innovatesolutions.com",
+      image: "/testimonials/michael.jpg",
     },
     {
       id: 3,
@@ -42,6 +43,7 @@ const Testimonials = () => {
       company: "Digital Minds",
       rating: 4,
       contact: "priya@digitalminds.io",
+      image: "/testimonials/priya.jpg",
     },
     {
       id: 4,
@@ -51,6 +53,7 @@ const Testimonials = () => {
       company: "TechFusion Inc.",
       rating: 5,
       contact: "sarah@techfusion.com",
+      image: "/testimonials/sarah.jpg",
     },
     {
       id: 5,
@@ -60,6 +63,7 @@ const Testimonials = () => {
       company: "Retail Connect",
       rating: 5,
       contact: "jwilson@retailconnect.com",
+      image: "/testimonials/james.jpg",
     },
     {
       id: 6,
@@ -69,6 +73,7 @@ const Testimonials = () => {
       company: "Creative Labs",
       rating: 5,
       contact: "lisa@creativelabs.co",
+      image: "/testimonials/lisa.jpg",
     },
     {
       id: 7,
@@ -78,6 +83,7 @@ const Testimonials = () => {
       company: "InnoTech Solutions",
       rating: 4,
       contact: "dkim@innotech.net",
+      image: "/testimonials/david.jpg",
     },
     {
       id: 8,
@@ -87,6 +93,7 @@ const Testimonials = () => {
       company: "Global Media",
       rating: 5,
       contact: "emma@globalmedia.org",
+      image: "/testimonials/emma.jpg",
     },
   ];
 
@@ -221,6 +228,14 @@ const Testimonials = () => {
     return stars;
   };
 
+  // Add error handling for images
+  const handleImageError = (e) => {
+    // Fallback to initial if image fails to load
+    e.target.onerror = null;
+    e.target.style.display = "none";
+    e.target.nextElementSibling.style.display = "flex";
+  };
+
   return (
     <div
       className={`py-20 px-6 transition-colors duration-300 ${
@@ -284,9 +299,19 @@ const Testimonials = () => {
                 >
                   {/* Photo and Rating */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#90D5FF] shadow-md">
-                      {/* Replace with actual image */}
-                      <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#90D5FF] shadow-md relative">
+                      {/* Actual image with fallback */}
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                        onError={handleImageError}
+                      />
+                      {/* Fallback content (hidden by default) */}
+                      <div
+                        className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold absolute top-0 left-0"
+                        style={{ display: "none" }}
+                      >
                         {testimonial.name.charAt(0)}
                       </div>
                     </div>

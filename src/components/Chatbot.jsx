@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { getMistralResponse } from "../services/mistralAI";
 import Lottie from "lottie-react";
-
+import Markdown from "react-markdown";
 const ChatBot = () => {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +74,7 @@ const ChatBot = () => {
     toggleChat();
   };
 
-  // Simple typewriter function that updates the message text gradually
+  // Improved typewriter function that updates the message text with a faster speed
   const typeMessage = (response) => {
     setIsTyping(true);
 
@@ -84,6 +84,20 @@ const ChatBot = () => {
 
     // Update state with the new message
     setMessages([...currentMessages, newMessage]);
+
+    // Calculate a faster typing speed based on message length
+    // For longer messages, we'll type more characters per interval
+    const messageLength = response.length;
+
+    // Determine characters per tick based on message length
+    // This makes longer messages appear faster without losing the typing effect
+    let charsPerTick = 1;
+    if (messageLength > 100) charsPerTick = 3;
+    if (messageLength > 200) charsPerTick = 5;
+    if (messageLength > 400) charsPerTick = 8;
+
+    // We'll also use a shorter interval time for faster appearance
+    const intervalTime = 2; // reduced from 5ms to 2ms
 
     let charIndex = 0;
 
@@ -95,7 +109,10 @@ const ChatBot = () => {
     // Set up the typing interval
     typingIntervalRef.current = setInterval(() => {
       if (charIndex <= response.length) {
-        const currentText = response.substring(0, charIndex);
+        // Calculate how many characters to add this tick
+        const nextIndex = Math.min(charIndex + charsPerTick, response.length);
+        const currentText = response.substring(0, nextIndex);
+        charIndex = nextIndex;
 
         // Get the current messages state
         const updatedMessages = [...messagesRef.current];
@@ -106,14 +123,15 @@ const ChatBot = () => {
           setMessages(updatedMessages);
         }
 
-        charIndex++;
         scrollToBottom();
-      } else {
-        // Typing complete
-        clearInterval(typingIntervalRef.current);
-        setIsTyping(false);
+
+        // If we've reached the end of the message
+        if (charIndex >= response.length) {
+          clearInterval(typingIntervalRef.current);
+          setIsTyping(false);
+        }
       }
-    }, 30); // 30ms per character
+    }, intervalTime);
   };
 
   const handleSubmit = async (e) => {
@@ -217,78 +235,8 @@ const ChatBot = () => {
     return null;
   };
 
-  const scrollbarStyles = `
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: ${theme === "light" ? "#f1f1f1" : "#2a2a2a"};
-    }
-    
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background-color: ${theme === "light" ? "#c1c1c1" : "#555"};
-      border-radius: 6px;
-    }
-    
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background-color: ${theme === "light" ? "#a8a8a8" : "#777"};
-    }
-    
-    .animate-fade-in {
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .typing-cursor::after {
-      content: '|';
-      margin-left: 2px;
-      animation: blink 1s step-end infinite;
-    }
-    
-    @keyframes blink {
-      from, to { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* Markdown list styling */
-    .markdown-content ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-      margin: 0.5rem 0;
-    }
-    
-    .markdown-content ol {
-      list-style-type: decimal;
-      padding-left: 1.5rem;
-      margin: 0.5rem 0;
-    }
-    
-    .markdown-content li {
-      margin-bottom: 0.25rem;
-    }
-    
-    .markdown-content li:last-child {
-      margin-bottom: 0;
-    }
-    
-    .markdown-content p {
-      margin-bottom: 0.5rem;
-    }
-    
-    .markdown-content p:last-child {
-      margin-bottom: 0;
-    }
-  `;
-
   return (
     <>
-      <style>{scrollbarStyles}</style>
-
       <button
         onClick={toggleChat}
         className="fixed bottom-6 right-6 p-2 rounded-full bg-[#90D5FF] text-[#1a1a1a] shadow-lg hover:bg-[#7BC0EA] transition-all duration-300 z-50 flex items-center justify-center w-16 h-16"
@@ -405,7 +353,7 @@ const ChatBot = () => {
                             : ""
                         }
                       >
-                        {message.text}
+                        <Markdown>{message.text}</Markdown>
                       </span>
                     </div>
                   </div>
