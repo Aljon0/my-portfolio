@@ -52,7 +52,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        "https://my-portfolio-38gm.onrender.com/api/send-email",
+        "contact-api-p7in.onrender.com/api/send-email",
         {
           method: "POST",
           headers: {
