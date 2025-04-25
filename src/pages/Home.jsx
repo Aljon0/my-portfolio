@@ -1,11 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from "react";
-import {
-  FaFacebook,
-  FaFileDownload,
-  FaGithub,
-  FaLinkedin,
-} from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
   CheckCircle,
@@ -15,9 +9,15 @@ import {
   Send,
   X,
 } from "lucide-react";
+import React, { useRef, useState } from "react";
+import {
+  FaFacebook,
+  FaFileDownload,
+  FaGithub,
+  FaLinkedin,
+} from "react-icons/fa";
 import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/ThemeContext";
-import { motion, AnimatePresence } from "framer-motion";
 
 const Home = () => {
   const { theme } = useTheme();
@@ -213,7 +213,7 @@ const Home = () => {
                     <div className="flex items-center justify-center sm:justify-start">
                       <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-lg overflow-hidden bg-gray-300">
                         <img
-                          src="/Toji.jpg"
+                          src="/Aljon.jpg"
                           alt="Al-jon Santiago"
                           className="w-full h-full object-cover"
                         />
@@ -333,7 +333,7 @@ const Home = () => {
                         <div className="flex flex-col items-center mb-4">
                           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden mb-3 sm:mb-4">
                             <img
-                              src="/Toji.jpg"
+                              src="/Aljon.jpg"
                               alt="Al-jon Santiago"
                               className="w-full h-full object-cover"
                             />
