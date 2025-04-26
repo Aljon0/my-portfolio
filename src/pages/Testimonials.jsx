@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useTheme } from "../context/ThemeContext";
 import { Star } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const Testimonials = () => {
   const { theme } = useTheme();
@@ -24,6 +24,7 @@ const Testimonials = () => {
       rating: 4.8,
       contact: "double7lapidamaker@gmail.com",
       image: "/testimonials/DoubleSeven.png",
+      label: "Client for Project ED3C System",
     },
     {
       id: 2,
@@ -34,6 +35,7 @@ const Testimonials = () => {
       rating: 5,
       contact: "mchen@innovatesolutions.com",
       image: "/testimonials/michael.jpg",
+      label: "Client for E-commerce Platform",
     },
     {
       id: 3,
@@ -44,6 +46,7 @@ const Testimonials = () => {
       rating: 4,
       contact: "priya@digitalminds.io",
       image: "/testimonials/priya.jpg",
+      label: "Client for CMS Development",
     },
     {
       id: 4,
@@ -54,6 +57,7 @@ const Testimonials = () => {
       rating: 5,
       contact: "sarah@techfusion.com",
       image: "/testimonials/sarah.jpg",
+      label: "Project Manager",
     },
     {
       id: 5,
@@ -64,6 +68,7 @@ const Testimonials = () => {
       rating: 5,
       contact: "jwilson@retailconnect.com",
       image: "/testimonials/james.jpg",
+      label: "Client for Mobile App Development",
     },
     {
       id: 6,
@@ -74,6 +79,7 @@ const Testimonials = () => {
       rating: 5,
       contact: "lisa@creativelabs.co",
       image: "/testimonials/lisa.jpg",
+      label: "Coworker at DevTeam",
     },
     {
       id: 7,
@@ -84,6 +90,7 @@ const Testimonials = () => {
       rating: 4,
       contact: "dkim@innotech.net",
       image: "/testimonials/david.jpg",
+      label: "Senior Developer",
     },
     {
       id: 8,
@@ -94,6 +101,7 @@ const Testimonials = () => {
       rating: 5,
       contact: "emma@globalmedia.org",
       image: "/testimonials/emma.jpg",
+      label: "UI/UX Lead",
     },
   ];
 
@@ -297,6 +305,19 @@ const Testimonials = () => {
                       : "bg-[#2a2a2a] border border-gray-700 hover:bg-[#333333]"
                   }`}
                 >
+                  {/* Label (Styled to match screenshots) */}
+                  <div className="mb-3">
+                    <span
+                      className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                        theme === "light"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-gradient-to-r from-[#3a3a3a] to-[#444444] text-[#90D5FF]"
+                      }`}
+                    >
+                      {testimonial.label}
+                    </span>
+                  </div>
+
                   {/* Photo and Rating */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#90D5FF] shadow-md relative">
@@ -349,7 +370,9 @@ const Testimonials = () => {
                     </p>
                     <a
                       href={`mailto:${testimonial.contact}`}
-                      className="text-[#90D5FF] hover:underline text-sm"
+                      className={`hover:underline text-sm ${
+                        theme === "light" ? "text-blue-500" : "text-[#90D5FF]"
+                      }`}
                     >
                       {testimonial.contact}
                     </a>
@@ -359,7 +382,7 @@ const Testimonials = () => {
             ))}
           </div>
 
-          {/* Pagination indicators with cursor pointer */}
+          {/* Pagination indicators matching your theme */}
           <div className="flex justify-center mt-6 gap-2">
             {Array.from({ length: paginationCount }).map((_, index) => (
               <button
