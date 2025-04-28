@@ -19,6 +19,7 @@ import {
   SiThreedotjs,
   SiVite,
   SiTypescript,
+  SiPostman,
 } from "react-icons/si";
 import { useTheme } from "../context/ThemeContext";
 
@@ -83,6 +84,7 @@ const Stack = () => {
         { name: "GitHub", icon: FaGithub, color: "#333333" },
         { name: "Vite", icon: SiVite, color: "#646CFF" },
         { name: "Docker", icon: FaDocker, color: "#2496ED" },
+        { name: "Postman", icon: SiPostman, color: "#FF6C37" },
       ],
     },
   ];
