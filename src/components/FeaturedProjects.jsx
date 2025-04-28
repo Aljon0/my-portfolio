@@ -2,15 +2,16 @@ import React from "react";
 import ProjectCard from "./ProjectCard";
 import { useTheme } from "../context/ThemeContext";
 
-const FeaturedProjects = ({ projects, handleViewProject }) => {
+const FeaturedProjects = ({ projects, handleViewProject, accentColor }) => {
   const { theme } = useTheme();
 
   return (
     <div className="mb-8">
       <h2
-        className={`text-xl font-bold text-[#90D5FF] border-b pb-2 mb-4 ${
+        className={`text-xl font-bold border-b pb-2 mb-4 ${
           theme === "light" ? "border-gray-300" : "border-gray-700"
         }`}
+        style={{ color: accentColor }}
       >
         Featured Projects
       </h2>
@@ -26,6 +27,7 @@ const FeaturedProjects = ({ projects, handleViewProject }) => {
               <ProjectCard
                 project={project}
                 handleViewProject={handleViewProject}
+                accentColor={accentColor}
               />
             </div>
           ))}

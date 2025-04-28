@@ -30,12 +30,12 @@ const Testimonials = () => {
       id: 2,
       comment:
         "Exceptional problem-solving skills! They transformed our concept into a fully functional application that exceeded our expectations.",
-      name: "Michael Chen",
-      company: "Innovate Solutions",
+      name: "Jeran Christopher Merino",
+      company: "Seiwa Kaiun Philippines Inc,",
       rating: 5,
-      contact: "mchen@innovatesolutions.com",
+      contact: "jeranmerino147@gmail.com",
       image: "/testimonials/michael.jpg",
-      label: "Client for E-commerce Platform",
+      label: "Co-worker at Seiwa Kaiun",
     },
     {
       id: 3,

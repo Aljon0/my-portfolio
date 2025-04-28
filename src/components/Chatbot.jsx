@@ -222,7 +222,11 @@ const ChatBot = () => {
                     e.stopPropagation();
                     openChatFromGreeting();
                   }}
-                  className="text-xs text-[#90D5FF] hover:underline"
+                  className={
+                    theme === "light"
+                      ? "text-xs text-blue-800 hover:underline"
+                      : "text-xs text-[#90D5FF] hover:underline"
+                  }
                 >
                   Reply
                 </button>
@@ -239,7 +243,11 @@ const ChatBot = () => {
     <>
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 p-2 rounded-full bg-[#90D5FF] text-[#1a1a1a] shadow-lg hover:bg-[#7BC0EA] transition-all duration-300 z-50 flex items-center justify-center w-16 h-16"
+        className={`fixed bottom-6 right-6 p-2 rounded-full ${
+          theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+        } ${theme === "light" ? "text-white" : "text-[#1a1a1a]"} shadow-lg ${
+          theme === "light" ? "hover:bg-blue-700" : "hover:bg-[#7BC0EA]"
+        } transition-all duration-300 z-50 flex items-center justify-center w-16 h-16`}
       >
         {animationData ? <RobotAnimation /> : <MessageCircle size={24} />}
       </button>
@@ -268,7 +276,11 @@ const ChatBot = () => {
                 {animationData ? (
                   <RobotAnimation />
                 ) : (
-                  <div className="w-8 h-8 bg-[#90D5FF] rounded-full"></div>
+                  <div
+                    className={`w-8 h-8 ${
+                      theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                    } rounded-full`}
+                  ></div>
                 )}
               </div>
               <h3
@@ -331,14 +343,20 @@ const ChatBot = () => {
                         {animationData ? (
                           <RobotAnimation />
                         ) : (
-                          <div className="w-8 h-8 bg-[#90D5FF] rounded-full"></div>
+                          <div
+                            className={`w-8 h-8 ${
+                              theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                            } rounded-full`}
+                          ></div>
                         )}
                       </div>
                     )}
                     <div
                       className={`p-3 rounded-lg max-w-[75%] ${
                         message.sender === "user"
-                          ? "bg-[#90D5FF] text-[#1a1a1a]"
+                          ? theme === "light"
+                            ? "bg-blue-800 text-white"
+                            : "bg-[#90D5FF] text-[#1a1a1a]"
                           : theme === "light"
                           ? "bg-gray-100 text-gray-800"
                           : "bg-[#444444] text-white"
@@ -364,7 +382,11 @@ const ChatBot = () => {
                       {animationData ? (
                         <RobotAnimation />
                       ) : (
-                        <div className="w-8 h-8 bg-[#90D5FF] rounded-full">
+                        <div
+                          className={`w-8 h-8 ${
+                            theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                          } rounded-full`}
+                        >
                           <div className="flex space-x-1 justify-center items-center h-full">
                             <div
                               className="w-1.5 h-1.5 rounded-full animate-bounce"
@@ -434,17 +456,21 @@ const ChatBot = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask me about Al-Jon..."
-                    className={`flex-1 p-2.5 rounded-l-md border focus:outline-none focus:ring-1 focus:ring-[#90D5FF] ${
+                    className={`flex-1 p-2.5 rounded-l-md border focus:outline-none focus:ring-1 ${
                       theme === "light"
-                        ? "bg-white text-gray-800 border-gray-300"
-                        : "bg-[#444444] text-white border-[#555555]"
+                        ? "bg-white text-gray-800 border-gray-300 focus:ring-blue-800"
+                        : "bg-[#444444] text-white border-[#555555] focus:ring-[#90D5FF]"
                     }`}
                     disabled={loading || isTyping}
                   />
                   <button
                     type="submit"
                     disabled={loading || !input.trim() || isTyping}
-                    className="p-2.5 rounded-r-md bg-[#90D5FF] text-[#1a1a1a] hover:bg-[#7BC0EA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className={`p-2.5 rounded-r-md ${
+                      theme === "light"
+                        ? "bg-blue-800 text-white hover:bg-blue-700"
+                        : "bg-[#90D5FF] text-[#1a1a1a] hover:bg-[#7BC0EA]"
+                    } transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
                     aria-label="Send message"
                   >
                     <Send size={20} />

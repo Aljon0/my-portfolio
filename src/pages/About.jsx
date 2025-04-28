@@ -4,6 +4,9 @@ import { useTheme } from "../context/ThemeContext";
 const About = () => {
   const { theme } = useTheme();
 
+  // Define the accent colors based on theme
+  const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
+
   return (
     <section
       id="about"
@@ -25,11 +28,12 @@ const About = () => {
         <div className="container mx-auto px-6 max-w-5xl space-y-6">
           {/* Introduction container with text on left side */}
           <div
-            className={`p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full ${
+            className={`p-5 rounded-lg border-l-4 shadow-md mb-10 w-full ${
               theme === "light"
                 ? "bg-gradient-to-r from-gray-100 to-gray-200"
                 : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
             }`}
+            style={{ borderColor: accentColor }}
           >
             <p
               className={`text-lg leading-relaxed text-center ${
@@ -37,7 +41,7 @@ const About = () => {
               }`}
             >
               Hello! I'm{" "}
-              <span className="text-[#90D5FF] font-semibold">
+              <span className="font-semibold" style={{ color: accentColor }}>
                 Al-Jon Santiago
               </span>{" "}
               , a Full Stack Web Developer from General Trias, Cavite,
@@ -53,7 +57,10 @@ const About = () => {
                 theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
               }`}
             >
-              <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
+              <h3
+                className="text-xl font-semibold mb-4"
+                style={{ color: accentColor }}
+              >
                 Expertise
               </h3>
               <p
@@ -74,7 +81,10 @@ const About = () => {
                 theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
               }`}
             >
-              <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
+              <h3
+                className="text-xl font-semibold mb-4"
+                style={{ color: accentColor }}
+              >
                 Background
               </h3>
               <p
@@ -96,7 +106,10 @@ const About = () => {
               theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
             }`}
           >
-            <h3 className="text-xl font-semibold text-[#90D5FF] mb-4">
+            <h3
+              className="text-xl font-semibold mb-4"
+              style={{ color: accentColor }}
+            >
               Off-Screen Time
             </h3>
             <p

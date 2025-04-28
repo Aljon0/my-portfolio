@@ -19,6 +19,9 @@ const Projects = () => {
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const clickPositionRef = useRef({ x: 0, y: 0 });
 
+  // Define the accent colors based on theme
+  const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
+
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -32,7 +35,6 @@ const Projects = () => {
   }, [selectedProject]);
 
   const handleViewProject = (project, event) => {
-    // Store the click position for the animation origin
     if (event) {
       const rect = event.currentTarget.getBoundingClientRect();
       clickPositionRef.current = {
@@ -40,7 +42,6 @@ const Projects = () => {
         y: rect.top + rect.height / 2,
       };
 
-      // Calculate center position of the screen for the final position
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
@@ -156,11 +157,15 @@ const Projects = () => {
               onClick={() => setActiveSection(section.id)}
               className={`px-4 py-2 text-sm font-medium transition-colors ${
                 activeSection === section.id
-                  ? "bg-[#90D5FF] text-[#333333]"
+                  ? "text-white"
                   : theme === "light"
                   ? "text-gray-800 hover:bg-gray-300"
                   : "text-white hover:bg-[#444444]"
               }`}
+              style={{
+                backgroundColor:
+                  activeSection === section.id ? accentColor : "",
+              }}
             >
               {section.label}
             </button>
@@ -180,7 +185,6 @@ const Projects = () => {
       }`}
     >
       <div className="container mx-auto px-6">
-        {/* Centered Projects title */}
         <h2
           className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
             theme === "light" ? "text-gray-800" : "text-white"
@@ -189,30 +193,30 @@ const Projects = () => {
           Projects
         </h2>
 
-        {/* Section Navigation */}
         <SectionNav />
 
         <div className={`${selectedProject ? "blur-sm" : ""}`}>
-          {/* Featured Projects Section */}
           {activeSection === "featured" && (
             <>
               <FeaturedProjects
                 projects={featuredProjects}
                 handleViewProject={handleViewProject}
+                accentColor={accentColor}
               />
 
-              {/* "View All" links for quick navigation when in featured view */}
               <div className="flex justify-end space-x-4 mt-2">
                 <button
                   onClick={() => setActiveSection("small")}
-                  className="text-sm text-[#90D5FF] flex items-center hover:underline"
+                  className="text-sm flex items-center hover:underline"
+                  style={{ color: accentColor }}
                 >
                   View all small projects <HiChevronRight className="ml-1" />
                 </button>
 
                 <button
                   onClick={() => setActiveSection("certificates")}
-                  className="text-sm text-[#90D5FF] flex items-center hover:underline"
+                  className="text-sm flex items-center hover:underline"
+                  style={{ color: accentColor }}
                 >
                   View certificates <HiChevronRight className="ml-1" />
                 </button>
@@ -220,21 +224,22 @@ const Projects = () => {
             </>
           )}
 
-          {/* Small Projects Section */}
           {activeSection === "small" && (
             <SmallProjects
               projects={smallProjects}
               handleViewProject={handleViewProject}
+              accentColor={accentColor}
             />
           )}
 
-          {/* Certificates Section */}
           {activeSection === "certificates" && (
-            <Certificates certificates={certificates} />
+            <Certificates
+              certificates={certificates}
+              accentColor={accentColor}
+            />
           )}
         </div>
 
-        {/* Case Study Overlay with Framer Motion */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
@@ -285,7 +290,6 @@ const Projects = () => {
                   &times;
                 </button>
 
-                {/* Large Project Image */}
                 {selectedProject.image && (
                   <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
                     <img
@@ -302,7 +306,11 @@ const Projects = () => {
                       href={selectedProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block bg-[#90D5FF] text-[#333333] px-4 py-2 rounded-md hover:bg-[#7bc8ff] transition-colors"
+                      className="inline-block px-4 py-2 rounded-md hover:opacity-90 transition-colors"
+                      style={{
+                        backgroundColor: accentColor,
+                        color: theme === "light" ? "white" : "#333333",
+                      }}
                     >
                       Visit Project
                     </a>

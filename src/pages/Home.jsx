@@ -99,12 +99,12 @@ const Home = () => {
     theme === "light" ? "text-gray-600" : "text-gray-300";
   const cardShadow =
     theme === "light"
-      ? "shadow-lg shadow-blue-100"
+      ? "shadow-lg shadow-blue-800/20"
       : "shadow-lg shadow-[#7ac1f0]/20";
   const buttonShadow =
     theme === "light"
-      ? "shadow-[0_0_15px_5px_rgba(144,213,255,0.3)]"
-      : "shadow-[0_0_15px_5px_rgba(34,108,224,0.5)]";
+      ? "shadow-[0_0_15px_5px_rgba(30,64,175,0.3)]"
+      : "shadow-[0_0_15px_5px_rgba(144,213,255,0.5)]";
 
   return (
     <section
@@ -128,10 +128,19 @@ const Home = () => {
               theme === "light" ? "text-gray-800" : "text-white"
             }`}
           >
-            Hi, I'm <span className="text-[#90D5FF]">Al-jon Santiago</span>
+            Hi, I'm{" "}
+            <span
+              className={theme === "light" ? "text-blue-800" : "text-[#90D5FF]"}
+            >
+              Al-jon Santiago
+            </span>
           </h1>
 
-          <h2 className="mt-3 md:mt-4 text-xl text-[#90D5FF] font-medium">
+          <h2
+            className={`mt-3 md:mt-4 text-xl ${
+              theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
+            } font-medium`}
+          >
             Web Developer
           </h2>
 
@@ -159,7 +168,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className={`transition-colors duration-300 text-2xl sm:text-3xl ${
                   theme === "light"
-                    ? "text-gray-700 hover:text-[#90D5FF]"
+                    ? "text-gray-700 hover:text-blue-800"
                     : "text-white hover:text-[#90D5FF]"
                 }`}
               >
@@ -171,15 +180,19 @@ const Home = () => {
           {/* Download CV Button */}
           <button
             className={`mt-6 md:mt-8 px-5 sm:px-6 py-2 sm:py-3 shadow-md ${
-              theme === "light" ? "shadow-blue-300" : "shadow-[#7ac1f0]"
-            } bg-[#90D5FF] text-white rounded-lg font-medium sm:font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer hover:scale-105 transition-transform mx-auto lg:mx-0`}
+              theme === "light"
+                ? "bg-blue-800 shadow-blue-800/30"
+                : "bg-[#90D5FF] shadow-[#7ac1f0]"
+            } text-white rounded-lg font-medium sm:font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer hover:scale-105 transition-transform mx-auto lg:mx-0`}
           >
             <span className="flex items-center relative z-10">
               <FaFileDownload className="mr-2" /> Download CV
             </span>
             {/* Glow effect */}
             <div
-              className={`absolute inset-0 bg-[#90D5FF] ${buttonShadow} transition-all duration-300 group-hover:shadow-none`}
+              className={`absolute inset-0 ${
+                theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+              } ${buttonShadow} transition-all duration-300 group-hover:shadow-none`}
             ></div>
           </button>
         </div>
@@ -204,7 +217,9 @@ const Home = () => {
                   scale: 1.05,
                   transition: { duration: 0.3 },
                 }}
-                className={`w-full max-w-sm sm:max-w-md md:max-w-lg rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${cardBgColor} border border-[#90D5FF] ${cardShadow}`}
+                className={`w-full max-w-sm sm:max-w-md md:max-w-lg rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${cardBgColor} border ${
+                  theme === "light" ? "border-blue-800" : "border-[#90D5FF]"
+                } ${cardShadow}`}
               >
                 {/* Card Content - Responsive layout */}
                 <div className="p-4 sm:p-6">
@@ -222,6 +237,30 @@ const Home = () => {
 
                     {/* Right side - Details */}
                     <div className="flex-1 flex flex-col justify-between text-center sm:text-left">
+                      {/* Add name for mobile view */}
+                      <div className="block sm:hidden mb-3">
+                        <h3 className={`text-xl font-bold ${textColor}`}>
+                          <span
+                            className={
+                              theme === "light"
+                                ? "text-blue-800"
+                                : "text-[#90D5FF]"
+                            }
+                          >
+                            Al-jon Santiago
+                          </span>
+                        </h3>
+                        <p
+                          className={`text-sm ${
+                            theme === "light"
+                              ? "text-blue-800"
+                              : "text-[#90D5FF]"
+                          }`}
+                        >
+                          Web Developer
+                        </p>
+                      </div>
+
                       {/* Get In Touch - Replaced name and title */}
                       <div>
                         <h3
@@ -230,28 +269,53 @@ const Home = () => {
                           GET IN TOUCH
                         </h3>
                         <div className="mt-1 mb-3 sm:mb-4">
-                          <div className="h-px w-full bg-[#90D5FF] mt-1"></div>
+                          <div
+                            className={`h-px w-full ${
+                              theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                            } mt-1`}
+                          ></div>
                         </div>
                       </div>
 
                       {/* Contact Details */}
                       <div className="space-y-2 sm:space-y-4 py-2">
                         <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                          <Phone size={18} className="text-[#90D5FF]" />
+                          <Phone
+                            size={18}
+                            className={
+                              theme === "light"
+                                ? "text-blue-800"
+                                : "text-[#90D5FF]"
+                            }
+                          />
                           <p className={`${textColor} text-sm sm:text-base`}>
                             +63 9669206512
                           </p>
                         </div>
 
                         <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                          <Mail size={18} className="text-[#90D5FF]" />
+                          <Mail
+                            size={18}
+                            className={
+                              theme === "light"
+                                ? "text-blue-800"
+                                : "text-[#90D5FF]"
+                            }
+                          />
                           <p className={`${textColor} text-sm sm:text-base`}>
                             aljon.media08@gmail.com
                           </p>
                         </div>
 
                         <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                          <MapPin size={18} className="text-[#90D5FF]" />
+                          <MapPin
+                            size={18}
+                            className={
+                              theme === "light"
+                                ? "text-blue-800"
+                                : "text-[#90D5FF]"
+                            }
+                          />
                           <p className={`${textColor} text-sm sm:text-base`}>
                             General Trias Cavite, Philippines
                           </p>
@@ -264,7 +328,9 @@ const Home = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => setContactExpanded(true)}
-                          className="px-4 sm:px-6 py-2 bg-[#90D5FF] text-white rounded-lg font-medium flex items-center justify-center group relative overflow-hidden transition-all duration-300"
+                          className={`px-4 sm:px-6 py-2 ${
+                            theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                          } text-white rounded-lg font-medium flex items-center justify-center group relative overflow-hidden transition-all duration-300`}
                         >
                           <span className="flex items-center gap-2 relative z-10">
                             Contact Me <Send size={16} />
@@ -290,7 +356,9 @@ const Home = () => {
                   },
                 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className={`w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-6xl rounded-xl ${cardBgColor} border border-[#90D5FF] overflow-hidden ${cardShadow}`}
+                className={`w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-6xl rounded-xl ${cardBgColor} border ${
+                  theme === "light" ? "border-blue-800" : "border-[#90D5FF]"
+                } overflow-hidden ${cardShadow}`}
               >
                 {/* Expanded Contact Form */}
                 <div className="p-4 sm:p-6 relative">
@@ -344,7 +412,13 @@ const Home = () => {
                             >
                               AL-JON SANTIAGO
                             </h3>
-                            <p className="text-[#90D5FF] text-sm sm:text-base">
+                            <p
+                              className={
+                                theme === "light"
+                                  ? "text-blue-800 text-sm sm:text-base"
+                                  : "text-[#90D5FF] text-sm sm:text-base"
+                              }
+                            >
                               Web Developer
                             </p>
                           </div>
@@ -367,7 +441,14 @@ const Home = () => {
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
                               }`}
                             >
-                              <Phone size={16} className="text-[#90D5FF]" />
+                              <Phone
+                                size={16}
+                                className={
+                                  theme === "light"
+                                    ? "text-blue-800"
+                                    : "text-[#90D5FF]"
+                                }
+                              />
                             </div>
                             <p
                               className={`${secondaryTextColor} text-sm sm:text-base`}
@@ -382,7 +463,14 @@ const Home = () => {
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
                               }`}
                             >
-                              <Mail size={16} className="text-[#90D5FF]" />
+                              <Mail
+                                size={16}
+                                className={
+                                  theme === "light"
+                                    ? "text-blue-800"
+                                    : "text-[#90D5FF]"
+                                }
+                              />
                             </div>
                             <p
                               className={`${secondaryTextColor} text-sm sm:text-base`}
@@ -397,7 +485,14 @@ const Home = () => {
                                 theme === "light" ? "bg-white" : "bg-[#333333]"
                               }`}
                             >
-                              <MapPin size={16} className="text-[#90D5FF]" />
+                              <MapPin
+                                size={16}
+                                className={
+                                  theme === "light"
+                                    ? "text-blue-800"
+                                    : "text-[#90D5FF]"
+                                }
+                              />
                             </div>
                             <p
                               className={`${secondaryTextColor} text-sm sm:text-base`}
@@ -440,7 +535,9 @@ const Home = () => {
                             onClick={() =>
                               setStatus({ ...status, submitted: false })
                             }
-                            className="px-4 sm:px-6 py-2 sm:py-3 bg-[#90D5FF] text-white rounded-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105 mt-4"
+                            className={`px-4 sm:px-6 py-2 sm:py-3 ${
+                              theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
+                            } text-white rounded-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105 mt-4`}
                           >
                             Send Another Message
                           </button>
@@ -452,7 +549,13 @@ const Home = () => {
                         >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             <div>
-                              <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
+                              <label
+                                className={`block ${
+                                  theme === "light"
+                                    ? "text-blue-800"
+                                    : "text-[#90D5FF]"
+                                } mb-1 sm:mb-2 text-sm sm:text-base`}
+                              >
                                 Name
                               </label>
                               <input
@@ -462,12 +565,22 @@ const Home = () => {
                                 onChange={handleChange}
                                 placeholder="Your Name"
                                 required
-                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
+                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-${
+                                  theme === "light" ? "blue-800" : "[#90D5FF]"
+                                } focus:outline-none focus:ring-1 focus:ring-${
+                                  theme === "light" ? "blue-800" : "[#90D5FF]"
+                                } transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               />
                             </div>
 
                             <div>
-                              <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
+                              <label
+                                className={`block ${
+                                  theme === "light"
+                                    ? "text-blue-800"
+                                    : "text-[#90D5FF]"
+                                } mb-1 sm:mb-2 text-sm sm:text-base`}
+                              >
                                 Email
                               </label>
                               <input
@@ -477,13 +590,23 @@ const Home = () => {
                                 onChange={handleChange}
                                 placeholder="Your Email"
                                 required
-                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
+                                className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-${
+                                  theme === "light" ? "blue-800" : "[#90D5FF]"
+                                } focus:outline-none focus:ring-1 focus:ring-${
+                                  theme === "light" ? "blue-800" : "[#90D5FF]"
+                                } transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               />
                             </div>
                           </div>
 
                           <div>
-                            <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
+                            <label
+                              className={`block ${
+                                theme === "light"
+                                  ? "text-blue-800"
+                                  : "text-[#90D5FF]"
+                              } mb-1 sm:mb-2 text-sm sm:text-base`}
+                            >
                               Subject
                             </label>
                             <input
@@ -493,12 +616,22 @@ const Home = () => {
                               onChange={handleChange}
                               placeholder="What is this regarding?"
                               required
-                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
+                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-${
+                                theme === "light" ? "blue-800" : "[#90D5FF]"
+                              } focus:outline-none focus:ring-1 focus:ring-${
+                                theme === "light" ? "blue-800" : "[#90D5FF]"
+                              } transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                             />
                           </div>
 
                           <div>
-                            <label className="block text-[#90D5FF] mb-1 sm:mb-2 text-sm sm:text-base">
+                            <label
+                              className={`block ${
+                                theme === "light"
+                                  ? "text-blue-800"
+                                  : "text-[#90D5FF]"
+                              } mb-1 sm:mb-2 text-sm sm:text-base`}
+                            >
                               Message
                             </label>
                             <textarea
@@ -507,7 +640,11 @@ const Home = () => {
                               onChange={handleChange}
                               placeholder="Your message here..."
                               required
-                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-[#90D5FF] focus:outline-none focus:ring-1 focus:ring-[#90D5FF] transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
+                              className={`w-full px-3 sm:px-4 py-2 rounded-lg focus:border-${
+                                theme === "light" ? "blue-800" : "[#90D5FF]"
+                              } focus:outline-none focus:ring-1 focus:ring-${
+                                theme === "light" ? "blue-800" : "[#90D5FF]"
+                              } transition-all duration-300 ${formBgColor} border ${borderColor} ${textColor} text-sm sm:text-base`}
                               rows="4"
                             ></textarea>
                           </div>
@@ -539,7 +676,11 @@ const Home = () => {
                             <button
                               type="submit"
                               disabled={status.submitting}
-                              className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-[#90D5FF] text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 disabled:opacity-70 hover:scale-105 text-sm sm:text-base"
+                              className={`w-full px-4 sm:px-6 py-2 sm:py-3 ${
+                                theme === "light"
+                                  ? "bg-blue-800"
+                                  : "bg-[#90D5FF]"
+                              } text-white rounded-lg hover:opacity-90 transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 disabled:opacity-70 hover:scale-105 text-sm sm:text-base`}
                             >
                               <span className="relative z-10">
                                 {status.submitting
@@ -550,7 +691,11 @@ const Home = () => {
                                 <Send size={16} className="relative z-10" />
                               )}
                               <div
-                                className={`absolute inset-0 bg-[#90D5FF] ${buttonShadow} transition-all duration-300`}
+                                className={`absolute inset-0 ${
+                                  theme === "light"
+                                    ? "bg-blue-800"
+                                    : "bg-[#90D5FF]"
+                                } ${buttonShadow} transition-all duration-300`}
                               ></div>
                             </button>
                           </div>

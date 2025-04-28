@@ -2,7 +2,7 @@ import React from "react";
 import { FaCertificate } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 
-const CertificateCard = ({ certificate }) => {
+const CertificateCard = ({ certificate, accentColor }) => {
   const { theme } = useTheme();
 
   return (
@@ -36,7 +36,13 @@ const CertificateCard = ({ certificate }) => {
           ></div>
         )}
 
-        <div className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 hover:scale-[1.1] transition-transform">
+        <div
+          className="absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 hover:scale-[1.1] transition-transform"
+          style={{
+            backgroundColor: accentColor,
+            color: theme === "light" ? "white" : "#333333",
+          }}
+        >
           <FaCertificate size={12} />
           {certificate.issuer}
         </div>
@@ -71,7 +77,11 @@ const CertificateCard = ({ certificate }) => {
               href={certificate.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff] transition-colors flex items-center gap-1 hover:scale-[1.05]"
+              className="text-xs px-2 py-1 rounded-md font-medium hover:opacity-90 transition-colors flex items-center gap-1 hover:scale-[1.05]"
+              style={{
+                backgroundColor: accentColor,
+                color: theme === "light" ? "white" : "#333333",
+              }}
             >
               View Certificate
             </a>

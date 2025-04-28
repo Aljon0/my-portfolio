@@ -27,7 +27,7 @@ const techIcons = {
   Supabase: { icon: SiSupabase, color: "#3ECF8E" },
 };
 
-const ProjectCard = ({ project, handleViewProject }) => {
+const ProjectCard = ({ project, handleViewProject, accentColor }) => {
   const { theme } = useTheme();
 
   return (
@@ -66,7 +66,11 @@ const ProjectCard = ({ project, handleViewProject }) => {
         )}
 
         <motion.div
-          className="absolute top-2 right-2 bg-[#90D5FF] text-[#333333] text-xs font-bold px-2 py-0.5 rounded-full"
+          className="absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full"
+          style={{
+            backgroundColor: accentColor,
+            color: theme === "light" ? "white" : "#333333",
+          }}
           whileHover={{ scale: 1.05 }}
         >
           {project.category}
@@ -118,8 +122,12 @@ const ProjectCard = ({ project, handleViewProject }) => {
         <div className="flex space-x-2">
           <motion.button
             onClick={(e) => handleViewProject(project, e)}
-            className="text-xs bg-[#90D5FF] text-[#333333] px-2 py-1 rounded-md font-medium hover:bg-[#7bc8ff]"
-            whileHover={{ scale: 1.05, backgroundColor: "#7bc8ff" }}
+            className="text-xs px-2 py-1 rounded-md font-medium hover:opacity-90"
+            style={{
+              backgroundColor: accentColor,
+              color: theme === "light" ? "white" : "#333333",
+            }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             View Project

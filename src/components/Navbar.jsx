@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Menu, X, Sun, Moon } from "lucide-react";
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
@@ -13,6 +14,33 @@ const Navbar = ({ activeSection }) => {
 
   // Updated nav items array to include testimonials
   const navItems = ["home", "about", "projects", "stack", "testimonials"];
+
+  // Custom style objects for theme-specific colors
+  const getLinkStyle = (isActive) => {
+    const baseStyle = {
+      transition: "all 0.3s ease",
+      paddingBottom: "2px",
+    };
+
+    if (isActive) {
+      return {
+        ...baseStyle,
+        color: theme === "light" ? "#1E40AF" : "#90D5FF", // Dark blue in light mode, light blue in dark mode
+        borderBottom: `2px solid ${theme === "light" ? "#1E40AF" : "#90D5FF"}`,
+      };
+    }
+
+    return {
+      ...baseStyle,
+      color: theme === "light" ? "#1f2937" : "#ffffff",
+    };
+  };
+
+  const hoverStyle = {
+    "&:hover": {
+      color: theme === "light" ? "#1E40AF" : "#90D5FF",
+    },
+  };
 
   return (
     <nav
@@ -45,9 +73,15 @@ const Navbar = ({ activeSection }) => {
                     e.preventDefault();
                     handleScroll(section);
                   }}
-                  className={`hover:text-[#90D5FF] pb-1 transition-all duration-300 ${
+                  className={`hover:${
+                    theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
+                  } pb-1 transition-all duration-300 ${
                     activeSection === section
-                      ? "border-b-2 border-[#90D5FF] text-[#90D5FF]"
+                      ? `border-b-2 ${
+                          theme === "light"
+                            ? "border-blue-800 text-blue-800"
+                            : "border-[#90D5FF] text-[#90D5FF]"
+                        }`
                       : theme === "light"
                       ? "text-gray-800"
                       : "text-white"
@@ -130,9 +164,13 @@ const Navbar = ({ activeSection }) => {
                     e.preventDefault();
                     handleScroll(section);
                   }}
-                  className={`block hover:text-[#90D5FF] transition-all duration-300 ${
+                  className={`block hover:${
+                    theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
+                  } transition-all duration-300 ${
                     activeSection === section
-                      ? "text-[#90D5FF]"
+                      ? theme === "light"
+                        ? "text-blue-800"
+                        : "text-[#90D5FF]"
                       : theme === "light"
                       ? "text-gray-800"
                       : "text-white"

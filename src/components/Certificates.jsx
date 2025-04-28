@@ -2,15 +2,16 @@ import React from "react";
 import CertificateCard from "./CertificateCard";
 import { useTheme } from "../context/ThemeContext";
 
-const Certificates = ({ certificates }) => {
+const Certificates = ({ certificates, accentColor }) => {
   const { theme } = useTheme();
 
   return (
     <div className="mb-8">
       <h2
-        className={`text-xl font-bold text-[#90D5FF] border-b pb-2 mb-4 ${
+        className={`text-xl font-bold border-b pb-2 mb-4 ${
           theme === "light" ? "border-gray-300" : "border-gray-700"
         }`}
+        style={{ color: accentColor }}
       >
         Certificates
       </h2>
@@ -23,7 +24,10 @@ const Certificates = ({ certificates }) => {
               className="flex-shrink-0 hover:scale-[1.03] transition-transform"
               style={{ width: "300px" }}
             >
-              <CertificateCard certificate={certificate} />
+              <CertificateCard
+                certificate={certificate}
+                accentColor={accentColor}
+              />
             </div>
           ))}
         </div>
