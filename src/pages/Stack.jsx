@@ -26,6 +26,7 @@ const Stack = () => {
   const { theme } = useTheme();
   const [activeSkill, setActiveSkill] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Web Development");
+  const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
 
   const ReactNativeIcon = ({ color, size, style }) => {
     return (
@@ -45,15 +46,13 @@ const Stack = () => {
     );
   };
 
-  // Function to get appropriate icon color based on theme and icon
   const getIconColor = (baseColor, name) => {
-    // Icons that need special handling in dark mode
     if (theme === "dark") {
-      if (name === "Three.js") return "#FFFFFF"; // White for Three.js in dark mode
-      if (name === "Express") return "#FFFFFF"; // White for Express in dark mode
-      if (name === "GitHub") return "#FFFFFF"; // White for GitHub in dark mode
+      if (name === "Three.js") return "#FFFFFF";
+      if (name === "Express") return "#FFFFFF";
+      if (name === "GitHub") return "#FFFFFF";
     }
-    return baseColor; // Default color for all other cases
+    return baseColor;
   };
 
   const skillCategories = [
@@ -116,11 +115,12 @@ const Stack = () => {
 
         <div className="container mx-auto px-6 max-w-5xl">
           <div
-            className={`p-5 rounded-lg border-l-4 border-[#90D5FF] shadow-md mb-10 w-full ${
+            className={`p-5 rounded-lg border-l-4 shadow-md mb-10 w-full ${
               theme === "light"
                 ? "bg-gradient-to-r from-gray-100 to-gray-200"
                 : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
             }`}
+            style={{ borderColor: accentColor }}
           >
             <p
               className={`text-lg leading-relaxed text-center ${
@@ -128,7 +128,7 @@ const Stack = () => {
               }`}
             >
               My{" "}
-              <span className="text-[#90D5FF] font-semibold">
+              <span className="font-semibold" style={{ color: accentColor }}>
                 technical expertise
               </span>{" "}
               spans across web development.
@@ -170,7 +170,7 @@ const Stack = () => {
                     className={`text-2xl font-bold mb-2 ${
                       theme === "light" ? "text-gray-800" : "text-white"
                     }`}
-                    style={{ color: "#90D5FF" }}
+                    style={{ color: accentColor }}
                   >
                     {selectedCategory.title}
                   </h3>
@@ -185,7 +185,6 @@ const Stack = () => {
 
                 <div className="flex flex-wrap justify-center gap-6">
                   {selectedCategory.skills.map((skill, index) => {
-                    // Get the appropriate color based on theme and icon name
                     const iconColor = getIconColor(skill.color, skill.name);
 
                     return (
@@ -248,18 +247,22 @@ const Stack = () => {
 
                 {selectedCategory.category === "Web Development" && (
                   <div
-                    className={`mt-10 p-4 rounded-lg border-l-4 border-[#90D5FF] ${
+                    className={`mt-10 p-4 rounded-lg border-l-4 ${
                       theme === "light"
                         ? "bg-white border border-gray-200"
                         : "bg-[#1e1e1e] border border-[#333333]"
                     }`}
+                    style={{ borderColor: accentColor }}
                   >
                     <p
                       className={`text-center ${
                         theme === "light" ? "text-gray-600" : "text-gray-300"
                       }`}
                     >
-                      <span className="text-[#90D5FF] font-semibold">
+                      <span
+                        className="font-semibold"
+                        style={{ color: accentColor }}
+                      >
                         FERN Stack
                       </span>{" "}
                       provides a powerful foundation for building scalable,

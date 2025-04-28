@@ -9,6 +9,7 @@ const Testimonials = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
 
   // Calculate visible cards based on screen size
   const [visibleCards, setVisibleCards] = useState(1);
@@ -251,6 +252,7 @@ const Testimonials = () => {
           ? "bg-gray-100 text-gray-800"
           : "bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white"
       }`}
+      id="testimonials"
     >
       <div className="container mx-auto">
         <div className="text-center mb-12">
@@ -261,7 +263,10 @@ const Testimonials = () => {
           >
             Client Testimonials
           </h2>
-          <div className="w-24 h-1 bg-[#90D5FF] mx-auto mb-6"></div>
+          <div
+            className="w-24 h-1 mx-auto mb-6"
+            style={{ backgroundColor: accentColor }}
+          ></div>
           <p
             className={`max-w-2xl mx-auto text-lg ${
               theme === "light" ? "text-gray-600" : "text-gray-300"
@@ -272,15 +277,13 @@ const Testimonials = () => {
           </p>
         </div>
 
-        {/* Testimonial carousel */}
         <div className="max-w-6xl mx-auto relative">
-          {/* Scrolling container with drag events */}
           <div
             ref={scrollContainerRef}
             className="flex overflow-x-auto scrollbar-hide scroll-smooth snap-x"
             style={{
-              scrollbarWidth: "none" /* Firefox */,
-              msOverflowStyle: "none" /* IE and Edge */,
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
               cursor: isDragging ? "grabbing" : "grab",
             }}
             onScroll={handleScroll}
@@ -305,7 +308,6 @@ const Testimonials = () => {
                       : "bg-[#2a2a2a] border border-gray-700 hover:bg-[#333333]"
                   }`}
                 >
-                  {/* Label (Styled to match screenshots) */}
                   <div className="mb-3">
                     <span
                       className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
@@ -318,17 +320,17 @@ const Testimonials = () => {
                     </span>
                   </div>
 
-                  {/* Photo and Rating */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#90D5FF] shadow-md relative">
-                      {/* Actual image with fallback */}
+                    <div
+                      className="w-14 h-14 rounded-full overflow-hidden border-2 shadow-md relative"
+                      style={{ borderColor: accentColor }}
+                    >
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
                         onError={handleImageError}
                       />
-                      {/* Fallback content (hidden by default) */}
                       <div
                         className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold absolute top-0 left-0"
                         style={{ display: "none" }}
@@ -341,7 +343,6 @@ const Testimonials = () => {
                     </div>
                   </div>
 
-                  {/* Testimonial content */}
                   <blockquote className="flex-grow">
                     <p
                       className={`text-base italic mb-4 ${
@@ -352,7 +353,6 @@ const Testimonials = () => {
                     </p>
                   </blockquote>
 
-                  {/* Client details */}
                   <div className="mt-auto">
                     <h4
                       className={`font-bold text-lg ${
@@ -370,9 +370,8 @@ const Testimonials = () => {
                     </p>
                     <a
                       href={`mailto:${testimonial.contact}`}
-                      className={`hover:underline text-sm ${
-                        theme === "light" ? "text-blue-500" : "text-[#90D5FF]"
-                      }`}
+                      className={`hover:underline text-sm`}
+                      style={{ color: accentColor }}
                     >
                       {testimonial.contact}
                     </a>
@@ -382,7 +381,6 @@ const Testimonials = () => {
             ))}
           </div>
 
-          {/* Pagination indicators matching your theme */}
           <div className="flex justify-center mt-6 gap-2">
             {Array.from({ length: paginationCount }).map((_, index) => (
               <button
@@ -390,11 +388,15 @@ const Testimonials = () => {
                 onClick={() => setActiveIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
                   activeIndex === index
-                    ? "bg-[#90D5FF] w-6"
+                    ? "w-6"
                     : theme === "light"
                     ? "bg-gray-300 hover:bg-gray-400"
                     : "bg-gray-700 hover:bg-gray-600"
                 }`}
+                style={{
+                  backgroundColor:
+                    activeIndex === index ? accentColor : undefined,
+                }}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
