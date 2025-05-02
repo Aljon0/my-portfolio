@@ -1,17 +1,16 @@
-/* eslint-disable no-unused-vars */
+import { motion } from "framer-motion";
 import React from "react";
 import { FaChartBar, FaDatabase, FaNodeJs, FaReact } from "react-icons/fa";
 import {
+  SiAppwrite,
   SiExpress,
   SiFirebase,
   SiMongodb,
-  SiTailwindcss,
-  SiAppwrite,
   SiSupabase,
+  SiTailwindcss,
 } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
 import { useTheme } from "../context/ThemeContext";
-import { motion } from "framer-motion";
 
 const techIcons = {
   React: { icon: FaReact, color: "#61DAFB" },
@@ -30,31 +29,38 @@ const techIcons = {
 const ProjectCard = ({ project, handleViewProject, accentColor }) => {
   const { theme } = useTheme();
 
+  // Improved card styles with better contrast for both themes
+  const cardBackgroundClass = theme === "light" ? "bg-white" : "bg-[#2a2a2a]";
+
+  const textColorClass = theme === "light" ? "text-gray-800" : "text-white";
+
+  const secondaryTextColorClass =
+    theme === "light" ? "text-gray-600" : "text-gray-300";
+
+  const techBadgeClass =
+    theme === "light"
+      ? "bg-gray-100 text-gray-700 border border-gray-200"
+      : "bg-[#3a3a3a] text-gray-200 border border-[#444444]";
+
   return (
-    <motion.div
-      className={`project-card group rounded-lg overflow-hidden shadow-lg ${
-        theme === "light"
-          ? "bg-gradient-to-b from-gray-100 to-gray-200"
-          : "bg-gradient-to-b from-[#2a2a2a] to-[#333333]"
+    <div
+      className={`project-card rounded-lg overflow-hidden shadow-lg ${cardBackgroundClass} border ${
+        theme === "light" ? "border-gray-200" : "border-[#444444]"
       }`}
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 300, damping: 15 }}
     >
-      <div
-        className={`h-32 relative overflow-hidden ${
-          theme === "light"
-            ? "bg-gradient-to-r from-gray-100 to-gray-200"
-            : "bg-gradient-to-r from-[#2a2a2a] to-[#444444]"
-        }`}
-      >
+      <div className="h-32 relative overflow-hidden">
         {project.image ? (
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover"
+          <motion.div
+            className="absolute inset-0 w-full h-full"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
-          />
+          >
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
         ) : (
           <div
             className={`absolute inset-0 opacity-10 ${
@@ -65,46 +71,32 @@ const ProjectCard = ({ project, handleViewProject, accentColor }) => {
           ></div>
         )}
 
-        <motion.div
+        <div
           className="absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full"
           style={{
             backgroundColor: accentColor,
             color: theme === "light" ? "white" : "#333333",
           }}
-          whileHover={{ scale: 1.05 }}
         >
           {project.category}
-        </motion.div>
+        </div>
       </div>
 
-      <div className="p-3">
-        <h3
-          className={`text-lg font-semibold mb-1 ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
-        >
+      <div className="p-4">
+        <h3 className={`text-lg font-semibold mb-2 ${textColorClass}`}>
           {project.title}
         </h3>
-        <p
-          className={`text-xs mb-2 line-clamp-2 ${
-            theme === "light" ? "text-gray-600" : "text-gray-300"
-          }`}
-        >
+        <p className={`text-sm mb-3 line-clamp-2 ${secondaryTextColorClass}`}>
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-1 mb-2">
+        <div className="flex flex-wrap gap-1.5 mb-3">
           {project.technologies.map((tech, index) => {
             const techIcon = techIcons[tech];
             return (
-              <motion.span
+              <span
                 key={index}
-                className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 ${
-                  theme === "light"
-                    ? "bg-gray-200 text-gray-700"
-                    : "bg-[#444444] text-gray-300"
-                }`}
-                whileHover={{ scale: 1.05 }}
+                className={`text-xs px-2 py-1 rounded-full flex items-center gap-1 ${techBadgeClass}`}
               >
                 {techIcon && (
                   <techIcon.icon
@@ -114,27 +106,25 @@ const ProjectCard = ({ project, handleViewProject, accentColor }) => {
                   />
                 )}
                 {tech}
-              </motion.span>
+              </span>
             );
           })}
         </div>
 
-        <div className="flex space-x-2">
-          <motion.button
-            onClick={(e) => handleViewProject(project, e)}
-            className="text-xs px-2 py-1 rounded-md font-medium hover:opacity-90"
-            style={{
-              backgroundColor: accentColor,
-              color: theme === "light" ? "white" : "#333333",
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View Project
-          </motion.button>
-        </div>
+        <motion.button
+          onClick={(e) => handleViewProject(project, e)}
+          className="w-full text-sm px-3 py-1.5 rounded-md font-medium hover:opacity-90 transition-colors"
+          style={{
+            backgroundColor: accentColor,
+            color: theme === "light" ? "white" : "#333333",
+          }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          View Project
+        </motion.button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
