@@ -1,9 +1,9 @@
+import Lottie from "lottie-react";
 import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import Markdown from "react-markdown";
 import { useTheme } from "../context/ThemeContext";
 import { getMistralResponse } from "../services/mistralAI";
-import Lottie from "lottie-react";
-import Markdown from "react-markdown";
 const ChatBot = () => {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -243,7 +243,7 @@ const ChatBot = () => {
     <>
       <button
         onClick={toggleChat}
-        className={`fixed bottom-6 right-6 p-2 rounded-full ${
+        className={`fixed bottom-6 right-6 p-2 rounded-full cursor-pointer ${
           theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
         } ${theme === "light" ? "text-white" : "text-[#1a1a1a]"} shadow-lg ${
           theme === "light" ? "hover:bg-blue-700" : "hover:bg-[#7BC0EA]"
@@ -294,7 +294,7 @@ const ChatBot = () => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={toggleMinimize}
-                className={`p-1.5 transition-colors ${
+                className={`p-1.5 transition-colors cursor-pointer ${
                   theme === "light"
                     ? "text-gray-500 hover:text-gray-700"
                     : "text-gray-400 hover:text-white"
@@ -309,7 +309,7 @@ const ChatBot = () => {
               </button>
               <button
                 onClick={toggleChat}
-                className={`p-1.5 transition-colors ${
+                className={`p-1.5 transition-colors cursor-pointer ${
                   theme === "light"
                     ? "text-gray-500 hover:text-gray-700"
                     : "text-gray-400 hover:text-white"

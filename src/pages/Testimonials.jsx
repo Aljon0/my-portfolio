@@ -124,7 +124,7 @@ const Testimonials = () => {
     return () => window.removeEventListener("resize", updateVisibleCards);
   }, []);
 
-  // Effect to scroll to the active index
+  // Effect to scroll to the active index with smooth animation (only when pagination is clicked)
   useEffect(() => {
     if (scrollContainerRef.current) {
       const cardWidth = scrollContainerRef.current.clientWidth / visibleCards;
@@ -139,23 +139,34 @@ const Testimonials = () => {
   // Calculate the number of pagination indicators needed
   const paginationCount = Math.max(1, totalCards - visibleCards + 1);
 
-  // Update active index based on scroll position
-  const handleScroll = () => {
-    if (!scrollContainerRef.current || isDragging) return;
+  // Function to update active index based on current scroll position
+  // (This is used for updating the dots indicator, not for stopping scrolling)
+  const updateActiveIndexFromScroll = () => {
+    if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
     const cardWidth = container.clientWidth / visibleCards;
     const scrollPosition = container.scrollLeft;
 
-    // Calculate the new index based on scroll position
-    const newIndex = Math.round(scrollPosition / cardWidth);
+    // Calculate nearest card index
+    const nearestIndex = Math.round(scrollPosition / cardWidth);
 
-    // Ensure the index is within bounds
-    const boundedIndex = Math.max(0, Math.min(newIndex, paginationCount - 1));
+    // Ensure index is within bounds
+    const boundedIndex = Math.max(
+      0,
+      Math.min(nearestIndex, paginationCount - 1)
+    );
 
+    // Update active index without forcing scroll
     if (boundedIndex !== activeIndex) {
       setActiveIndex(boundedIndex);
     }
+  };
+
+  // Update active index based on scroll position (for non-drag scrolling)
+  const handleScroll = () => {
+    if (!scrollContainerRef.current || isDragging) return;
+    updateActiveIndexFromScroll();
   };
 
   // Mouse and touch event handlers for dragging/sliding
@@ -175,20 +186,30 @@ const Testimonials = () => {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Speed multiplier
+    // Use a smaller multiplier for even smoother movement
+    const walk = (x - startX) * 1.2;
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleTouchMove = (e) => {
     if (!isDragging) return;
+    e.preventDefault(); // Prevent default touch behavior
     const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Speed multiplier
+    // Use a smaller multiplier for even smoother movement
+    const walk = (x - startX) * 1.2;
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  // Add momentum scrolling effect when drag ends
   const handleDragEnd = () => {
-    setIsDragging(false);
-    handleScroll();
+    if (isDragging) {
+      setIsDragging(false);
+      // Only update the active index for pagination indicators
+      updateActiveIndexFromScroll();
+
+      // For smooth deceleration, we're letting the natural scroll behavior
+      // take over without forcing a snap
+    }
   };
 
   const renderStars = (rating) => {
@@ -280,11 +301,15 @@ const Testimonials = () => {
         <div className="max-w-6xl mx-auto relative">
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide scroll-smooth snap-x"
+            className="flex overflow-x-auto scrollbar-hide scroll-smooth snap-x select-none"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               cursor: isDragging ? "grabbing" : "grab",
+              WebkitUserSelect: "none", // Safari
+              MozUserSelect: "none", // Firefox
+              msUserSelect: "none", // IE/Edge
+              userSelect: "none", // Standard syntax
             }}
             onScroll={handleScroll}
             onMouseDown={handleMouseDown}
@@ -294,15 +319,15 @@ const Testimonials = () => {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleDragEnd}
             onTouchMove={handleTouchMove}
+            onTouchCancel={handleDragEnd}
           >
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 snap-center"
-                style={{ scrollSnapAlign: "center" }}
+                className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 snap-start transition-transform duration-300"
               >
                 <div
-                  className={`p-5 rounded-xl shadow-lg transition-all duration-300 flex flex-col h-96 ${
+                  className={`p-5 rounded-xl shadow-lg transition-all duration-300 flex flex-col h-96 select-none ${
                     theme === "light"
                       ? "bg-white hover:shadow-xl"
                       : "bg-[#2a2a2a] border border-gray-700 hover:bg-[#333333]"
@@ -330,6 +355,7 @@ const Testimonials = () => {
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
                         onError={handleImageError}
+                        draggable="false"
                       />
                       <div
                         className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold absolute top-0 left-0"
@@ -343,7 +369,7 @@ const Testimonials = () => {
                     </div>
                   </div>
 
-                  <blockquote className="flex-grow">
+                  <blockquote className="flex-grow select-none">
                     <p
                       className={`text-base italic mb-4 ${
                         theme === "light" ? "text-gray-700" : "text-gray-200"
