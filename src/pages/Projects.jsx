@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 import { HiChevronRight } from "react-icons/hi";
-import { motion, AnimatePresence } from "framer-motion";
-import FeaturedProjects from "../components/FeaturedProjects";
-import SmallProjects from "../components/SmallProjects";
 import Certificates from "../components/Certificates";
+import FeaturedProjects from "../components/FeaturedProjects";
 import {
   certificates,
   featuredProjects,
   smallProjects,
 } from "../components/ProjectsData";
+import SmallProjects from "../components/SmallProjects";
 import { useTheme } from "../context/ThemeContext";
 
 const Projects = () => {
@@ -155,7 +155,7 @@ const Projects = () => {
             <button
               key={section.id}
               onClick={() => setActiveSection(section.id)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
                 activeSection === section.id
                   ? "text-white"
                   : theme === "light"
@@ -207,7 +207,7 @@ const Projects = () => {
               <div className="flex justify-end space-x-4 mt-2">
                 <button
                   onClick={() => setActiveSection("small")}
-                  className="text-sm flex items-center hover:underline"
+                  className="text-sm flex items-center hover:underline cursor-pointer"
                   style={{ color: accentColor }}
                 >
                   View all small projects <HiChevronRight className="ml-1" />
@@ -215,7 +215,7 @@ const Projects = () => {
 
                 <button
                   onClick={() => setActiveSection("certificates")}
-                  className="text-sm flex items-center hover:underline"
+                  className="text-sm flex items-center hover:underline cursor-pointer"
                   style={{ color: accentColor }}
                 >
                   View certificates <HiChevronRight className="ml-1" />
@@ -283,7 +283,7 @@ const Projects = () => {
               >
                 <button
                   onClick={closeOverlay}
-                  className={`absolute top-4 right-4 text-2xl transition-colors z-10 ${
+                  className={`absolute top-4 right-4 text-2xl transition-colors z-10 cursor-pointer ${
                     theme === "light" ? "text-gray-800" : "text-white"
                   }`}
                 >
@@ -306,7 +306,7 @@ const Projects = () => {
                       href={selectedProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block px-4 py-2 rounded-md hover:opacity-90 transition-colors"
+                      className="inline-block px-4 py-2 rounded-md hover:opacity-90 transition-colors cursor-pointer"
                       style={{
                         backgroundColor: accentColor,
                         color: theme === "light" ? "white" : "#333333",

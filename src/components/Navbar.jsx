@@ -1,65 +1,82 @@
 /* eslint-disable no-unused-vars */
 import { Menu, Moon, Sun, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 const Navbar = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  // Add scroll listener to create subtle background when scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleScroll = (id) => {
     window.location.hash = id;
     setIsMenuOpen(false);
   };
 
-  // Updated nav items array to include testimonials
+  // Updated nav items array
   const navItems = ["home", "about", "projects", "stack", "testimonials"];
-
-  // Custom style objects for theme-specific colors
-  const getLinkStyle = (isActive) => {
-    const baseStyle = {
-      transition: "all 0.3s ease",
-      paddingBottom: "2px",
-    };
-
-    if (isActive) {
-      return {
-        ...baseStyle,
-        color: theme === "light" ? "#1E40AF" : "#90D5FF", // Dark blue in light mode, light blue in dark mode
-        borderBottom: `2px solid ${theme === "light" ? "#1E40AF" : "#90D5FF"}`,
-      };
-    }
-
-    return {
-      ...baseStyle,
-      color: theme === "light" ? "#1f2937" : "#ffffff",
-    };
-  };
-
-  const hoverStyle = {
-    "&:hover": {
-      color: theme === "light" ? "#1E40AF" : "#90D5FF",
-    },
-  };
 
   return (
     <nav
-      className={`fixed top-0 w-full shadow-md z-50 transition-colors duration-300 ${
-        theme === "light" ? "bg-white text-gray-800" : "bg-[#333333] text-white"
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? theme === "light"
+            ? "bg-white/80 backdrop-blur-sm shadow-md"
+            : "bg-[#333333]/80 backdrop-blur-sm shadow-md"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center font-[Poppins]">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a
           href="#home"
           onClick={(e) => {
             e.preventDefault();
             handleScroll("home");
           }}
-          className={`font-bold text-xl ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
+          className={`font-bold text-2xl transition-colors duration-300 tracking-wider`}
         >
-          Portfolio
+          <span className="font-mono relative group">
+            <span
+              className={`${
+                theme === "light" ? "text-blue-700" : "text-[#90D5FF]"
+              }`}
+            >
+              &lt;/
+            </span>
+            <span
+              className={`font-extrabold ${
+                theme === "light" ? "text-gray-800" : "text-white"
+              }`}
+            >
+              AJ
+            </span>
+            <span
+              className={`${
+                theme === "light" ? "text-blue-700" : "text-[#90D5FF]"
+              }`}
+            >
+              &gt;
+            </span>
+            <span
+              className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
+                theme === "light" ? "bg-blue-700" : "bg-[#90D5FF]"
+              } transition-all duration-300 group-hover:w-full`}
+            ></span>
+          </span>
         </a>
 
         {/* Desktop Navigation */}
@@ -152,8 +169,8 @@ const Navbar = ({ activeSection }) => {
       {isMenuOpen && (
         <div
           className={`md:hidden py-3 ${
-            theme === "light" ? "bg-white" : "bg-[#333333]"
-          }`}
+            theme === "light" ? "bg-white/95" : "bg-[#333333]/95"
+          } backdrop-blur-sm`}
         >
           <ul className="flex flex-col items-center">
             {navItems.map((section) => (
