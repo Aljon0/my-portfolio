@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
@@ -96,7 +96,7 @@ const Navbar = ({ activeSection }) => {
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-full transition-colors duration-300 ${
+            className={`p-2 rounded-full transition-colors duration-300 cursor-pointer ${
               theme === "light"
                 ? "bg-gray-100 hover:bg-gray-200"
                 : "bg-gray-700 hover:bg-gray-600"

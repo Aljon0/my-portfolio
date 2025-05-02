@@ -31,7 +31,7 @@ const About = () => {
             className={`p-5 rounded-lg border-l-4 shadow-md mb-10 w-full ${
               theme === "light"
                 ? "bg-gradient-to-r from-gray-100 to-gray-200"
-                : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
+                : "bg-gradient-to-r from-[#333333] to-[#2a2a2a]"
             }`}
             style={{ borderColor: accentColor }}
           >

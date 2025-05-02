@@ -14,12 +14,11 @@ import {
   SiChakraui,
   SiExpress,
   SiFirebase,
+  SiPostman,
   SiSupabase,
   SiTailwindcss,
   SiThreedotjs,
   SiVite,
-  SiTypescript,
-  SiPostman,
 } from "react-icons/si";
 import { useTheme } from "../context/ThemeContext";
 
@@ -142,7 +141,7 @@ const Stack = () => {
               <button
                 key={cat.category}
                 onClick={() => handleCategoryClick(cat.category)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 border ${
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 border cursor-pointer ${
                   activeCategory === cat.category
                     ? "border-[#90D5FF]"
                     : theme === "light"
@@ -192,7 +191,7 @@ const Stack = () => {
                     return (
                       <div
                         key={index}
-                        className={`group relative flex flex-col items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 animate-bounce-slow cursor-pointer w-24 h-24 ${
+                        className={`group relative flex flex-col items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 animate-bounce-slow w-24 h-24 ${
                           theme === "light"
                             ? "bg-white border border-gray-200"
                             : "bg-[#1e1e1e] border border-[#333333]"
