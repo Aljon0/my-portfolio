@@ -51,7 +51,7 @@ export const featuredProjects = [
     image: "/projects/AI-Resume Builder.webp",
     category: "Web App",
     technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
-    link: "#",
+    link: "https://ai-rb-haee.onrender.com",
     featured: true,
     caseStudy: {
       title: "AI-Powered Resume Builder: Smarter Resume Creation",
