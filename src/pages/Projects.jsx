@@ -89,6 +89,54 @@ const Projects = () => {
           </p>
         </div>
 
+        {caseStudy.problemAndSolution && (
+          <>
+            <div>
+              <h2
+                className={`text-2xl font-semibold mb-2 ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
+              >
+                Problem Statement
+              </h2>
+              <ul className="list-disc pl-5">
+                {caseStudy.problemAndSolution.problem.map((problem, index) => (
+                  <li
+                    key={index}
+                    className={`text-justify ${
+                      theme === "light" ? "text-gray-700" : "text-gray-300"
+                    }`}
+                  >
+                    {problem}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2
+                className={`text-2xl font-semibold mb-2 ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
+              >
+                Solution Approach
+              </h2>
+              <ul className="list-disc pl-5">
+                {caseStudy.problemAndSolution.solution.map((solution, index) => (
+                  <li
+                    key={index}
+                    className={`text-justify ${
+                      theme === "light" ? "text-gray-700" : "text-gray-300"
+                    }`}
+                  >
+                    {solution}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+
         <div>
           <h2
             className={`text-2xl font-semibold mb-2 ${

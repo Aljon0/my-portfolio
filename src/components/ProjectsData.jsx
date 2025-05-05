@@ -1,11 +1,10 @@
-// Featured projects data
 export const featuredProjects = [
   {
     id: 1,
     title: "ED3C: Memorial Design Platform",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
-    image: "/projects/ED3C.png",
+    image: "/projects/ed3c.webp",
     category: "Web App",
     technologies: ["React", "Three.js", "Firebase"],
     link: "#",
@@ -14,11 +13,28 @@ export const featuredProjects = [
       title: "ED3C: Revolutionizing Memorial Design",
       overview:
         "ED3C is an innovative web application designed to transform the memorial design process for Double Seven Lapida Maker Incorporation. By providing an intuitive, real-time 3D customization platform, it addresses key challenges in memorial design.",
+      problemAndSolution: {
+        problem: [
+          "Customers demand to see design previews immediately, leading to time-consuming revisions and bottlenecks.",
+          "The business struggles with managing multiple orders and frequently gets confused with customer requests.",
+          "There have been cases where customers pay partially, never complete the payment, and fail to claim their orders—causing losses.",
+        ],
+        solution: [
+          "ED3C introduces a real-time 3D visualization feature, allowing customers to design and preview gravestones, urns, and table signs themselves, minimizing revision requests.",
+          "A dedicated order tracking system and messaging module lets customers check the status of their orders and communicate directly with the business.",
+          "Separate forms per customer were implemented to organize order details and reduce confusion.",
+          "The system also includes digital receipts for both partial and full payments—preventing unpaid or abandoned orders from being fulfilled until full payment is received.",
+        ],
+      },
       features: [
         "Interactive 3D design tool",
         "Real-time customization of gravestones, table signs, urns, and bases",
         "User-friendly design management system",
         "Comprehensive order tracking",
+        "Real-time messaging between customer and business",
+        "Partial and full payment tracking with receipt generation",
+        "Admin Dashboard for monthly sales and most buyed products",
+        "Template Designs for gravestones, urns, and table signs",
       ],
       technologyStack: [
         "Frontend: React.js",
@@ -26,19 +42,37 @@ export const featuredProjects = [
         "Backend & Database: Firebase",
       ],
     },
-  },
+  },  
   {
     id: 2,
-    title: "E-Commerce Platform",
+    title: "AI-Resume Builder",
     description:
-      "Secure online shopping application with payment integration and user authentication system.",
-    image: "/path-to-ecommerce-img.jpg",
+      "An intelligent resume builder that uses Mistral AI for skill suggestions, customizable templates, and PDF export with Firebase integration.",
+    image: "/projects/AI-Resume Builder.webp",
     category: "Web App",
-    technologies: ["React", "Node.js", "Tailwind"],
+    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
     link: "#",
     featured: true,
-    caseStudy: "Case study content for E-Commerce Platform",
-  },
+    caseStudy: {
+      title: "AI-Powered Resume Builder: Smarter Resume Creation",
+      overview:
+        "This web application streamlines the resume creation process by integrating Mistral AI to suggest relevant skills based on job titles. It allows users to generate, customize, save, and download resumes using a clean, intuitive interface and PDF-ready templates.",
+      features: [
+        "AI-generated skill suggestions via Mistral AI",
+        "Customizable resume templates styled with Tailwind CSS",
+        "Export resumes as PDF files",
+        "Save and load resumes using Firebase Firestore",
+        "Secure user authentication via Firebase Auth",
+      ],
+      technologyStack: [
+        "Frontend: React.js + Tailwind CSS",
+        "Backend: Express.js (Node.js)",
+        "AI Integration: Mistral AI",
+        "Database: Firebase Firestore",
+        "Authentication: Firebase Authentication",
+      ],
+    },
+  },  
   {
     id: 3,
     title: "Portfolio Website",
@@ -51,18 +85,6 @@ export const featuredProjects = [
     featured: true,
     caseStudy: "Case study content for Portfolio Website",
   },
-  {
-    id: 4,
-    title: "Task Manager",
-    description:
-      "Collaborative tool for teams to organize and assign tasks, and track progress.",
-    image: "/path-to-taskmanager-img.jpg",
-    category: "Web App",
-    technologies: ["React", "Express", "MongoDB"],
-    link: "#",
-    featured: true,
-    caseStudy: "Case study content for Task Management App",
-  },
 ];
 
 // Small projects data
@@ -72,7 +94,7 @@ export const smallProjects = [
     title: "Expense Tracker",
     description:
       "A streamlined expense tracking application built with React and Appwrite to help users manage their personal finances effectively.",
-    image: "/projects/ExpenseTracker.png",
+    image: "/projects/expensetracker.webp",
     category: "Web App",
     technologies: ["React", "Tailwind", "Appwrite"],
     link: "https://expensetracker-hrws.onrender.com",
@@ -96,7 +118,7 @@ export const smallProjects = [
     title: "Chat Sphere",
     description:
       "ChatSphere is a sleek, responsive chat app built with React, Vite, and Tailwind CSS, showcasing real-time messaging powered by Firebase. Designed with user experience at its core, it features intuitive authentication, instant communication, and a polished UI that adapts seamlessly across devices. From dark mode and emoji support to file sharing and group chats, ChatSphere demonstrates best practices in modern frontend development, efficient state management, and scalable backend integration.",
-    image: "/projects/ChatSphere.png",
+    image: "/projects/chatsphere.webp",
     category: "Web App",
     technologies: ["React", "Tailwind", "Firebase"],
     link: "https://chat-web-app-1c91d.web.app/",
@@ -119,7 +141,7 @@ export const smallProjects = [
     title: "Task Master",
     description:
       "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
-    image: "/projects/TaskManager.png",
+    image: "/projects/taskmanager.webp",
     category: "Web Tool",
     technologies: ["React", "Tailwind", "Supabase"],
     link: "https://task-manager-app-cwgb.onrender.com",
@@ -145,7 +167,7 @@ export const smallProjects = [
     title: "Movie Recommendation Chatbot",
     description:
       "An AI-powered movie recommendation chatbot built with React that lets users chat and receive personalized movie suggestions in real-time, no account required.",
-    image: "/projects/AI-MR.png",
+    image: "/projects/ai-mr.webp",
     category: "Web App",
     technologies: ["React", "Tailwind", "Express"],
     link: "https://ai-movie.onrender.com",
@@ -172,7 +194,6 @@ export const smallProjects = [
   },
 ];
 
-// Certificates data
 export const certificates = [
   {
     id: 8,
