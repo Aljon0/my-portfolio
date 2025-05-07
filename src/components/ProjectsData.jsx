@@ -1,16 +1,16 @@
 export const featuredProjects = [
   {
     id: 1,
-    title: "ED3C: Memorial Design Platform",
+    title: "ED3C: Eternal Design",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
     image: "/projects/ed3c.webp",
     category: "Web App",
-    technologies: ["React", "Three.js", "Firebase"],
+    technologies: ["React", "Tailwind", "Three.js", "Firebase"],
     link: "#",
     featured: true,
     caseStudy: {
-      title: "ED3C: Revolutionizing Memorial Design",
+      title: "ED3C: Eternal Design 3D Customization",
       overview:
         "ED3C is an innovative web application designed to transform the memorial design process for Double Seven Lapida Maker Incorporation. By providing an intuitive, real-time 3D customization platform, it addresses key challenges in memorial design.",
       problemAndSolution: {
@@ -75,16 +75,34 @@ export const featuredProjects = [
   },  
   {
     id: 3,
-    title: "Portfolio Website",
+    title: "AI-Health Companion",
     description:
-      "Responsive portfolio built with React and Tailwind CSS showcasing projects and skills.",
-    image: "/path-to-portfolio-img.jpg",
+      "A smart healthcare assistant web app that uses Mistral AI and public medical APIs to help users check symptoms, track mental health, and access timely health advice.",
+    image: "/projects/AI-HealthCare.webp",
     category: "Web App",
-    technologies: ["React", "Tailwind", "Three.js"],
-    link: "#",
+    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
+    link: "https://projectbaymax.onrender.com/",
     featured: true,
-    caseStudy: "Case study content for Portfolio Website",
-  },
+    caseStudy: {
+      title: "BAYMAX – Your AI-Powered Health Companion",
+      overview:
+        "BAYMAX is an AI-driven health assistant web application that empowers users to monitor their well-being through symptom checks, mood tracking, journaling, and wellness tips. By integrating Mistral AI with trusted public medical data sources like the National Library of Medicine (NLM), the system provides informed and contextual health responses in real time.",
+      features: [
+        "AI-powered Symptom Checker using Mistral AI and MedlinePlus/NLM APIs",
+        "Daily emotional and health check-ins with mood sliders and logs",
+        "Private journaling feature with CBT-inspired prompts",
+        "Personalized health tips and push notification reminders",
+        "Emergency assistant with quick access to stored critical health info"
+      ],
+      technologyStack: [
+        "Frontend: React.js + Tailwind CSS",
+        "Backend: Express.js (Node.js)",
+        "AI Integration: Mistral AI + NLM / MedlinePlus APIs",
+        "Database: Firebase Firestore",
+        "Authentication: Firebase Authentication"
+      ]
+    }
+  }  
 ];
 
 // Small projects data
@@ -142,7 +160,7 @@ export const smallProjects = [
     description:
       "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
     image: "/projects/taskmanager.webp",
-    category: "Web Tool",
+    category: "Web App",
     technologies: ["React", "Tailwind", "Supabase"],
     link: "https://task-manager-app-cwgb.onrender.com",
     featured: false,

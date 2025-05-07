@@ -329,14 +329,20 @@ const Projects = () => {
                   transition: { duration: 0.2 },
                 }}
               >
-                <button
-                  onClick={closeOverlay}
-                  className={`absolute top-4 right-4 text-2xl transition-colors z-10 cursor-pointer ${
-                    theme === "light" ? "text-gray-800" : "text-white"
-                  }`}
-                >
-                  &times;
-                </button>
+                {/* Sticky position close button that stays at the top of the modal */}
+                <div className="sticky top-0 left-0 w-full z-20 flex justify-end" style={{ marginTop: "-8px", marginRight: "-8px" }}>
+                  <button
+                    onClick={closeOverlay}
+                    className={`w-10 h-10 flex items-center justify-center rounded-full shadow-md ${
+                      theme === "light" 
+                        ? "bg-white text-gray-800 hover:bg-gray-100" 
+                        : "bg-[#333333] text-white hover:bg-[#444444]"
+                    }`}
+                    style={{ fontSize: "24px" }}
+                  >
+                    &times;
+                  </button>
+                </div>
 
                 {selectedProject.image && (
                   <div className="w-full h-64 mb-6 mt-8 overflow-hidden rounded-lg">
