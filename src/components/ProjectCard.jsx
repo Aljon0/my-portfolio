@@ -24,7 +24,7 @@ const techIcons = {
   "Weather API": { icon: FaDatabase, color: "#5F9EA0" },
   Appwrite: { icon: SiAppwrite, color: "#F02E65" },
   Supabase: { icon: SiSupabase, color: "#3ECF8E" },
-  "Express": { icon: SiExpress, color: "#333333" },
+  Express: { icon: SiExpress, color: "#333333" },
 };
 
 const ProjectCard = ({ project, handleViewProject, accentColor }) => {
@@ -114,7 +114,7 @@ const ProjectCard = ({ project, handleViewProject, accentColor }) => {
 
         <motion.button
           onClick={(e) => handleViewProject(project, e)}
-          className="w-full text-sm px-3 py-1.5 rounded-md font-medium hover:opacity-90 transition-colors"
+          className="w-full text-sm px-3 py-1.5 rounded-md font-medium hover:opacity-90 transition-colors cursor-pointer"
           style={{
             backgroundColor: accentColor,
             color: theme === "light" ? "white" : "#333333",

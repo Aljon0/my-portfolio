@@ -122,16 +122,18 @@ const Projects = () => {
                 Solution Approach
               </h2>
               <ul className="list-disc pl-5">
-                {caseStudy.problemAndSolution.solution.map((solution, index) => (
-                  <li
-                    key={index}
-                    className={`text-justify ${
-                      theme === "light" ? "text-gray-700" : "text-gray-300"
-                    }`}
-                  >
-                    {solution}
-                  </li>
-                ))}
+                {caseStudy.problemAndSolution.solution.map(
+                  (solution, index) => (
+                    <li
+                      key={index}
+                      className={`text-justify ${
+                        theme === "light" ? "text-gray-700" : "text-gray-300"
+                      }`}
+                    >
+                      {solution}
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           </>
@@ -330,12 +332,15 @@ const Projects = () => {
                 }}
               >
                 {/* Sticky position close button that stays at the top of the modal */}
-                <div className="sticky top-0 left-0 w-full z-20 flex justify-end" style={{ marginTop: "-8px", marginRight: "-8px" }}>
+                <div
+                  className="sticky top-0 left-0 w-full z-20 flex justify-end"
+                  style={{ marginTop: "-8px", marginRight: "-8px" }}
+                >
                   <button
                     onClick={closeOverlay}
-                    className={`w-10 h-10 flex items-center justify-center rounded-full shadow-md ${
-                      theme === "light" 
-                        ? "bg-white text-gray-800 hover:bg-gray-100" 
+                    className={`w-10 h-10 flex items-center justify-center rounded-full shadow-md cursor-pointer ${
+                      theme === "light"
+                        ? "bg-white text-gray-800 hover:bg-gray-100"
                         : "bg-[#333333] text-white hover:bg-[#444444]"
                     }`}
                     style={{ fontSize: "24px" }}
