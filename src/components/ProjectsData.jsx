@@ -215,13 +215,13 @@ export const smallProjects = [
 export const certificates = [
   {
     id: 8,
-    title: "Meta Frontend Developer",
+    title: "Introduction to Computer Networking",
     description:
       "Professional certification covering React, JavaScript, and web development fundamentals.",
-    image: "/path-to-meta-cert.jpg",
+    image: "/certificates/ICN.png",
     category: "Certificate",
-    issuer: "Meta",
-    date: "2023",
+    issuer: "Simplilearn",
+    date: "2025",
     link: "#",
   },
   {
