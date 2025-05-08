@@ -216,34 +216,27 @@ export const certificates = [
   {
     id: 8,
     title: "Introduction to Computer Networking",
-    description:
-      "Professional certification covering React, JavaScript, and web development fundamentals.",
     image: "/certificates/ICN.png",
     category: "Certificate",
     issuer: "Simplilearn",
     date: "2025",
-    link: "#",
+    
   },
   {
     id: 9,
     title: "AWS Cloud Practitioner",
-    description:
-      "Foundational certification for Amazon Web Services cloud infrastructure.",
     image: "/path-to-aws-cert.jpg",
     category: "Certificate",
     issuer: "Amazon Web Services",
     date: "2022",
-    link: "#",
   },
   {
     id: 10,
     title: "MongoDB Developer",
-    description:
-      "Technical certification in MongoDB database development and management.",
     image: "/path-to-mongo-cert.jpg",
     category: "Certificate",
     issuer: "MongoDB University",
     date: "2022",
-    link: "#",
+    
   },
 ];
