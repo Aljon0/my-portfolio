@@ -215,35 +215,28 @@ export const smallProjects = [
 export const certificates = [
   {
     id: 8,
-    title: "Meta Frontend Developer",
-    description:
-      "Professional certification covering React, JavaScript, and web development fundamentals.",
-    image: "/path-to-meta-cert.jpg",
+    title: "Introduction to Computer Networking",
+    image: "/certificates/ICN.png",
     category: "Certificate",
-    issuer: "Meta",
-    date: "2023",
-    link: "#",
+    issuer: "Simplilearn",
+    date: "2025",
+    
   },
   {
     id: 9,
     title: "AWS Cloud Practitioner",
-    description:
-      "Foundational certification for Amazon Web Services cloud infrastructure.",
     image: "/path-to-aws-cert.jpg",
     category: "Certificate",
     issuer: "Amazon Web Services",
     date: "2022",
-    link: "#",
   },
   {
     id: 10,
     title: "MongoDB Developer",
-    description:
-      "Technical certification in MongoDB database development and management.",
     image: "/path-to-mongo-cert.jpg",
     category: "Certificate",
     issuer: "MongoDB University",
     date: "2022",
-    link: "#",
+    
   },
 ];

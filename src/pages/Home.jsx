@@ -161,7 +161,7 @@ const Home = () => {
                     <div className="flex items-center justify-center sm:justify-start">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-lg overflow-hidden bg-gray-300">
                         <img
-                          src="/Aljon.jpg"
+                          src="/Aljon.webp"
                           alt="Al-jon Santiago"
                           className="w-full h-full object-cover"
                         />
