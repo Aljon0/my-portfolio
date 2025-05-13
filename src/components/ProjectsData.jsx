@@ -1,6 +1,36 @@
 export const featuredProjects = [
   {
-    id: 3,
+    id: 1,
+    title: "AI-Health Companion",
+    description:
+      "A smart healthcare assistant web app that uses Mistral AI and public medical APIs to help users check symptoms, track mental health, and access timely health advice.",
+    image: "/projects/AI-HealthCare.webp",
+    category: "Web App",
+    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
+    link: "https://projectbaymax.onrender.com/",
+    featured: true,
+    caseStudy: {
+      title: "BAYMAX – Your AI-Powered Health Companion",
+      overview:
+        "BAYMAX is an AI-driven health assistant web application that empowers users to monitor their well-being through symptom checks, mood tracking, journaling, and wellness tips. By integrating Mistral AI with trusted public medical data sources like the National Library of Medicine (NLM), the system provides informed and contextual health responses in real time.",
+      features: [
+        "AI-powered Symptom Checker using Mistral AI and MedlinePlus/NLM APIs",
+        "Daily emotional and health check-ins with mood sliders and logs",
+        "Private journaling feature with CBT-inspired prompts",
+        "Personalized health tips and push notification reminders",
+        "Emergency assistant with quick access to stored critical health info",
+      ],
+      technologyStack: [
+        "Frontend: React.js + Tailwind CSS",
+        "Backend: Express.js (Node.js)",
+        "AI Integration: Mistral AI + NLM / MedlinePlus APIs",
+        "Database: Firebase Firestore",
+        "Authentication: Firebase Authentication",
+      ],
+    },
+  },
+  {
+    id: 2,
     title: "ED3C: Eternal Design",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
@@ -43,66 +73,7 @@ export const featuredProjects = [
       ],
     },
   },
-  {
-    id: 2,
-    title: "AI-Resume Builder",
-    description:
-      "An intelligent resume builder that uses Mistral AI for skill suggestions, customizable templates, and PDF export with Firebase integration.",
-    image: "/projects/AI-Resume Builder.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
-    link: "https://ai-rb-haee.onrender.com",
-    featured: true,
-    caseStudy: {
-      title: "AI-Powered Resume Builder: Smarter Resume Creation",
-      overview:
-        "This web application streamlines the resume creation process by integrating Mistral AI to suggest relevant skills based on job titles. It allows users to generate, customize, save, and download resumes using a clean, intuitive interface and PDF-ready templates.",
-      features: [
-        "AI-generated skill suggestions via Mistral AI",
-        "Customizable resume templates styled with Tailwind CSS",
-        "Export resumes as PDF files",
-        "Save and load resumes using Firebase Firestore",
-        "Secure user authentication via Firebase Auth",
-      ],
-      technologyStack: [
-        "Frontend: React.js + Tailwind CSS",
-        "Backend: Express.js (Node.js)",
-        "AI Integration: Mistral AI",
-        "Database: Firebase Firestore",
-        "Authentication: Firebase Authentication",
-      ],
-    },
-  },
-  {
-    id: 1,
-    title: "AI-Health Companion",
-    description:
-      "A smart healthcare assistant web app that uses Mistral AI and public medical APIs to help users check symptoms, track mental health, and access timely health advice.",
-    image: "/projects/AI-HealthCare.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
-    link: "https://projectbaymax.onrender.com/",
-    featured: true,
-    caseStudy: {
-      title: "BAYMAX – Your AI-Powered Health Companion",
-      overview:
-        "BAYMAX is an AI-driven health assistant web application that empowers users to monitor their well-being through symptom checks, mood tracking, journaling, and wellness tips. By integrating Mistral AI with trusted public medical data sources like the National Library of Medicine (NLM), the system provides informed and contextual health responses in real time.",
-      features: [
-        "AI-powered Symptom Checker using Mistral AI and MedlinePlus/NLM APIs",
-        "Daily emotional and health check-ins with mood sliders and logs",
-        "Private journaling feature with CBT-inspired prompts",
-        "Personalized health tips and push notification reminders",
-        "Emergency assistant with quick access to stored critical health info",
-      ],
-      technologyStack: [
-        "Frontend: React.js + Tailwind CSS",
-        "Backend: Express.js (Node.js)",
-        "AI Integration: Mistral AI + NLM / MedlinePlus APIs",
-        "Database: Firebase Firestore",
-        "Authentication: Firebase Authentication",
-      ],
-    },
-  },
+
 ];
 
 // Small projects data
