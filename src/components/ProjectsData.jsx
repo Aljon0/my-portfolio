@@ -192,20 +192,4 @@ export const certificates = [
     issuer: "Simplilearn",
     date: "2025",
   },
-  {
-    id: 9,
-    title: "AWS Cloud Practitioner",
-    image: "/path-to-aws-cert.jpg",
-    category: "Certificate",
-    issuer: "Amazon Web Services",
-    date: "2022",
-  },
-  {
-    id: 10,
-    title: "MongoDB Developer",
-    image: "/path-to-mongo-cert.jpg",
-    category: "Certificate",
-    issuer: "MongoDB University",
-    date: "2022",
-  },
 ];
