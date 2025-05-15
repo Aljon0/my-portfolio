@@ -120,7 +120,7 @@ const Home = () => {
             } text-white rounded-lg font-medium flex items-center justify-center group relative overflow-hidden cursor-pointer hover:scale-105 transition-transform mx-auto lg:mx-0 text-sm sm:text-base`}
           >
             <span className="flex items-center relative z-10">
-              <a href="/src/assets/Aljon Santiago-CV.pdf" download className="flex gap-2 items-center"><FaFileDownload className="mr-2" /> Download CV</a>
+              <a href="/public/Aljon Santiago-CV.pdf" download className="flex gap-2 items-center"><FaFileDownload className="mr-2" /> Download CV</a>
             </span>
             {/* Glow effect */}
             <div
