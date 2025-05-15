@@ -31,6 +31,36 @@ export const featuredProjects = [
   },
   {
     id: 2,
+    title: "AI-Resume Builder",
+    description:
+      "An intelligent resume builder that uses Mistral AI for skill suggestions, customizable templates, and PDF export with Firebase integration.",
+    image: "/projects/AI-Resume Builder.webp",
+    category: "Web App",
+    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
+    link: "https://ai-rb-haee.onrender.com",
+    featured: true,
+    caseStudy: {
+      title: "AI-Powered Resume Builder: Smarter Resume Creation",
+      overview:
+        "This web application streamlines the resume creation process by integrating Mistral AI to suggest relevant skills based on job titles. It allows users to generate, customize, save, and download resumes using a clean, intuitive interface and PDF-ready templates.",
+      features: [
+        "AI-generated skill suggestions via Mistral AI",
+        "Customizable resume templates styled with Tailwind CSS",
+        "Export resumes as PDF files",
+        "Save and load resumes using Firebase Firestore",
+        "Secure user authentication via Firebase Auth",
+      ],
+      technologyStack: [
+        "Frontend: React.js + Tailwind CSS",
+        "Backend: Express.js (Node.js)",
+        "AI Integration: Mistral AI",
+        "Database: Firebase Firestore",
+        "Authentication: Firebase Authentication",
+      ],
+    },
+  },
+  {
+    id: 3,
     title: "ED3C: Eternal Design",
     description:
       "Interactive 3D customization web application for memorial design and gravestone creation.",
@@ -73,7 +103,6 @@ export const featuredProjects = [
       ],
     },
   },
-
 ];
 
 // Small projects data
