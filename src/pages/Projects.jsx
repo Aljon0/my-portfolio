@@ -373,6 +373,17 @@ const Projects = () => {
                     >
                       Visit Project
                     </a>
+
+                    {/* Add this conditional text below the button */}
+                    {selectedProject.id === 3 && ( // Assuming ED3C is project ID 3
+                      <div
+                        className="mt-2 text-sm font-medium"
+                        style={{ color: accentColor }}
+                      >
+                        ⓘ This link will take you to a video demonstration of
+                        this client project
+                      </div>
+                    )}
                   </div>
                 )}
 

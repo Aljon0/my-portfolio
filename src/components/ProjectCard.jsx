@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import React from "react";
 import { FaChartBar, FaDatabase, FaNodeJs, FaReact } from "react-icons/fa";
@@ -24,7 +25,6 @@ const techIcons = {
   "Weather API": { icon: FaDatabase, color: "#5F9EA0" },
   Appwrite: { icon: SiAppwrite, color: "#F02E65" },
   Supabase: { icon: SiSupabase, color: "#3ECF8E" },
-  Express: { icon: SiExpress, color: "#333333" },
 };
 
 const ProjectCard = ({ project, handleViewProject, accentColor }) => {
