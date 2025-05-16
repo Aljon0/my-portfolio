@@ -1,14 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from "react";
-import About from "./pages/About";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
-import Projects from "./pages/Projects";
-import Stack from "./pages/Stack";
-import Testimonials from "./pages/Testimonials"; // Import the new component
+import Footer from "./components/Footer";
 import ChatBot from "./components/Chatbot";
 import { ThemeProvider } from "./context/ThemeContext";
+
+// Lazy load page components
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Stack = lazy(() => import("./pages/Stack"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center h-screen">
+    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -19,7 +28,7 @@ function App() {
     about: null,
     projects: null,
     stack: null,
-    testimonials: null, // Add reference for testimonials section
+    testimonials: null,
     contact: null,
   });
 
@@ -126,35 +135,36 @@ function App() {
       <div className="bg-[#fefffe] transition-colors duration-300">
         <Navbar activeSection={activeSection} />
 
-        {/* All sections rendered with isActive prop */}
-        <section id="home" className="relative z-0">
-          <Home isActive={activeSection === "home"} />
-        </section>
-        <section
-          id="about"
-          className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-100"
-        >
-          <About isActive={activeSection === "about"} />
-        </section>
-        <section
-          id="projects"
-          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
-        >
-          <Projects isActive={activeSection === "projects"} />
-        </section>
-        <section
-          id="stack"
-          className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
-        >
-          <Stack isActive={activeSection === "stack"} />
-        </section>
-        {/* Add Testimonials section */}
-        <section
-          id="testimonials"
-          className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
-        >
-          <Testimonials isActive={activeSection === "testimonials"} />
-        </section>
+        {/* All sections rendered with isActive prop and Suspense for lazy loading */}
+        <Suspense fallback={<LoadingFallback />}>
+          <section id="home" className="relative z-0">
+            <Home isActive={activeSection === "home"} />
+          </section>
+          <section
+            id="about"
+            className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-100"
+          >
+            <About isActive={activeSection === "about"} />
+          </section>
+          <section
+            id="projects"
+            className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+          >
+            <Projects isActive={activeSection === "projects"} />
+          </section>
+          <section
+            id="stack"
+            className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
+          >
+            <Stack isActive={activeSection === "stack"} />
+          </section>
+          <section
+            id="testimonials"
+            className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+          >
+            <Testimonials isActive={activeSection === "testimonials"} />
+          </section>
+        </Suspense>
 
         <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
       </div>

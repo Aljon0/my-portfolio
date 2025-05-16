@@ -1,9 +1,12 @@
-import Lottie from "lottie-react";
 import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { useTheme } from "../context/ThemeContext";
 import { getMistralResponse } from "../services/mistralAI";
+
+// Lazy load the Lottie component
+const Lottie = lazy(() => import("lottie-react"));
+
 const ChatBot = () => {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -35,15 +38,18 @@ const ChatBot = () => {
   // Path to your Lottie animation JSON file in the public folder
   const robotAnimationPath = "/robotAnimation.json";
 
-  // Fetch the Lottie animation data
+  // Fetch the Lottie animation data - use dynamic import for the JSON file
   useEffect(() => {
-    fetch(robotAnimationPath)
-      .then((response) => response.json())
-      .then((data) => setAnimationData(data))
-      .catch((error) =>
-        console.error("Error loading Lottie animation:", error)
-      );
-  }, []);
+    // Only load animation data when needed (when the chat is open or about to be shown)
+    if (isOpen || showGreeting) {
+      // Use dynamic import for the animation JSON
+      import(/* webpackChunkName: "robotAnimation" */ `${robotAnimationPath}`)
+        .then((data) => setAnimationData(data))
+        .catch((error) =>
+          console.error("Error loading Lottie animation:", error)
+        );
+    }
+  }, [isOpen, showGreeting, robotAnimationPath]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -181,17 +187,19 @@ const ChatBot = () => {
     };
   }, []);
 
-  // Lottie animation component for reuse
+  // Lottie animation component with Suspense
   const RobotAnimation = () => {
     if (!animationData) return null;
 
     return (
-      <Lottie
-        animationData={animationData}
-        loop={true}
-        autoplay={true}
-        style={{ width: "100%", height: "100%" }}
-      />
+      <Suspense fallback={<div className="w-full h-full bg-gray-300 animate-pulse rounded-full"></div>}>
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoplay={true}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </Suspense>
     );
   };
 

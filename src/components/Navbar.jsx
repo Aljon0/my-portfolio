@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { Menu, Moon, Sun, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useTheme } from "../context/ThemeContext";
+
+// Loading fallback for any lazy-loaded components that might be used in the navbar in the future
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center p-2">
+    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 const Navbar = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

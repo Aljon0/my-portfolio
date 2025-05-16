@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { HiChevronRight } from "react-icons/hi";
 import Certificates from "../components/Certificates";
 import FeaturedProjects from "../components/FeaturedProjects";
 import {
@@ -18,9 +17,50 @@ const Projects = () => {
   const [activeSection, setActiveSection] = useState("featured");
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const clickPositionRef = useRef({ x: 0, y: 0 });
+  
+  // For carousel functionality
+  const scrollContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Define the accent colors based on theme
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
+
+  // Update visible cards based on screen size
+  const [visibleCards, setVisibleCards] = useState(3);
+  const totalFeaturedCards = featuredProjects.length;
+  const totalSmallCards = smallProjects.length;
+
+  // Calculate the number of pagination indicators needed
+  const getPaginationCount = () => {
+    const totalCards = activeSection === "featured" 
+      ? totalFeaturedCards 
+      : activeSection === "small" 
+        ? totalSmallCards 
+        : 1;
+    
+    return Math.max(1, totalCards - visibleCards + 1);
+  };
+
+  // Update visible cards based on window width
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCards(1); // Mobile: 1 card
+      } else if (window.innerWidth < 1024) {
+        setVisibleCards(2); // Tablet: 2 cards
+      } else {
+        setVisibleCards(3); // Desktop: 3 cards
+      }
+    };
+
+    updateVisibleCards();
+    window.addEventListener("resize", updateVisibleCards);
+
+    return () => window.removeEventListener("resize", updateVisibleCards);
+  }, []);
 
   useEffect(() => {
     if (selectedProject) {
@@ -33,6 +73,26 @@ const Projects = () => {
       document.body.style.overflow = "auto";
     };
   }, [selectedProject]);
+
+  // Effect to scroll to the active index with smooth animation (only when pagination is clicked)
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const cardWidth = scrollContainerRef.current.clientWidth / visibleCards;
+      const scrollAmount = activeIndex * cardWidth;
+      scrollContainerRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  }, [activeIndex, visibleCards]);
+
+  // Reset activeIndex when changing sections
+  useEffect(() => {
+    setActiveIndex(0);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, [activeSection]);
 
   const handleViewProject = (project, event) => {
     if (event) {
@@ -56,6 +116,75 @@ const Projects = () => {
 
   const closeOverlay = () => {
     setSelectedProject(null);
+  };
+
+  // Function to update active index based on current scroll position
+  const updateActiveIndexFromScroll = () => {
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const cardWidth = container.clientWidth / visibleCards;
+    const scrollPosition = container.scrollLeft;
+
+    // Calculate nearest card index
+    const nearestIndex = Math.round(scrollPosition / cardWidth);
+
+    // Ensure index is within bounds
+    const boundedIndex = Math.max(
+      0,
+      Math.min(nearestIndex, getPaginationCount() - 1)
+    );
+
+    // Update active index without forcing scroll
+    if (boundedIndex !== activeIndex) {
+      setActiveIndex(boundedIndex);
+    }
+  };
+
+  // Mouse and touch event handlers for dragging/sliding
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    // Use a smaller multiplier for even smoother movement
+    const walk = (x - startX) * 1.2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault(); // Prevent default touch behavior
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    // Use a smaller multiplier for even smoother movement
+    const walk = (x - startX) * 1.2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Update active index based on scroll position (for non-drag scrolling)
+  const handleScroll = () => {
+    if (!scrollContainerRef.current || isDragging) return;
+    updateActiveIndexFromScroll();
+  };
+
+  // Add momentum scrolling effect when drag ends
+  const handleDragEnd = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      // Only update the active index for pagination indicators
+      updateActiveIndexFromScroll();
+    }
   };
 
   const renderCaseStudy = (caseStudy) => {
@@ -246,47 +375,74 @@ const Projects = () => {
         <SectionNav />
 
         <div className={`${selectedProject ? "blur-sm" : ""}`}>
-          {activeSection === "featured" && (
-            <>
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto scrollbar-hide scroll-smooth snap-x select-none"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              cursor: isDragging ? "grabbing" : "grab",
+              WebkitUserSelect: "none", // Safari
+              MozUserSelect: "none", // Firefox
+              msUserSelect: "none", // IE/Edge
+              userSelect: "none", // Standard syntax
+            }}
+            onScroll={handleScroll}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleDragEnd}
+            onMouseUp={handleDragEnd}
+            onMouseMove={handleMouseMove}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleDragEnd}
+            onTouchMove={handleTouchMove}
+            onTouchCancel={handleDragEnd}
+          >
+            {activeSection === "featured" && (
               <FeaturedProjects
                 projects={featuredProjects}
                 handleViewProject={handleViewProject}
                 accentColor={accentColor}
               />
+            )}
 
-              <div className="flex justify-end space-x-4 mt-2">
+            {activeSection === "small" && (
+              <SmallProjects
+                projects={smallProjects}
+                handleViewProject={handleViewProject}
+                accentColor={accentColor}
+              />
+            )}
+
+            {activeSection === "certificates" && (
+              <Certificates
+                certificates={certificates}
+                accentColor={accentColor}
+              />
+            )}
+          </div>
+
+          {/* Pagination dots */}
+          {activeSection !== "certificates" && (
+            <div className="flex justify-center mt-6 gap-2">
+              {Array.from({ length: getPaginationCount() }).map((_, index) => (
                 <button
-                  onClick={() => setActiveSection("small")}
-                  className="text-sm flex items-center hover:underline cursor-pointer"
-                  style={{ color: accentColor }}
-                >
-                  View all small projects <HiChevronRight className="ml-1" />
-                </button>
-
-                <button
-                  onClick={() => setActiveSection("certificates")}
-                  className="text-sm flex items-center hover:underline cursor-pointer"
-                  style={{ color: accentColor }}
-                >
-                  View certificates <HiChevronRight className="ml-1" />
-                </button>
-              </div>
-            </>
-          )}
-
-          {activeSection === "small" && (
-            <SmallProjects
-              projects={smallProjects}
-              handleViewProject={handleViewProject}
-              accentColor={accentColor}
-            />
-          )}
-
-          {activeSection === "certificates" && (
-            <Certificates
-              certificates={certificates}
-              accentColor={accentColor}
-            />
+                  key={index}
+                  onClick={() => setActiveIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
+                    activeIndex === index
+                      ? "w-6"
+                      : theme === "light"
+                      ? "bg-gray-300 hover:bg-gray-400"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }`}
+                  style={{
+                    backgroundColor:
+                      activeIndex === index ? accentColor : undefined,
+                  }}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           )}
         </div>
 
