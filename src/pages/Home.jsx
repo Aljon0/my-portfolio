@@ -75,7 +75,7 @@ const Home = () => {
               theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
             } font-medium`}
           >
-            Web Developer
+            Full Stack Developer | AI-Integrated Web Solutions
           </h2>
 
           <p
@@ -83,7 +83,7 @@ const Home = () => {
               theme === "light" ? "text-gray-700" : "text-white"
             }`}
           >
-            Crafting responsive web applications with modern technologies.
+            Crafting modern web applications with integrated AI features using tools like Hugging Face and Mistral AI.
           </p>
 
           {/* Social Icons */}

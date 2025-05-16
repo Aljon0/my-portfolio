@@ -49,6 +49,37 @@ const About = () => {
             </p>
           </div>
 
+          {/* AI Focus Container - NEW */}
+          <div
+            className={`rounded-xl shadow-lg p-6 border-t-2 ${
+              theme === "light" 
+                ? "bg-white bg-opacity-90" 
+                : "bg-[#2a2a2a] bg-opacity-95"
+            }`}
+            style={{ borderColor: accentColor }}
+          >
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl" style={{ color: accentColor }}>
+                🔍
+              </span>
+              <div>
+                <h3
+                  className="text-xl font-semibold mb-2"
+                  style={{ color: accentColor }}
+                >
+                  AI Integration Focus
+                </h3>
+                <p
+                  className={`leading-relaxed ${
+                    theme === "light" ? "text-gray-700" : "text-white"
+                  }`}
+                >
+                  Recently, I've been focusing on integrating AI into web apps — building smart, responsive systems using tools like Hugging Face APIs and Mistral AI. From an AI-powered resume builder to a healthcare companion bot, I enjoy creating applications that go beyond CRUD and deliver real user intelligence.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Two column layout for Expertise and Background */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Expertise Container */}
