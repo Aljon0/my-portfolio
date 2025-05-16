@@ -14,7 +14,7 @@ const ParticlesBackground = ({ show = true, theme = "dark" }) => {
           },
         },
         color: {
-          value: theme === "light" ? "#1E40AF" : "#90D5FF", // Changed to dark blue for light mode
+          value: theme === "light" ? "#1E40AF" : "#90D5FF", // Dark blue for light mode, light blue for dark mode
         },
         shape: {
           type: "circle",
@@ -34,11 +34,7 @@ const ParticlesBackground = ({ show = true, theme = "dark" }) => {
           },
         },
         line_linked: {
-          enable: true,
-          distance: 150,
-          color: theme === "light" ? "#1E40AF" : "#90D5FF", // Changed to dark blue for light mode
-          opacity: theme === "light" ? 0.3 : 0.4,
-          width: 1,
+          enable: false, // Disabled the connecting lines
         },
         move: {
           enable: true,
