@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   FaCss3Alt,
-  FaDocker,
   FaGithub,
   FaHtml5,
   FaJsSquare,
@@ -9,20 +8,51 @@ import {
   FaNodeJs,
   FaReact,
   FaGit,
+  FaPython,
+  FaBrain,
 } from "react-icons/fa";
 import {
-  SiAppwrite,
-  SiChakraui,
   SiExpress,
   SiFirebase,
   SiPostman,
   SiSupabase,
   SiTailwindcss,
-  SiThreedotjs,
   SiVite,
   SiTypescript,
 } from "react-icons/si";
 import { useTheme } from "../context/ThemeContext";
+
+// Custom Mistral AI icon
+const MistralIcon = ({ color, size, style }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill={color}
+      style={style}
+    >
+      <path d="M12 2L4 6v12l8 4 8-4V6l-8-4zm0 2.3L18 8v8l-6 3-6-3V8l6-3.7zm0 1.7L7 9v6l5 2.5L17 15V9l-5-3z" />
+    </svg>
+  );
+};
+
+// Custom Hugging Face icon
+const HuggingFaceIcon = ({ color, size, style }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill={color}
+      style={style}
+    >
+      <path d="M7.5 5c-.8 0-1.5.7-1.5 1.5S6.7 8 7.5 8 9 7.3 9 6.5 8.3 5 7.5 5zm9 0c-.8 0-1.5.7-1.5 1.5S15.7 8 16.5 8 18 7.3 18 6.5 17.3 5 16.5 5zm-9 12c-.8 0-1.5.7-1.5 1.5S6.7 20 7.5 20 9 19.3 9 18.5 8.3 17 7.5 17zm9 0c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5zM12 10c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" />
+    </svg>
+  );
+};
 
 const Stack = () => {
   const { theme } = useTheme();
@@ -50,7 +80,6 @@ const Stack = () => {
 
   const getIconColor = (baseColor, name) => {
     if (theme === "dark") {
-      if (name === "Three.js") return "#FFFFFF";
       if (name === "Express") return "#FFFFFF";
       if (name === "GitHub") return "#FFFFFF";
     }
@@ -78,15 +107,14 @@ const Stack = () => {
         { name: "CSS", icon: FaCss3Alt, color: "#1572B6" },
         { name: "JavaScript", icon: FaJsSquare, color: "#F7DF1E" },
         { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+        { name: "Python", icon: FaPython, color: "#3776AB" },
         { name: "Tailwind", icon: SiTailwindcss, color: "#38B2AC" },
-        { name: "Chakra UI", icon: SiChakraui, color: "#319795" },
-        { name: "Three.js", icon: SiThreedotjs, color: "#333333" },
+        { name: "Hugging Face", icon: HuggingFaceIcon, color: "#FFD21E" },
+        { name: "Mistral AI", icon: MistralIcon, color: "#6352D9" },
         { name: "Supabase", icon: SiSupabase, color: "#3ECF8E" },
-        { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
         { name: "GitHub", icon: FaGithub, color: "#333333" },
         { name: "Git", icon: FaGit, color: "#F05032" },
         { name: "Vite", icon: SiVite, color: "#646CFF" },
-        { name: "Docker", icon: FaDocker, color: "#2496ED" },
         { name: "Postman", icon: SiPostman, color: "#FF6C37" },
       ],
     },
@@ -136,7 +164,7 @@ const Stack = () => {
               <span className="font-semibold" style={{ color: accentColor }}>
                 technical expertise
               </span>{" "}
-              spans across web development.
+              spans across web development and AI technologies.
             </p>
           </div>
 
