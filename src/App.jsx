@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import ChatBot from "./components/Chatbot";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./context/ThemeContext";
-import LoadingAnimation from "./components/LoadingAnimation";
 
 // Lazy load page components
 const Home = lazy(() => import("./pages/Home"));
@@ -16,13 +15,16 @@ const Testimonials = lazy(() => import("./pages/Testimonials"));
 // Loading fallback component for lazy-loaded components
 const LoadingFallback = ({ isLoading = true }) => (
   <div className="flex items-center justify-center h-screen">
-    <div className={`${isLoading ? "animate-spin" : ""} rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500`}></div>
+    <div
+      className={`${
+        isLoading ? "animate-spin" : ""
+      } rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500`}
+    ></div>
   </div>
 );
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [lazyComponentsLoading, setLazyComponentsLoading] = useState(true);
   const scrollTimeout = useRef(null);
   const isScrolling = useRef(false);
@@ -122,9 +124,7 @@ function App() {
 
     // Initial scroll to section if hash exists
     const initialHash = window.location.hash.replace("#", "") || "home";
-    if (!isInitialLoading) {
-      scrollToSection(initialHash);
-    }
+    scrollToSection(initialHash);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
@@ -133,7 +133,7 @@ function App() {
         clearTimeout(scrollTimeout.current);
       }
     };
-  }, [activeSection, isInitialLoading]);
+  }, [activeSection]);
 
   // Function to handle when lazy components are loaded
   const handleLazyComponentsLoaded = () => {
@@ -142,50 +142,49 @@ function App() {
 
   return (
     <ThemeProvider>
-      {isInitialLoading ? (
-        <LoadingAnimation onComplete={() => setIsInitialLoading(false)} />
-      ) : (
-        <div className="bg-[#fefffe] transition-colors duration-300">
-          <Navbar activeSection={activeSection} />
+      <div className="bg-[#fefffe] transition-colors duration-300">
+        <Navbar activeSection={activeSection} />
 
-          {/* All sections rendered with isActive prop and Suspense for lazy loading */}
-          <Suspense fallback={<LoadingFallback isLoading={lazyComponentsLoading} />}>
-            <div onLoad={handleLazyComponentsLoaded}>
-              <section id="home" className="relative z-0">
-                <Home isActive={activeSection === "home"} />
-              </section>
-              <section
-                id="about"
-                className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-100"
-              >
-                <About isActive={activeSection === "about"} />
-              </section>
-              <section
-                id="projects"
-                className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
-              >
-                <Projects isActive={activeSection === "projects"} />
-              </section>
-              <section
-                id="stack"
-                className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
-              >
-                <Stack isActive={activeSection === "stack"} />
-              </section>
-              <section
-                id="testimonials"
-                className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
-              >
-                <Testimonials isActive={activeSection === "testimonials"} />
-              </section>
-            </div>
-          </Suspense>
+        {/* All sections rendered with isActive prop and Suspense for lazy loading */}
+        <Suspense
+          fallback={<LoadingFallback isLoading={lazyComponentsLoading} />}
+        >
+          <div onLoad={handleLazyComponentsLoaded}>
+            <section id="home" className="relative z-0">
+              <Home isActive={activeSection === "home"} />
+            </section>
+            <section
+              id="about"
+              className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-100"
+            >
+              <About isActive={activeSection === "about"} />
+            </section>
+            <section
+              id="projects"
+              className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+            >
+              <Projects isActive={activeSection === "projects"} />
+            </section>
+            <section
+              id="stack"
+              className="bg-[#333333] dark:bg-[#333333] light:bg-gray-100 relative z-10"
+            >
+              <Stack isActive={activeSection === "stack"} />
+            </section>
+            <section
+              id="testimonials"
+              className="bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] dark:from-[#1a1a1a] dark:to-[#2d2d2d] light:from-gray-100 light:to-gray-200 z-10 relative"
+            >
+              <Testimonials isActive={activeSection === "testimonials"} />
+            </section>
+          </div>
+        </Suspense>
 
-          <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
-        </div>
-      )}
+        <Footer className="relative z-10 bg-[#333333] dark:bg-[#333333] light:bg-gray-200" />
+      </div>
       <ChatBot />
     </ThemeProvider>
   );
 }
+
 export default App;
