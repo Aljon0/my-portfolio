@@ -30,13 +30,24 @@ const Testimonials = () => {
     {
       id: 2,
       comment:
-        "Exceptional problem-solving skills! They transformed our concept into a fully functional application that exceeded our expectations.",
-      name: "Jeran Christopher Merino",
+        "Aljon have constantly shown that he is a reliable employee by showing up for work each day prepared and with a positive attitude.",
+      name: "Rodante R. Reyes",
       company: "Seiwa Kaiun Philippines Inc,",
       rating: 5,
-      contact: "jeranmerino147@gmail.com",
-      image: "/testimonials/michael.jpg",
-      label: "Co-worker at Seiwa Kaiun",
+      contact: "dan.reyes@seiwakaiun.com.ph",
+      image: "/testimonials/Reyes.jpg",
+      label: "IT Manager at Seiwa Kaiun",
+    },
+    {
+      id: 3,
+      comment:
+        "Aljon is a trusted and proficient backend developer who regularly produces clear, effective code and finds solutions to issues. He is a valuable member of the team because of his cooperative demeanor.",
+      name: "Glaiza Lei San Jose",
+      company: "CVSU - CCAT Campus",
+      rating: 5,
+      contact: "glaizaleis@gmail.com",
+      image: "/testimonials/",
+      label: "Classmate at CCAT",
     },
   ];
 
