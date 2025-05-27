@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import {
   FaCss3Alt,
+  FaGit,
   FaGithub,
   FaHtml5,
   FaJsSquare,
   FaMobileAlt,
   FaNodeJs,
-  FaReact,
-  FaGit,
   FaPython,
-  FaBrain,
+  FaReact,
 } from "react-icons/fa";
 import {
   SiExpress,
@@ -17,10 +16,12 @@ import {
   SiPostman,
   SiSupabase,
   SiTailwindcss,
-  SiVite,
   SiTypescript,
+  SiVite,
 } from "react-icons/si";
-import { useTheme } from "../context/ThemeContext";
+
+// Mock theme context
+const useTheme = () => ({ theme: "dark" });
 
 // Custom Mistral AI icon
 const MistralIcon = ({ color, size, style }) => {
@@ -90,7 +91,6 @@ const Stack = () => {
     {
       category: "Web Development",
       title: "FERN Stack",
-      description: "Firebase, Express, React, Node.js",
       skills: [
         { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
         { name: "Express", icon: SiExpress, color: "#333333" },
@@ -129,185 +129,280 @@ const Stack = () => {
   };
 
   return (
-    <section
-      id="stack"
-      className={`min-h-screen flex flex-col items-center justify-center py-16 transition-colors duration-300 ${
-        theme === "light"
-          ? "bg-gradient-to-br from-gray-100 to-gray-200"
-          : "bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]"
-      }`}
-    >
-      <div className="w-full">
-        <h2
-          className={`text-4xl font-bold mb-10 text-center font-[poppins] ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
-        >
-          Tech Stack
-        </h2>
+    <div>
+      <style jsx>{`
+        @keyframes float-3d {
+          0%,
+          100% {
+            transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+          }
+          25% {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-2deg);
+          }
+          50% {
+            transform: translateY(-15px) rotateX(0deg) rotateY(2deg);
+          }
+          75% {
+            transform: translateY(-8px) rotateX(-3deg) rotateY(-1deg);
+          }
+        }
 
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div
-            className={`p-5 rounded-lg border-l-4 shadow-md mb-10 w-full ${
-              theme === "light"
-                ? "bg-gradient-to-r from-gray-100 to-gray-200"
-                : "bg-gradient-to-r from-[#2a2a2a] to-[#333333]"
-            }`}
-            style={{ borderColor: accentColor }}
+        @keyframes glow-pulse {
+          0%,
+          100% {
+            box-shadow: 0 0 20px rgba(144, 213, 255, 0.3),
+              0 0 40px rgba(144, 213, 255, 0.2),
+              inset 0 0 20px rgba(144, 213, 255, 0.1);
+          }
+          50% {
+            box-shadow: 0 0 30px rgba(144, 213, 255, 0.5),
+              0 0 60px rgba(144, 213, 255, 0.3),
+              inset 0 0 30px rgba(144, 213, 255, 0.2);
+          }
+        }
+
+        .skill-container-3d {
+          perspective: 1000px;
+          transform-style: preserve-3d;
+        }
+
+        .skill-card-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(30, 30, 30, 0.9) 0%,
+            rgba(45, 45, 45, 0.95) 50%,
+            rgba(60, 60, 60, 0.9) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+            0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+          transform-style: preserve-3d;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          backdrop-filter: blur(10px);
+        }
+
+        .skill-card-3d::before {
+          content: "";
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(144, 213, 255, 0.1),
+            transparent
+          );
+          border-radius: inherit;
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .skill-card-3d:hover::before {
+          opacity: 1;
+        }
+
+        .skill-card-3d:hover {
+          transform: translateY(-15px) rotateX(10deg) rotateY(5deg) scale(1.05);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+            0 10px 30px rgba(0, 0, 0, 0.6),
+            0 0 40px var(--glow-color, rgba(144, 213, 255, 0.4)),
+            inset 0 2px 0 rgba(255, 255, 255, 0.2),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .skill-icon-3d {
+          transform-style: preserve-3d;
+          transition: all 0.3s ease;
+          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .skill-card-3d:hover .skill-icon-3d {
+          transform: translateZ(20px) rotateY(15deg);
+          filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+        }
+
+        .category-button-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(30, 30, 30, 0.9) 0%,
+            rgba(45, 45, 45, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transform-style: preserve-3d;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(5px);
+        }
+
+        .category-button-3d:hover {
+          transform: translateY(-5px) rotateX(5deg);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(144, 213, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .category-button-3d.active {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.2) 0%,
+            rgba(30, 64, 175, 0.3) 100%
+          );
+          border-color: rgba(144, 213, 255, 0.6);
+          animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        .info-panel-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(20, 20, 20, 0.95) 0%,
+            rgba(35, 35, 35, 0.98) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
+            0 6px 20px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 30px rgba(144, 213, 255, 0.1);
+          backdrop-filter: blur(15px);
+          transform-style: preserve-3d;
+        }
+
+        .floating-animation {
+          animation: float-3d 6s ease-in-out infinite;
+        }
+      `}</style>
+
+      <section
+        id="stack"
+        className="min-h-screen flex flex-col items-center justify-center py-16 transition-colors duration-300"
+        style={{
+          background:
+            "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)",
+        }}
+      >
+        <div className="w-full">
+          <h2
+            className="text-5xl font-bold mb-10 text-center text-white floating-animation"
+            style={{
+              textShadow:
+                "0 0 20px rgba(144, 213, 255, 0.5), 0 0 40px rgba(144, 213, 255, 0.3)",
+              background: "linear-gradient(45deg, #90D5FF, #ffffff, #90D5FF)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
           >
-            <p
-              className={`text-lg leading-relaxed text-center ${
-                theme === "light" ? "text-gray-700" : "text-gray-300"
-              }`}
+            Tech Stack
+          </h2>
+
+          <div className="container mx-auto px-6 max-w-5xl">
+            <div
+              className="info-panel-3d p-6 rounded-2xl mb-10 w-full border-l-4 floating-animation"
+              style={{ borderColor: accentColor, animationDelay: "0.5s" }}
             >
-              My{" "}
-              <span className="font-semibold" style={{ color: accentColor }}>
-                technical expertise
-              </span>{" "}
-              spans across web development and AI technologies.
-            </p>
-          </div>
+              <p className="text-lg leading-relaxed text-center text-gray-300">
+                My{" "}
+                <span className="font-semibold text-blue-300">
+                  technical expertise
+                </span>{" "}
+                spans across web development and AI technologies.
+              </p>
+            </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-10">
-            {skillCategories.map((cat) => (
-              <button
-                key={cat.category}
-                onClick={() => handleCategoryClick(cat.category)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 border cursor-pointer ${
-                  activeCategory === cat.category
-                    ? "border-[#90D5FF]"
-                    : theme === "light"
-                    ? "border-gray-300"
-                    : "border-[#444444]"
-                } ${
-                  theme === "light"
-                    ? activeCategory === cat.category
-                      ? "bg-white text-gray-800"
-                      : "bg-gray-100 text-gray-700"
-                    : activeCategory === cat.category
-                    ? "bg-[#1e1e1e] text-white"
-                    : "bg-[#2a2a2a] text-gray-300"
-                } hover:scale-105`}
-              >
-                {cat.category}
-              </button>
-            ))}
-          </div>
+            <div className="flex flex-wrap justify-center gap-6 mb-12">
+              {skillCategories.map((cat, index) => (
+                <button
+                  key={cat.category}
+                  onClick={() => handleCategoryClick(cat.category)}
+                  className={`category-button-3d px-6 py-3 rounded-xl font-medium cursor-pointer ${
+                    activeCategory === cat.category ? "active" : ""
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  <span className="text-gray-200">{cat.category}</span>
+                </button>
+              ))}
+            </div>
 
-          {skillCategories
-            .filter((cat) => cat.category === activeCategory)
-            .map((selectedCategory) => (
-              <div key={selectedCategory.category} className="space-y-6">
-                <div className="text-center mb-8">
-                  <h3
-                    className={`text-2xl font-bold mb-2 ${
-                      theme === "light" ? "text-gray-800" : "text-white"
-                    }`}
-                    style={{ color: accentColor }}
-                  >
-                    {selectedCategory.title}
-                  </h3>
-                  <p
-                    className={
-                      theme === "light" ? "text-gray-600" : "text-gray-300"
-                    }
-                  >
-                    {selectedCategory.description}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-6">
-                  {selectedCategory.skills.map((skill, index) => {
-                    const iconColor = getIconColor(skill.color, skill.name);
-
-                    return (
-                      <div
-                        key={index}
-                        className={`group relative flex flex-col items-center justify-center px-4 py-3 rounded-md transition-all duration-300 hover:scale-105 animate-bounce-slow w-24 h-24 ${
-                          theme === "light"
-                            ? "bg-white border border-gray-200"
-                            : "bg-[#1e1e1e] border border-[#333333]"
-                        }`}
-                        style={{
-                          animationDuration: `${3 + index * 0.2}s`,
-                          animationDelay: `${index * 0.1}s`,
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.boxShadow = `0 0 10px ${skill.color}, 0 0 15px ${skill.color}40`;
-                          e.currentTarget.style.border = `1px solid ${skill.color}`;
-                          e.currentTarget.style.animationPlayState = "paused";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.boxShadow = "none";
-                          e.currentTarget.style.border =
-                            theme === "light"
-                              ? "1px solid #e5e7eb"
-                              : "1px solid #333333";
-                          e.currentTarget.style.animationPlayState = "running";
-                        }}
-                        onClick={() => handleSkillClick(skill.name)}
-                      >
-                        <div className="flex items-center justify-center mb-2">
-                          <skill.icon
-                            color={iconColor}
-                            style={{
-                              fontSize: "1.5rem",
-                              filter:
-                                skill.color === "#FFFFFF"
-                                  ? "invert(1)"
-                                  : "none",
-                            }}
-                            size={40}
-                          />
-                        </div>
-
-                        <span
-                          className={`text-xs font-medium text-center ${
-                            theme === "light"
-                              ? "text-gray-700"
-                              : "text-gray-300"
-                          }`}
-                          style={{
-                            color: iconColor,
-                          }}
-                        >
-                          {skill.name}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {selectedCategory.category === "Web Development" && (
-                  <div
-                    className={`mt-10 p-4 rounded-lg border-l-4 ${
-                      theme === "light"
-                        ? "bg-white border border-gray-200"
-                        : "bg-[#1e1e1e] border border-[#333333]"
-                    }`}
-                    style={{ borderColor: accentColor }}
-                  >
-                    <p
-                      className={`text-center ${
-                        theme === "light" ? "text-gray-600" : "text-gray-300"
-                      }`}
+            {skillCategories
+              .filter((cat) => cat.category === activeCategory)
+              .map((selectedCategory) => (
+                <div key={selectedCategory.category} className="space-y-8">
+                  <div className="text-center mb-10">
+                    <h3
+                      className="text-3xl font-bold mb-3 text-blue-300 floating-animation"
+                      style={{ animationDelay: "1s" }}
                     >
-                      <span
-                        className="font-semibold"
-                        style={{ color: accentColor }}
-                      >
-                        FERN Stack
-                      </span>{" "}
-                      provides a powerful foundation for building scalable,
-                      real-time web applications.
+                      {selectedCategory.title}
+                    </h3>
+                    <p className="text-gray-300 text-lg">
+                      {selectedCategory.description}
                     </p>
                   </div>
-                )}
-              </div>
-            ))}
+
+                  <div className="flex flex-wrap justify-center gap-8 skill-container-3d">
+                    {selectedCategory.skills.map((skill, index) => {
+                      const iconColor = getIconColor(skill.color, skill.name);
+
+                      return (
+                        <div
+                          key={index}
+                          className="skill-card-3d group flex flex-col items-center justify-center px-6 py-6 rounded-2xl w-32 h-32 cursor-pointer"
+                          style={{
+                            "--glow-color": `${skill.color}40`,
+                            animationDelay: `${index * 0.1}s`,
+                          }}
+                          onClick={() => handleSkillClick(skill.name)}
+                        >
+                          <div className="skill-icon-3d flex items-center justify-center mb-3">
+                            <skill.icon
+                              color={iconColor}
+                              size={48}
+                              style={{
+                                filter:
+                                  skill.color === "#FFFFFF"
+                                    ? "invert(1)"
+                                    : "none",
+                              }}
+                            />
+                          </div>
+
+                          <span className="text-sm font-semibold text-center text-gray-200 group-hover:text-white transition-colors duration-300">
+                            {skill.name}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {selectedCategory.category === "Web Development" && (
+                    <div
+                      className="info-panel-3d mt-12 p-6 rounded-2xl border-l-4 floating-animation"
+                      style={{ borderColor: accentColor, animationDelay: "2s" }}
+                    >
+                      <p className="text-center text-gray-300 text-lg">
+                        <span className="font-semibold text-blue-300">
+                          FERN Stack
+                        </span>{" "}
+                        provides a powerful foundation for building scalable,
+                        real-time web applications.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

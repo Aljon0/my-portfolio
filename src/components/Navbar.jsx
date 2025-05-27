@@ -1,21 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Menu, Moon, Sun, X } from "lucide-react";
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-
-// Loading fallback for any lazy-loaded components that might be used in the navbar in the future
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center p-2">
-    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
-  </div>
-);
 
 const Navbar = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  // Add scroll listener to create subtle background when scrolling
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -34,180 +26,145 @@ const Navbar = ({ activeSection }) => {
     setIsMenuOpen(false);
   };
 
-  // Updated nav items array
   const navItems = ["home", "about", "projects", "stack", "testimonials"];
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? theme === "light"
-            ? "bg-white/80 backdrop-blur-sm shadow-md"
-            : "bg-[#333333]/80 backdrop-blur-sm shadow-md"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a
-          href="#home"
-          onClick={(e) => {
-            e.preventDefault();
-            handleScroll("home");
-          }}
-          className={`font-bold text-2xl transition-colors duration-300 tracking-wider`}
-        >
-          <span className="font-mono relative group">
-            <span
-              className={`${
-                theme === "light" ? "text-blue-700" : "text-[#90D5FF]"
-              }`}
-            >
-              &lt;/
-            </span>
-            <span
-              className={`font-extrabold ${
-                theme === "light" ? "text-gray-800" : "text-white"
-              }`}
-            >
-              AJ
-            </span>
-            <span
-              className={`${
-                theme === "light" ? "text-blue-700" : "text-[#90D5FF]"
-              }`}
-            >
-              &gt;
-            </span>
-            <span
-              className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
-                theme === "light" ? "bg-blue-700" : "bg-[#90D5FF]"
-              } transition-all duration-300 group-hover:w-full`}
-            ></span>
-          </span>
-        </a>
+    <div>
+      <style jsx>{`
+        .navbar-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(20, 20, 20, 0.95) 0%,
+            rgba(35, 35, 35, 0.98) 100%
+          );
+          border-bottom: 1px solid rgba(144, 213, 255, 0.2);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(144, 213, 255, 0.1);
+          backdrop-filter: blur(15px);
+        }
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center">
-          <ul className="flex space-x-6 mr-6">
-            {navItems.map((section) => (
-              <li key={section}>
-                <a
-                  href={`#${section}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScroll(section);
-                  }}
-                  className={`hover:${
-                    theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
-                  } pb-1 transition-all duration-300 ${
-                    activeSection === section
-                      ? `border-b-2 ${
-                          theme === "light"
-                            ? "border-blue-800 text-blue-800"
-                            : "border-[#90D5FF] text-[#90D5FF]"
-                        }`
-                      : theme === "light"
-                      ? "text-gray-800"
-                      : "text-white"
-                  }`}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </a>
-              </li>
-            ))}
-          </ul>
+        .logo-3d {
+          transform-style: preserve-3d;
+          transition: all 0.3s ease;
+        }
 
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-full transition-colors duration-300 cursor-pointer ${
-              theme === "light"
-                ? "bg-gray-100 hover:bg-gray-200"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-            aria-label="Toggle theme"
+        .logo-3d:hover {
+          transform: translateZ(10px) rotateY(5deg);
+          text-shadow: 0 0 20px rgba(144, 213, 255, 0.5);
+        }
+
+        .nav-item-3d {
+          position: relative;
+          transition: all 0.3s ease;
+          transform-style: preserve-3d;
+        }
+
+        .nav-item-3d::after {
+          content: "";
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #90d5ff, transparent);
+          transition: all 0.3s ease;
+          transform: translateX(-50%);
+        }
+
+        .nav-item-3d:hover::after,
+        .nav-item-3d.active::after {
+          width: 100%;
+        }
+
+        .nav-item-3d:hover {
+          transform: translateY(-2px) translateZ(5px);
+          text-shadow: 0 0 10px rgba(144, 213, 255, 0.3);
+        }
+      `}</style>
+
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? "navbar-3d" : "bg-transparent"
+        }`}
+      >
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleScroll("home");
+            }}
+            className="logo-3d font-bold text-2xl tracking-wider cursor-pointer"
           >
-            {theme === "light" ? (
-              <Moon size={20} className="text-gray-800" />
-            ) : (
-              <Sun size={20} className="text-white" />
-            )}
-          </button>
+            <span className="font-mono relative group">
+              <span className="text-[#90D5FF]">&lt;/</span>
+              <span className="font-extrabold text-white">AJ</span>
+              <span className="text-[#90D5FF]">&gt;</span>
+            </span>
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center">
+            <ul className="flex space-x-8 mr-6">
+              {navItems.map((section) => (
+                <li key={section}>
+                  <a
+                    href={`#${section}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleScroll(section);
+                    }}
+                    className={`nav-item-3d cursor-pointer ${
+                      activeSection === section
+                        ? "active text-[#90D5FF]"
+                        : "text-white hover:text-[#90D5FF]"
+                    }`}
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-white focus:outline-none"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
-          {/* Theme Toggle Button (Mobile) */}
-          <button
-            onClick={toggleTheme}
-            className={`p-2 mr-2 rounded-full transition-colors duration-300 ${
-              theme === "light"
-                ? "bg-gray-100 hover:bg-gray-200"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-            aria-label="Toggle theme"
-          >
-            {theme === "light" ? (
-              <Moon
-                size={20}
-                className={theme === "light" ? "text-gray-800" : "text-white"}
-              />
-            ) : (
-              <Sun
-                size={20}
-                className={theme === "light" ? "text-gray-800" : "text-white"}
-              />
-            )}
-          </button>
-
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`focus:outline-none ${
-              theme === "light" ? "text-gray-800" : "text-white"
-            }`}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div
-          className={`md:hidden py-3 ${
-            theme === "light" ? "bg-white/95" : "bg-[#333333]/95"
-          } backdrop-blur-sm`}
-        >
-          <ul className="flex flex-col items-center">
-            {navItems.map((section) => (
-              <li key={section} className="py-2 w-full text-center">
-                <a
-                  href={`#${section}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScroll(section);
-                  }}
-                  className={`block hover:${
-                    theme === "light" ? "text-blue-800" : "text-[#90D5FF]"
-                  } transition-all duration-300 ${
-                    activeSection === section
-                      ? theme === "light"
-                        ? "text-blue-800"
-                        : "text-[#90D5FF]"
-                      : theme === "light"
-                      ? "text-gray-800"
-                      : "text-white"
-                  }`}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </nav>
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden navbar-3d">
+            <ul className="flex flex-col items-center py-4">
+              {navItems.map((section) => (
+                <li key={section} className="py-3 w-full text-center">
+                  <a
+                    href={`#${section}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleScroll(section);
+                    }}
+                    className={`nav-item-3d cursor-pointer ${
+                      activeSection === section
+                        ? "text-[#90D5FF]"
+                        : "text-white hover:text-[#90D5FF]"
+                    }`}
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </nav>
+    </div>
   );
 };
 
