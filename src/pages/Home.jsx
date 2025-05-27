@@ -43,6 +43,20 @@ const Home = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (contactExpanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [contactExpanded]);
+
   const handleContactClick = () => {
     setContactExpanded(true);
     // Reset form state when opening
@@ -438,6 +452,30 @@ const Home = () => {
             0 0 50px rgba(144, 213, 255, 0.2);
         }
 
+        .contact-modal-content {
+          max-height: calc(100vh - 4rem);
+          overflow-y: auto;
+        }
+
+        /* Custom scrollbar styles */
+        .contact-modal-content::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .contact-modal-content::-webkit-scrollbar-track {
+          background: rgba(144, 213, 255, 0.1);
+          border-radius: 10px;
+        }
+
+        .contact-modal-content::-webkit-scrollbar-thumb {
+          background: rgba(144, 213, 255, 0.5);
+          border-radius: 10px;
+        }
+
+        .contact-modal-content::-webkit-scrollbar-thumb:hover {
+          background: rgba(144, 213, 255, 0.7);
+        }
+
         .form-input {
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(144, 213, 255, 0.2);
@@ -466,6 +504,18 @@ const Home = () => {
           transform: translateY(-2px);
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
             0 0 30px rgba(144, 213, 255, 0.5);
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+          .contact-modal {
+            margin: 1rem;
+            max-height: calc(100vh - 2rem);
+          }
+
+          .contact-modal-content {
+            max-height: calc(100vh - 6rem);
+          }
         }
       `}</style>
 
@@ -586,189 +636,199 @@ const Home = () => {
 
       {/* Contact Form Modal */}
       {contactExpanded && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 contact-overlay">
-          <div className="contact-modal w-full max-w-6xl rounded-3xl backdrop-blur-xs overflow-hidden">
-            <div className="p-6 md:p-8 relative">
-              <button
-                onClick={() => setContactExpanded(false)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/30 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
-              >
-                <X size={20} />
-              </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center contact-overlay">
+          <div className="contact-modal w-full max-w-6xl rounded-3xl backdrop-blur-xs overflow-hidden mx-4 md:mx-8">
+            <div className="contact-modal-content">
+              <div className="p-6 md:p-8 relative">
+                <button
+                  onClick={() => setContactExpanded(false)}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/30 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 z-10"
+                >
+                  <X size={20} />
+                </button>
 
-              <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                  Let's Work Together
-                </h2>
-                <p className="text-xl text-[#90D5FF] font-serif italic">
-                  "Looking forward to working with you!"
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {/* Profile Section */}
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-[#90D5FF]/20">
-                    <div className="text-center mb-6">
-                      <div className="w-24 h-24 mx-auto rounded-xl overflow-hidden mb-4 border-2 border-[#90D5FF]/30">
-                        <img
-                          src="/Aljon.webp"
-                          alt="Al-jon Santiago"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-white">
-                        AL-JON SANTIAGO
-                      </h3>
-                      <p className="text-[#90D5FF]">Web Developer</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-[#90D5FF]/20">
-                    <h3 className="text-white font-semibold mb-4 text-center">
-                      Connect With Me
-                    </h3>
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
-                          <Phone size={16} className="text-[#90D5FF]" />
-                        </div>
-                        <p className="text-gray-300 text-sm">+63 9669206512</p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
-                          <Mail size={16} className="text-[#90D5FF]" />
-                        </div>
-                        <p className="text-gray-300 text-sm">
-                          aljon.media08@gmail.com
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
-                          <MapPin size={16} className="text-[#90D5FF]" />
-                        </div>
-                        <p className="text-gray-300 text-sm">
-                          General Trias Cavite, Philippines
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                    Let's Work Together
+                  </h2>
+                  <p className="text-xl text-[#90D5FF] font-serif italic">
+                    "Looking forward to working with you!"
+                  </p>
                 </div>
 
-                {/* Contact Form */}
-                <div className="md:col-span-2 bg-gradient-to-br from-gray-800/30 to-gray-900/30 rounded-2xl p-6 border border-[#90D5FF]/20">
-                  {status.submitted ? (
-                    <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                      <CheckCircle size={60} className="text-green-400 mb-4" />
-                      <h3 className="text-2xl font-semibold mb-3 text-white">
-                        Thank You!
-                      </h3>
-                      <p className="text-gray-300 mb-6">
-                        Your message has been sent successfully. I'll get back
-                        to you soon!
-                      </p>
-                      <button
-                        onClick={() =>
-                          setStatus({ ...status, submitted: false })
-                        }
-                        className="submit-btn px-6 py-3 text-white rounded-xl font-semibold backdrop-filter backdrop-blur-lg"
-                      >
-                        Send Another Message
-                      </button>
+                <div className="grid md:grid-cols-3 gap-8">
+                  {/* Profile Section */}
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-[#90D5FF]/20">
+                      <div className="text-center mb-6">
+                        <div className="w-24 h-24 mx-auto rounded-xl overflow-hidden mb-4 border-2 border-[#90D5FF]/30">
+                          <img
+                            src="/Aljon.webp"
+                            alt="Al-jon Santiago"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <h3 className="text-xl font-bold text-white">
+                          AL-JON SANTIAGO
+                        </h3>
+                        <p className="text-[#90D5FF]">Web Developer</p>
+                      </div>
                     </div>
-                  ) : (
-                    <div className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-6">
+
+                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-[#90D5FF]/20">
+                      <h3 className="text-white font-semibold mb-4 text-center">
+                        Connect With Me
+                      </h3>
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
+                            <Phone size={16} className="text-[#90D5FF]" />
+                          </div>
+                          <p className="text-gray-300 text-sm">
+                            +63 9669206512
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
+                            <Mail size={16} className="text-[#90D5FF]" />
+                          </div>
+                          <p className="text-gray-300 text-sm">
+                            aljon.media08@gmail.com
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-[#90D5FF]/10 border border-[#90D5FF]/20">
+                            <MapPin size={16} className="text-[#90D5FF]" />
+                          </div>
+                          <p className="text-gray-300 text-sm">
+                            General Trias Cavite, Philippines
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Contact Form */}
+                  <div className="md:col-span-2 bg-gradient-to-br from-gray-800/30 to-gray-900/30 rounded-2xl p-6 border border-[#90D5FF]/20">
+                    {status.submitted ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center py-12">
+                        <CheckCircle
+                          size={60}
+                          className="text-green-400 mb-4"
+                        />
+                        <h3 className="text-2xl font-semibold mb-3 text-white">
+                          Thank You!
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                          Your message has been sent successfully. I'll get back
+                          to you soon!
+                        </p>
+                        <button
+                          onClick={() =>
+                            setStatus({ ...status, submitted: false })
+                          }
+                          className="submit-btn px-6 py-3 text-white rounded-xl font-semibold backdrop-filter backdrop-blur-lg"
+                        >
+                          Send Another Message
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <label className="block text-[#90D5FF] mb-2 font-medium">
+                              Name
+                            </label>
+                            <input
+                              type="text"
+                              name="from_name"
+                              value={formData.from_name}
+                              onChange={handleChange}
+                              placeholder="Your Name"
+                              required
+                              className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[#90D5FF] mb-2 font-medium">
+                              Email
+                            </label>
+                            <input
+                              type="email"
+                              name="reply_to"
+                              value={formData.reply_to}
+                              onChange={handleChange}
+                              placeholder="Your Email"
+                              required
+                              className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm"
+                            />
+                          </div>
+                        </div>
+
                         <div>
                           <label className="block text-[#90D5FF] mb-2 font-medium">
-                            Name
+                            Subject
                           </label>
                           <input
                             type="text"
-                            name="from_name"
-                            value={formData.from_name}
+                            name="subject"
+                            value={formData.subject}
                             onChange={handleChange}
-                            placeholder="Your Name"
+                            placeholder="What is this regarding?"
                             required
                             className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm"
                           />
                         </div>
+
                         <div>
                           <label className="block text-[#90D5FF] mb-2 font-medium">
-                            Email
+                            Message
                           </label>
-                          <input
-                            type="email"
-                            name="reply_to"
-                            value={formData.reply_to}
+                          <textarea
+                            name="message"
+                            value={formData.message}
                             onChange={handleChange}
-                            placeholder="Your Email"
+                            placeholder="Your message here..."
                             required
-                            className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm"
-                          />
+                            rows="5"
+                            className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm resize-none"
+                          ></textarea>
                         </div>
-                      </div>
 
-                      <div>
-                        <label className="block text-[#90D5FF] mb-2 font-medium">
-                          Subject
-                        </label>
-                        <input
-                          type="text"
-                          name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          placeholder="What is this regarding?"
-                          required
-                          className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm"
-                        />
-                      </div>
+                        {status.info.msg && (
+                          <div
+                            className={`flex items-center gap-3 p-4 rounded-xl ${
+                              status.info.error
+                                ? "bg-red-900/30 text-red-200 border border-red-700/50"
+                                : "bg-green-900/30 text-green-200 border border-green-700/50"
+                            }`}
+                          >
+                            {status.info.error ? (
+                              <AlertCircle size={20} className="text-red-300" />
+                            ) : (
+                              <CheckCircle
+                                size={20}
+                                className="text-green-300"
+                              />
+                            )}
+                            <span>{status.info.msg}</span>
+                          </div>
+                        )}
 
-                      <div>
-                        <label className="block text-[#90D5FF] mb-2 font-medium">
-                          Message
-                        </label>
-                        <textarea
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          placeholder="Your message here..."
-                          required
-                          rows="5"
-                          className="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 backdrop-filter backdrop-blur-sm resize-none"
-                        ></textarea>
-                      </div>
-
-                      {status.info.msg && (
-                        <div
-                          className={`flex items-center gap-3 p-4 rounded-xl ${
-                            status.info.error
-                              ? "bg-red-900/30 text-red-200 border border-red-700/50"
-                              : "bg-green-900/30 text-green-200 border border-green-700/50"
-                          }`}
+                        <button
+                          type="button"
+                          onClick={handleSubmit}
+                          disabled={status.submitting}
+                          className="submit-btn w-full px-6 py-4 text-white rounded-xl font-semibold flex items-center justify-center gap-3 disabled:opacity-70 backdrop-filter backdrop-blur-lg"
                         >
-                          {status.info.error ? (
-                            <AlertCircle size={20} className="text-red-300" />
-                          ) : (
-                            <CheckCircle size={20} className="text-green-300" />
-                          )}
-                          <span>{status.info.msg}</span>
-                        </div>
-                      )}
-
-                      <button
-                        type="button"
-                        onClick={handleSubmit}
-                        disabled={status.submitting}
-                        className="submit-btn w-full px-6 py-4 text-white rounded-xl font-semibold flex items-center justify-center gap-3 disabled:opacity-70 backdrop-filter backdrop-blur-lg"
-                      >
-                        <span>
-                          {status.submitting ? "Sending..." : "Send Message"}
-                        </span>
-                        {!status.submitting && <Send size={20} />}
-                      </button>
-                    </div>
-                  )}
+                          <span>
+                            {status.submitting ? "Sending..." : "Send Message"}
+                          </span>
+                          {!status.submitting && <Send size={20} />}
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
