@@ -1,9 +1,21 @@
-import Lottie from "lottie-react";
-import { Maximize2, MessageCircle, Minimize2, Send, X } from "lucide-react";
+import {
+  Bot,
+  Maximize2,
+  MessageCircle,
+  Minimize2,
+  Send,
+  X,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
-import { useTheme } from "../context/ThemeContext";
-import { getMistralResponse } from "../services/mistralAI";
+
+// Mock theme context and Mistral service for demo
+const useTheme = () => ({ theme: "dark" });
+const getMistralResponse = async (input, history) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return `Thanks for asking "${input}"! This is a demo response from Al-Jon's virtual assistant. I can help you learn more about Al-Jon's projects, skills, and experience as a Full Stack Developer specializing in AI-integrated web solutions.`;
+};
+
 const ChatBot = () => {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +30,6 @@ const ChatBot = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
-  const [animationData, setAnimationData] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
 
   const messagesEndRef = useRef(null);
@@ -27,23 +38,9 @@ const ChatBot = () => {
   const typingIntervalRef = useRef(null);
   const messagesRef = useRef(messages);
 
-  // Update messagesRef whenever messages state changes
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
-
-  // Path to your Lottie animation JSON file in the public folder
-  const robotAnimationPath = "/robotAnimation.json";
-
-  // Fetch the Lottie animation data
-  useEffect(() => {
-    fetch(robotAnimationPath)
-      .then((response) => response.json())
-      .then((data) => setAnimationData(data))
-      .catch((error) =>
-        console.error("Error loading Lottie animation:", error)
-      );
-  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -74,50 +71,32 @@ const ChatBot = () => {
     toggleChat();
   };
 
-  // Improved typewriter function that updates the message text with a faster speed
   const typeMessage = (response) => {
     setIsTyping(true);
-
-    // Add the bot message with empty initial text
     const currentMessages = [...messagesRef.current];
     const newMessage = { text: "", sender: "bot", fullText: response };
-
-    // Update state with the new message
     setMessages([...currentMessages, newMessage]);
 
-    // Calculate a faster typing speed based on message length
-    // For longer messages, we'll type more characters per interval
     const messageLength = response.length;
-
-    // Determine characters per tick based on message length
-    // This makes longer messages appear faster without losing the typing effect
     let charsPerTick = 1;
     if (messageLength > 100) charsPerTick = 3;
     if (messageLength > 200) charsPerTick = 5;
     if (messageLength > 400) charsPerTick = 8;
 
-    // We'll also use a shorter interval time for faster appearance
-    const intervalTime = 2; // reduced from 5ms to 2ms
-
+    const intervalTime = 2;
     let charIndex = 0;
 
-    // Clear any existing interval
     if (typingIntervalRef.current) {
       clearInterval(typingIntervalRef.current);
     }
 
-    // Set up the typing interval
     typingIntervalRef.current = setInterval(() => {
       if (charIndex <= response.length) {
-        // Calculate how many characters to add this tick
         const nextIndex = Math.min(charIndex + charsPerTick, response.length);
         const currentText = response.substring(0, nextIndex);
         charIndex = nextIndex;
 
-        // Get the current messages state
         const updatedMessages = [...messagesRef.current];
-
-        // Update the last message's text
         if (updatedMessages.length > 0) {
           updatedMessages[updatedMessages.length - 1].text = currentText;
           setMessages(updatedMessages);
@@ -125,7 +104,6 @@ const ChatBot = () => {
 
         scrollToBottom();
 
-        // If we've reached the end of the message
         if (charIndex >= response.length) {
           clearInterval(typingIntervalRef.current);
           setIsTyping(false);
@@ -139,40 +117,30 @@ const ChatBot = () => {
     if (!input.trim() || isTyping) return;
 
     const userMessage = { text: input, sender: "user" };
-
-    // Use the messagesRef to get the current messages
     const currentMessages = [...messagesRef.current];
     const updatedMessages = [...currentMessages, userMessage];
 
-    // Update both the state and the ref
     setMessages(updatedMessages);
     messagesRef.current = updatedMessages;
-
     setInput("");
     setLoading(true);
 
     try {
-      // Use our Mistral AI service
       const conversationHistory = updatedMessages.filter(
         (msg) => msg.sender === "user" || msg.sender === "bot"
       );
-
       const response = await getMistralResponse(input, conversationHistory);
-
-      // Start typing effect
       setLoading(false);
       typeMessage(response);
     } catch (error) {
       console.error("Error getting response:", error);
       setLoading(false);
-
       const errorMessage =
         "Sorry, I couldn't process your request right now. Please try again later.";
       typeMessage(errorMessage);
     }
   };
 
-  // Clean up interval on unmount
   useEffect(() => {
     return () => {
       if (typingIntervalRef.current) {
@@ -181,52 +149,46 @@ const ChatBot = () => {
     };
   }, []);
 
-  // Lottie animation component for reuse
-  const RobotAnimation = () => {
-    if (!animationData) return null;
-
-    return (
-      <Lottie
-        animationData={animationData}
-        loop={true}
-        autoplay={true}
-        style={{ width: "100%", height: "100%" }}
-      />
-    );
-  };
+  const BotIcon = () => (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-cyan-300 rounded-full">
+      <Bot size={20} className="text-gray-900" />
+    </div>
+  );
 
   const FirstTimeGreeting = () => {
     if (!isOpen && messages.length === 1 && showGreeting) {
       return (
         <div
-          className={`fixed bottom-20 right-6 w-64 p-4 rounded-lg shadow-lg z-40 animate-fade-in cursor-pointer ${
-            theme === "light" ? "bg-white" : "bg-[#333333]"
-          }`}
+          className="fixed bottom-20 right-6 w-72 p-5 rounded-2xl shadow-2xl z-40 cursor-pointer transition-all duration-500 hover:scale-105"
           onClick={hideGreeting}
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(35, 35, 35, 0.98) 100%)",
+            border: "1px solid rgba(144, 213, 255, 0.3)",
+            backdropFilter: "blur(15px)",
+            boxShadow: `
+              0 12px 40px rgba(0, 0, 0, 0.6),
+              0 6px 20px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1),
+              0 0 30px rgba(144, 213, 255, 0.1)
+            `,
+          }}
         >
-          <div className="flex items-start space-x-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-              <RobotAnimation />
+          <div className="flex items-start space-x-4">
+            <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-lg">
+              <BotIcon />
             </div>
-            <div>
-              <p
-                className={`text-sm ${
-                  theme === "light" ? "text-gray-800" : "text-white"
-                }`}
-              >
+            <div className="flex-1">
+              <p className="text-sm text-gray-200 leading-relaxed">
                 Hi there! I'm Al-Jon's virtual assistant. How can I help you?
               </p>
-              <div className="mt-2 flex justify-end">
+              <div className="mt-3 flex justify-end">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     openChatFromGreeting();
                   }}
-                  className={
-                    theme === "light"
-                      ? "text-xs text-blue-800 hover:underline"
-                      : "text-xs text-[#90D5FF] hover:underline"
-                  }
+                  className="text-xs text-blue-300 hover:text-blue-200 hover:underline transition-colors duration-200 font-medium"
                 >
                   Reply
                 </button>
@@ -241,64 +203,294 @@ const ChatBot = () => {
 
   return (
     <>
+      <style jsx>{`
+        @keyframes float-3d {
+          0%,
+          100% {
+            transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+          }
+          25% {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-2deg);
+          }
+          50% {
+            transform: translateY(-15px) rotateX(0deg) rotateY(2deg);
+          }
+          75% {
+            transform: translateY(-8px) rotateX(-3deg) rotateY(-1deg);
+          }
+        }
+
+        @keyframes glow-pulse {
+          0%,
+          100% {
+            box-shadow: 0 0 20px rgba(144, 213, 255, 0.3),
+              0 0 40px rgba(144, 213, 255, 0.2),
+              inset 0 0 20px rgba(144, 213, 255, 0.1);
+          }
+          50% {
+            box-shadow: 0 0 30px rgba(144, 213, 255, 0.5),
+              0 0 60px rgba(144, 213, 255, 0.3),
+              inset 0 0 30px rgba(144, 213, 255, 0.2);
+          }
+        }
+
+        .chat-button-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.9) 0%,
+            rgba(30, 64, 175, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.5);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+            0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2),
+            0 0 20px rgba(144, 213, 255, 0.3);
+          transform-style: preserve-3d;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          backdrop-filter: blur(10px);
+          animation: float-3d 6s ease-in-out infinite;
+        }
+
+        .chat-button-3d:hover {
+          transform: translateY(-8px) rotateX(10deg) rotateY(5deg) scale(1.1);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+            0 10px 30px rgba(144, 213, 255, 0.4),
+            0 0 40px rgba(144, 213, 255, 0.6),
+            inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-container-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(15, 15, 15, 0.95) 0%,
+            rgba(25, 25, 25, 0.98) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8),
+            0 12px 40px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 50px rgba(144, 213, 255, 0.2);
+          backdrop-filter: blur(20px);
+          transform-style: preserve-3d;
+        }
+
+        .chat-header-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(20, 20, 20, 0.9) 0%,
+            rgba(35, 35, 35, 0.95) 100%
+          );
+          border-bottom: 1px solid rgba(144, 213, 255, 0.2);
+          backdrop-filter: blur(10px);
+        }
+
+        .message-user-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.9) 0%,
+            rgba(30, 64, 175, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          transform: translateZ(5px);
+          transition: all 0.3s ease;
+        }
+
+        .message-user-3d:hover {
+          transform: translateZ(10px) translateY(-2px);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(144, 213, 255, 0.3);
+        }
+
+        .message-bot-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(30, 30, 30, 0.9) 0%,
+            rgba(45, 45, 45, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.2);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transform: translateZ(5px);
+          transition: all 0.3s ease;
+        }
+
+        .message-bot-3d:hover {
+          transform: translateZ(10px) translateY(-2px);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4),
+            0 0 15px rgba(144, 213, 255, 0.2);
+        }
+
+        .input-container-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(25, 25, 25, 0.9) 0%,
+            rgba(40, 40, 40, 0.95) 100%
+          );
+          border-top: 1px solid rgba(144, 213, 255, 0.2);
+          backdrop-filter: blur(10px);
+        }
+
+        .input-field-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(40, 40, 40, 0.9) 0%,
+            rgba(55, 55, 55, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          backdrop-filter: blur(5px);
+          transition: all 0.3s ease;
+        }
+
+        .input-field-3d:focus {
+          border-color: rgba(144, 213, 255, 0.6);
+          box-shadow: 0 0 20px rgba(144, 213, 255, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transform: translateZ(5px);
+        }
+
+        .send-button-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.9) 0%,
+            rgba(30, 64, 175, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.4);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          transition: all 0.3s ease;
+        }
+
+        .send-button-3d:hover:not(:disabled) {
+          transform: translateY(-2px) scale(1.05);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(144, 213, 255, 0.4);
+        }
+
+        .typing-cursor::after {
+          content: "▋";
+          animation: blink 1s infinite;
+          color: rgba(144, 213, 255, 0.8);
+        }
+
+        @keyframes blink {
+          0%,
+          50% {
+            opacity: 1;
+          }
+          51%,
+          100% {
+            opacity: 0;
+          }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(30, 30, 30, 0.5);
+          border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.6),
+            rgba(30, 64, 175, 0.6)
+          );
+          border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.8),
+            rgba(30, 64, 175, 0.8)
+          );
+        }
+
+        .markdown-content {
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          max-width: none;
+        }
+
+        .markdown-content p {
+          margin: 0;
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4,
+        .markdown-content h5,
+        .markdown-content h6 {
+          margin-top: 0.5rem;
+          margin-bottom: 0.25rem;
+          font-weight: 600;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+          margin: 0.25rem 0;
+          padding-left: 1rem;
+        }
+
+        .markdown-content li {
+          margin: 0.125rem 0;
+        }
+
+        .markdown-content code {
+          background-color: rgba(255, 255, 255, 0.1);
+          padding: 0.125rem 0.25rem;
+          border-radius: 0.25rem;
+          font-size: 0.75rem;
+        }
+
+        .markdown-content pre {
+          background-color: rgba(255, 255, 255, 0.05);
+          padding: 0.5rem;
+          border-radius: 0.375rem;
+          overflow-x: auto;
+          margin: 0.5rem 0;
+        }
+
+        .markdown-content pre code {
+          background-color: transparent;
+          padding: 0;
+        }
+      `}</style>
+
       <button
         onClick={toggleChat}
-        className={`fixed bottom-6 right-6 p-2 rounded-full cursor-pointer ${
-          theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
-        } ${theme === "light" ? "text-white" : "text-[#1a1a1a]"} shadow-lg ${
-          theme === "light" ? "hover:bg-blue-700" : "hover:bg-[#7BC0EA]"
-        } transition-all duration-300 z-50 flex items-center justify-center w-16 h-16`}
+        className="chat-button-3d fixed bottom-6 right-6 p-3 rounded-full cursor-pointer text-gray-900 z-50 flex items-center justify-center w-16 h-16"
       >
-        {animationData ? <RobotAnimation /> : <MessageCircle size={24} />}
+        <MessageCircle size={28} />
       </button>
 
       <FirstTimeGreeting />
 
       {isOpen && (
         <div
-          className={`fixed bottom-20 right-6 w-80 sm:w-96 rounded-lg shadow-xl overflow-hidden z-50 transition-all duration-300 flex flex-col ${
-            isMinimized ? "h-14" : "h-[500px]"
-          } ${
-            theme === "light"
-              ? "bg-white border border-gray-200"
-              : "bg-[#333333] border border-[#444444]"
+          className={`chat-container-3d fixed bottom-20 right-6 w-80 sm:w-96 rounded-2xl overflow-hidden z-50 transition-all duration-500 flex flex-col ${
+            isMinimized ? "h-16" : "h-[500px]"
           }`}
         >
-          <div
-            className={`px-4 py-3 flex justify-between items-center border-b ${
-              theme === "light"
-                ? "bg-gray-100 border-gray-200"
-                : "bg-[#222222] border-[#444444]"
-            }`}
-          >
+          <div className="chat-header-3d px-5 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-full overflow-hidden">
-                {animationData ? (
-                  <RobotAnimation />
-                ) : (
-                  <div
-                    className={`w-8 h-8 ${
-                      theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
-                    } rounded-full`}
-                  ></div>
-                )}
+              <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg">
+                <BotIcon />
               </div>
-              <h3
-                className={`font-semibold ${
-                  theme === "light" ? "text-gray-800" : "text-white"
-                }`}
-              >
+              <h3 className="font-bold text-gray-100 text-lg">
                 Al-Jon's Assistant
               </h3>
             </div>
             <div className="flex items-center space-x-3">
               <button
                 onClick={toggleMinimize}
-                className={`p-1.5 transition-colors cursor-pointer ${
-                  theme === "light"
-                    ? "text-gray-500 hover:text-gray-700"
-                    : "text-gray-400 hover:text-white"
-                }`}
+                className="p-2 transition-all duration-200 cursor-pointer text-gray-400 hover:text-blue-300 hover:scale-110"
                 aria-label={isMinimized ? "Maximize" : "Minimize"}
               >
                 {isMinimized ? (
@@ -309,11 +501,7 @@ const ChatBot = () => {
               </button>
               <button
                 onClick={toggleChat}
-                className={`p-1.5 transition-colors cursor-pointer ${
-                  theme === "light"
-                    ? "text-gray-500 hover:text-gray-700"
-                    : "text-gray-400 hover:text-white"
-                }`}
+                className="p-2 transition-all duration-200 cursor-pointer text-gray-400 hover:text-red-400 hover:scale-110"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -325,112 +513,74 @@ const ChatBot = () => {
             <>
               <div
                 ref={messagesContainerRef}
-                className={`flex-1 overflow-y-auto px-4 py-3 custom-scrollbar ${
-                  theme === "light" ? "bg-white" : "bg-[#2a2a2a]"
-                }`}
+                className="flex-1 overflow-y-auto px-5 py-4 custom-scrollbar space-y-4"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%)",
+                }}
               >
                 {messages.map((message, index) => (
                   <div
                     key={index}
-                    className={`mb-3 flex ${
+                    className={`flex ${
                       message.sender === "user"
                         ? "justify-end"
                         : "justify-start"
                     }`}
                   >
                     {message.sender === "bot" && (
-                      <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0 self-end">
-                        {animationData ? (
-                          <RobotAnimation />
-                        ) : (
-                          <div
-                            className={`w-8 h-8 ${
-                              theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
-                            } rounded-full`}
-                          ></div>
-                        )}
+                      <div className="w-8 h-8 rounded-full overflow-hidden mr-3 flex-shrink-0 self-end shadow-md">
+                        <BotIcon />
                       </div>
                     )}
                     <div
-                      className={`p-3 rounded-lg max-w-[75%] ${
+                      className={`p-4 rounded-2xl max-w-[80%] ${
                         message.sender === "user"
-                          ? theme === "light"
-                            ? "bg-blue-800 text-white"
-                            : "bg-[#90D5FF] text-[#1a1a1a]"
-                          : theme === "light"
-                          ? "bg-gray-100 text-gray-800"
-                          : "bg-[#444444] text-white"
-                      } ${message.sender === "bot" ? "markdown-content" : ""}`}
+                          ? "message-user-3d text-gray-900"
+                          : "message-bot-3d text-gray-100"
+                      }`}
                     >
-                      <span
-                        className={
+                      <div
+                        className={`markdown-content ${
                           index === messages.length - 1 &&
                           message.sender === "bot" &&
                           isTyping
                             ? "typing-cursor"
                             : ""
-                        }
+                        }`}
                       >
-                        <Markdown>{message.text}</Markdown>
-                      </span>
+                        <Markdown>
+                          {message.text}
+                        </Markdown>
+                      </div>
                     </div>
                   </div>
                 ))}
                 {loading && (
-                  <div className="mb-3 flex justify-start">
-                    <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0 self-end">
-                      {animationData ? (
-                        <RobotAnimation />
-                      ) : (
-                        <div
-                          className={`w-8 h-8 ${
-                            theme === "light" ? "bg-blue-800" : "bg-[#90D5FF]"
-                          } rounded-full`}
-                        >
-                          <div className="flex space-x-1 justify-center items-center h-full">
-                            <div
-                              className="w-1.5 h-1.5 rounded-full animate-bounce"
-                              style={{ animationDelay: "0s" }}
-                            ></div>
-                            <div
-                              className="w-1.5 h-1.5 rounded-full animate-bounce"
-                              style={{ animationDelay: "0.2s" }}
-                            ></div>
-                            <div
-                              className="w-1.5 h-1.5 rounded-full animate-bounce"
-                              style={{ animationDelay: "0.4s" }}
-                            ></div>
-                          </div>
-                        </div>
-                      )}
+                  <div className="flex justify-start">
+                    <div className="w-8 h-8 rounded-full overflow-hidden mr-3 flex-shrink-0 self-end shadow-md">
+                      <BotIcon />
                     </div>
-                    <div
-                      className={`p-3 rounded-lg ${
-                        theme === "light" ? "bg-gray-100" : "bg-[#444444]"
-                      }`}
-                    >
-                      <div className="flex space-x-1">
+                    <div className="message-bot-3d p-4 rounded-2xl">
+                      <div className="flex space-x-2">
                         <div
                           className="w-2 h-2 rounded-full animate-bounce"
                           style={{
-                            backgroundColor:
-                              theme === "light" ? "#6b7280" : "#d1d5db",
+                            backgroundColor: "rgba(144, 213, 255, 0.8)",
                             animationDelay: "0s",
                           }}
                         ></div>
                         <div
                           className="w-2 h-2 rounded-full animate-bounce"
                           style={{
-                            backgroundColor:
-                              theme === "light" ? "#6b7280" : "#d1d5db",
+                            backgroundColor: "rgba(144, 213, 255, 0.8)",
                             animationDelay: "0.2s",
                           }}
                         ></div>
                         <div
                           className="w-2 h-2 rounded-full animate-bounce"
                           style={{
-                            backgroundColor:
-                              theme === "light" ? "#6b7280" : "#d1d5db",
+                            backgroundColor: "rgba(144, 213, 255, 0.8)",
                             animationDelay: "0.4s",
                           }}
                         ></div>
@@ -441,42 +591,33 @@ const ChatBot = () => {
                 <div ref={messagesEndRef} />
               </div>
 
-              <form
-                onSubmit={handleSubmit}
-                className={`p-4 border-t ${
-                  theme === "light"
-                    ? "bg-gray-50 border-gray-200"
-                    : "bg-[#222222] border-[#444444]"
-                }`}
-              >
-                <div className="flex items-center space-x-2">
+              <div className="input-container-3d p-4">
+                <div className="flex items-center space-x-3">
                   <input
                     type="text"
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSubmit(e);
+                      }
+                    }}
                     placeholder="Ask me about Al-Jon..."
-                    className={`flex-1 p-2.5 rounded-l-md border focus:outline-none focus:ring-1 ${
-                      theme === "light"
-                        ? "bg-white text-gray-800 border-gray-300 focus:ring-blue-800"
-                        : "bg-[#444444] text-white border-[#555555] focus:ring-[#90D5FF]"
-                    }`}
+                    className="input-field-3d flex-1 p-3 rounded-xl text-gray-100 placeholder-gray-400 focus:outline-none"
                     disabled={loading || isTyping}
                   />
                   <button
-                    type="submit"
+                    onClick={handleSubmit}
                     disabled={loading || !input.trim() || isTyping}
-                    className={`p-2.5 rounded-r-md ${
-                      theme === "light"
-                        ? "bg-blue-800 text-white hover:bg-blue-700"
-                        : "bg-[#90D5FF] text-[#1a1a1a] hover:bg-[#7BC0EA]"
-                    } transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+                    className="send-button-3d p-3 rounded-xl text-gray-900 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Send message"
                   >
                     <Send size={20} />
                   </button>
                 </div>
-              </form>
+              </div>
             </>
           )}
         </div>
