@@ -18,8 +18,8 @@ const About = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Define the accent colors based on theme
-  const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
+  // Define the accent color for dark theme
+  const accentColor = "#90D5FF";
 
   return (
     <div>

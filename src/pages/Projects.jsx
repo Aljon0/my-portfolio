@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import FeaturedProjects from "../components/FeaturedProjects";
 import { featuredProjects, smallProjects } from "../components/ProjectsData";
-import SmallProjects from "../components/SmallProjects";
 import { useTheme } from "../context/ThemeContext";
 
 const Projects = () => {
@@ -12,45 +10,10 @@ const Projects = () => {
   const [activeSection, setActiveSection] = useState("featured");
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const clickPositionRef = useRef({ x: 0, y: 0 });
-
-  // For carousel functionality
-  const scrollContainerRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredProject, setHoveredProject] = useState(null);
 
   // Define the accent colors based on theme
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
-
-  // Update visible cards based on screen size
-  const [visibleCards, setVisibleCards] = useState(3);
-  const totalFeaturedCards = featuredProjects.length;
-  const totalSmallCards = smallProjects.length;
-
-  // Calculate the number of pagination indicators needed
-  const getPaginationCount = () => {
-    const totalCards =
-      activeSection === "featured" ? totalFeaturedCards : totalSmallCards;
-    return Math.max(1, totalCards - visibleCards + 1);
-  };
-
-  // Update visible cards based on window width
-  useEffect(() => {
-    const updateVisibleCards = () => {
-      if (window.innerWidth < 640) {
-        setVisibleCards(1); // Mobile: 1 card
-      } else if (window.innerWidth < 1024) {
-        setVisibleCards(2); // Tablet: 2 cards
-      } else {
-        setVisibleCards(3); // Desktop: 3 cards
-      }
-    };
-
-    updateVisibleCards();
-    window.addEventListener("resize", updateVisibleCards);
-    return () => window.removeEventListener("resize", updateVisibleCards);
-  }, []);
 
   useEffect(() => {
     if (selectedProject) {
@@ -62,26 +25,6 @@ const Projects = () => {
       document.body.style.overflow = "auto";
     };
   }, [selectedProject]);
-
-  // Effect to scroll to the active index with smooth animation
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      const cardWidth = scrollContainerRef.current.clientWidth / visibleCards;
-      const scrollAmount = activeIndex * cardWidth;
-      scrollContainerRef.current.scrollTo({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  }, [activeIndex, visibleCards]);
-
-  // Reset activeIndex when changing sections
-  useEffect(() => {
-    setActiveIndex(0);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = 0;
-    }
-  }, [activeSection]);
 
   const handleViewProject = (project, event) => {
     if (event) {
@@ -104,66 +47,6 @@ const Projects = () => {
 
   const closeOverlay = () => {
     setSelectedProject(null);
-  };
-
-  // Function to update active index based on current scroll position
-  const updateActiveIndexFromScroll = () => {
-    if (!scrollContainerRef.current) return;
-
-    const container = scrollContainerRef.current;
-    const cardWidth = container.clientWidth / visibleCards;
-    const scrollPosition = container.scrollLeft;
-
-    const nearestIndex = Math.round(scrollPosition / cardWidth);
-    const boundedIndex = Math.max(
-      0,
-      Math.min(nearestIndex, getPaginationCount() - 1)
-    );
-
-    if (boundedIndex !== activeIndex) {
-      setActiveIndex(boundedIndex);
-    }
-  };
-
-  // Mouse and touch event handlers for dragging/sliding
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleScroll = () => {
-    if (!scrollContainerRef.current || isDragging) return;
-    updateActiveIndexFromScroll();
-  };
-
-  const handleDragEnd = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      updateActiveIndexFromScroll();
-    }
   };
 
   const renderCaseStudy = (caseStudy) => {
@@ -262,6 +145,151 @@ const Projects = () => {
     );
   };
 
+  // Enhanced Project Card Component with hover effects
+  const ProjectCard = ({ project, isSmall = false }) => {
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+      <motion.div
+        className="project-card-3d relative group cursor-pointer"
+        onMouseEnter={() => {
+          setIsHovered(true);
+          setHoveredProject(project.id);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          setHoveredProject(null);
+        }}
+        onClick={(e) => handleViewProject(project, e)}
+        whileHover={{
+          scale: 1.05,
+          rotateY: 5,
+          rotateX: 2,
+          transition: { duration: 0.3 },
+        }}
+        whileTap={{ scale: 0.98 }}
+        layout
+      >
+        <div className="relative overflow-hidden rounded-xl h-full">
+          {/* Project Image */}
+          <div
+            className={`${isSmall ? "h-48" : "h-64"} overflow-hidden relative`}
+          >
+            {project.image && (
+              <>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className={`w-full h-full object-cover transition-all duration-500 ${
+                    isHovered ? "scale-110" : "scale-100"
+                  } ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                  onLoad={() => setImageLoaded(true)}
+                />
+                {!imageLoaded && (
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse" />
+                )}
+              </>
+            )}
+
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+            {/* Hover Overlay with Project Details */}
+            <motion.div
+              className="absolute inset-0 bg-black/90 flex flex-col justify-center items-center p-6 text-center"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                transition: { duration: 0.3 },
+              }}
+            >
+              <motion.h3
+                className="text-xl font-bold text-white mb-3"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{
+                  y: isHovered ? 0 : 20,
+                  opacity: isHovered ? 1 : 0,
+                  transition: { delay: 0.1, duration: 0.3 },
+                }}
+              >
+                {project.title}
+              </motion.h3>
+
+              {/* Only show description for non-small projects */}
+              {!isSmall && (
+                <motion.p
+                  className="text-gray-300 text-sm mb-4 line-clamp-3"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{
+                    y: isHovered ? 0 : 20,
+                    opacity: isHovered ? 1 : 0,
+                    transition: { delay: 0.2, duration: 0.3 },
+                  }}
+                >
+                  {project.description}
+                </motion.p>
+              )}
+
+              <motion.div
+                className="flex flex-wrap gap-2 justify-center mb-4"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{
+                  y: isHovered ? 0 : 20,
+                  opacity: isHovered ? 1 : 0,
+                  transition: { delay: isSmall ? 0.2 : 0.3, duration: 0.3 },
+                }}
+              >
+                {project.technologies &&
+                  project.technologies.slice(0, 3).map((tech, index) => (
+                    <span
+                      key={index}
+                      className="tech-badge-hover-3d text-xs px-2 py-1 rounded-full text-blue-200 font-medium"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                {project.technologies && project.technologies.length > 3 && (
+                  <span className="text-xs text-gray-400">
+                    +{project.technologies.length - 3} more
+                  </span>
+                )}
+              </motion.div>
+
+              <motion.button
+                className="explore-button-3d px-4 py-2 rounded-lg font-semibold text-white text-sm"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{
+                  y: isHovered ? 0 : 20,
+                  opacity: isHovered ? 1 : 0,
+                  transition: { delay: isSmall ? 0.3 : 0.4, duration: 0.3 },
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Explore Project
+              </motion.button>
+            </motion.div>
+          </div>
+
+          {/* Bottom Project Info (Always Visible) */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/80 to-transparent">
+            <h3 className="text-lg font-bold text-white mb-1">
+              {project.title}
+            </h3>
+            <p className="text-gray-300 text-sm opacity-80">
+              {project.technologies &&
+                project.technologies.slice(0, 2).join(" • ")}
+              {project.technologies &&
+                project.technologies.length > 2 &&
+                " ..."}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
   // Section navigation buttons with 3D styling
   const SectionNav = () => {
     const sections = [
@@ -270,73 +298,23 @@ const Projects = () => {
     ];
 
     return (
-      <>
-        <style jsx>{`
-          .nav-container-3d {
-            background: linear-gradient(
-              135deg,
-              rgba(30, 30, 30, 0.9) 0%,
-              rgba(45, 45, 45, 0.95) 100%
-            );
-            border: 1px solid rgba(144, 213, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
-              0 4px 16px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transform-style: preserve-3d;
-          }
-
-          .nav-button-3d {
-            background: linear-gradient(
-              135deg,
-              rgba(144, 213, 255, 0.1) 0%,
-              rgba(30, 64, 175, 0.2) 100%
-            );
-            backdrop-filter: blur(5px);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-          }
-
-          .nav-button-3d:hover {
-            transform: translateY(-2px) rotateX(5deg);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
-              0 0 15px rgba(144, 213, 255, 0.3);
-          }
-
-          .nav-button-active-3d {
-            background: linear-gradient(
-              135deg,
-              rgba(144, 213, 255, 0.9) 0%,
-              rgba(30, 64, 175, 0.9) 100%
-            );
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              0 0 20px rgba(144, 213, 255, 0.4);
-          }
-
-          .nav-button-active-3d:hover {
-            transform: translateY(-3px) rotateX(8deg);
-          }
-        `}</style>
-
-        <div className="flex justify-center mb-12">
-          <div className="nav-container-3d flex rounded-xl overflow-hidden p-1">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`nav-button-3d px-6 py-3 text-sm font-bold transition-all cursor-pointer rounded-lg mx-1 ${
-                  activeSection === section.id
-                    ? "nav-button-active-3d text-white"
-                    : "text-blue-200 hover:text-white"
-                }`}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
+      <div className="flex justify-center mb-12">
+        <div className="nav-container-3d flex rounded-xl overflow-hidden p-1">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => setActiveSection(section.id)}
+              className={`nav-button-3d px-6 py-3 text-sm font-bold transition-all cursor-pointer rounded-lg mx-1 ${
+                activeSection === section.id
+                  ? "nav-button-active-3d text-white"
+                  : "text-blue-200 hover:text-white"
+              }`}
+            >
+              {section.label}
+            </button>
+          ))}
         </div>
-      </>
+      </div>
     );
   };
 
@@ -392,32 +370,90 @@ const Projects = () => {
           box-shadow: 0 0 15px rgba(144, 213, 255, 0.8);
         }
 
-        .pagination-dot-3d {
+        .project-card-3d {
           background: linear-gradient(
             135deg,
-            rgba(75, 85, 99, 0.8),
-            rgba(55, 65, 81, 0.9)
+            rgba(30, 30, 30, 0.9) 0%,
+            rgba(45, 45, 45, 0.95) 100%
           );
           border: 1px solid rgba(144, 213, 255, 0.2);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+            0 4px 16px rgba(0, 0, 0, 0.3);
+          backdrop-filter: blur(10px);
           transform-style: preserve-3d;
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .pagination-dot-3d:hover {
-          transform: translateY(-2px) scale(1.1);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
-            0 0 10px rgba(144, 213, 255, 0.3);
+        .project-card-3d:hover {
+          border-color: rgba(144, 213, 255, 0.4);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(144, 213, 255, 0.3);
         }
 
-        .pagination-dot-active-3d {
+        .tech-badge-hover-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.3),
+            rgba(30, 64, 175, 0.4)
+          );
+          border: 1px solid rgba(144, 213, 255, 0.5);
+          backdrop-filter: blur(5px);
+        }
+
+        .explore-button-3d {
           background: linear-gradient(
             135deg,
             rgba(144, 213, 255, 0.9),
             rgba(30, 64, 175, 0.9)
           );
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
-            0 0 20px rgba(144, 213, 255, 0.5);
+            0 0 15px rgba(144, 213, 255, 0.3);
+        }
+
+        .nav-container-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(30, 30, 30, 0.9) 0%,
+            rgba(45, 45, 45, 0.95) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+            0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          transform-style: preserve-3d;
+        }
+
+        .nav-button-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.1) 0%,
+            rgba(30, 64, 175, 0.2) 100%
+          );
+          backdrop-filter: blur(5px);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transform-style: preserve-3d;
+        }
+
+        .nav-button-3d:hover {
+          transform: translateY(-2px) rotateX(5deg);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
+            0 0 15px rgba(144, 213, 255, 0.3);
+        }
+
+        .nav-button-active-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.9) 0%,
+            rgba(30, 64, 175, 0.9) 100%
+          );
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2),
+            0 0 20px rgba(144, 213, 255, 0.4);
+        }
+
+        .nav-button-active-3d:hover {
+          transform: translateY(-3px) rotateX(8deg);
         }
 
         .modal-3d {
@@ -495,13 +531,42 @@ const Projects = () => {
           animation: float-3d 6s ease-in-out infinite;
         }
 
-        .hide-scrollbar-3d {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
-        .hide-scrollbar-3d::-webkit-scrollbar {
-          display: none;
+        .project-card-3d {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .project-wrapper-3d {
+          height: 100%;
+        }
+
+        .project-image-3d {
+          flex-shrink: 0;
+        }
+
+        .project-card-3d .absolute.inset-0.bg-black\/90 {
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .project-card-3d .text-gray-300.text-sm {
+          max-height: 4.5em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
         }
       `}</style>
 
@@ -525,56 +590,47 @@ const Projects = () => {
               selectedProject ? "blur-sm scale-95" : ""
             }`}
           >
-            <div
-              ref={scrollContainerRef}
-              className="hide-scrollbar-3d overflow-x-auto scroll-smooth snap-x select-none"
-              style={{
-                cursor: isDragging ? "grabbing" : "grab",
-                WebkitUserSelect: "none",
-                MozUserSelect: "none",
-                msUserSelect: "none",
-                userSelect: "none",
-              }}
-              onScroll={handleScroll}
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleDragEnd}
-              onMouseUp={handleDragEnd}
-              onMouseMove={handleMouseMove}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleDragEnd}
-              onTouchMove={handleTouchMove}
-              onTouchCancel={handleDragEnd}
-            >
-              {activeSection === "featured" && (
-                <FeaturedProjects
-                  projects={featuredProjects}
-                  handleViewProject={handleViewProject}
-                  accentColor={accentColor}
-                />
-              )}
+            {/* Featured Projects Grid */}
+            {activeSection === "featured" && (
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, staggerChildren: 0.1 }}
+              >
+                {featuredProjects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                  >
+                    <ProjectCard project={project} isSmall={false} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
 
-              {activeSection === "small" && (
-                <SmallProjects
-                  projects={smallProjects}
-                  handleViewProject={handleViewProject}
-                  accentColor={accentColor}
-                />
-              )}
-            </div>
-
-            {/* Enhanced 3D Pagination dots */}
-            <div className="flex justify-center mt-8 gap-3">
-              {Array.from({ length: getPaginationCount() }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`pagination-dot-3d w-4 h-4 rounded-full transition-all cursor-pointer ${
-                    activeIndex === index ? "pagination-dot-active-3d w-8" : ""
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+            {/* Small Projects Grid */}
+            {activeSection === "small" && (
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, staggerChildren: 0.1 }}
+              >
+                {smallProjects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                  >
+                    <ProjectCard project={project} isSmall={true} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
           </div>
 
           {/* Enhanced 3D Modal */}
