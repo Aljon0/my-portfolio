@@ -307,10 +307,9 @@ const About = () => {
             About Me
           </h2>
 
-          <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
-            {/* Top Intro Section */}
-            <div className="mb-8">
-              {/* Introduction */}
+          <div className="px-4 sm:px-6 max-w-5xl mx-auto">
+            {/* Introduction Section */}
+            <div className="mb-12">
               <div
                 className="intro-card-3d p-6 rounded-2xl"
                 style={{
@@ -338,13 +337,13 @@ const About = () => {
               </div>
             </div>
 
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              {/* Left Side: Information Containers */}
-              <div className="space-y-6">
+            {/* Main Content - Reverse Triangle Layout */}
+            <div className="space-y-8">
+              {/* Top Row - Two Cards */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* AI Focus */}
                 <div
-                  className="about-card-3d rounded-2xl p-6"
+                  className="about-card-3d rounded-2xl p-6 min-h-[200px]"
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.5
@@ -353,14 +352,14 @@ const About = () => {
                     borderTopWidth: "3px",
                   }}
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl"
+                      className="emoji-3d text-3xl flex-shrink-0"
                       style={{ color: accentColor }}
                     >
                       🔍
                     </span>
-                    <div>
+                    <div className="flex-1">
                       <h3
                         className="text-xl md:text-2xl font-bold mb-3"
                         style={{
@@ -382,23 +381,23 @@ const About = () => {
                   </div>
                 </div>
 
-                {/* Expertise Container */}
+                {/* Expertise */}
                 <div
-                  className="about-card-3d rounded-2xl p-6"
+                  className="about-card-3d rounded-2xl p-6 min-h-[200px]"
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.2
                     }deg) rotateY(${mousePosition.x * 1.2}deg)`,
                   }}
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl"
+                      className="emoji-3d text-3xl flex-shrink-0"
                       style={{ color: accentColor }}
                     >
                       ⚡
                     </span>
-                    <div>
+                    <div className="flex-1">
                       <h3
                         className="text-xl md:text-2xl font-bold mb-3"
                         style={{
@@ -417,24 +416,26 @@ const About = () => {
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Background Container */}
+              {/* Bottom Row - One Centered Card */}
+              <div className="flex justify-center">
                 <div
-                  className="about-card-3d rounded-2xl p-6"
+                  className="about-card-3d rounded-2xl p-6 min-h-[200px] w-full max-w-2xl"
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.8
                     }deg) rotateY(${mousePosition.x * 1.8}deg)`,
                   }}
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl"
+                      className="emoji-3d text-3xl flex-shrink-0"
                       style={{ color: accentColor }}
                     >
                       🚀
                     </span>
-                    <div>
+                    <div className="flex-1">
                       <h3
                         className="text-xl md:text-2xl font-bold mb-3"
                         style={{
@@ -449,117 +450,6 @@ const About = () => {
                         versatile skillset to projects, ensuring they're not
                         only functional but also deliver seamless experiences
                         across all devices and platforms.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Side: Additional Content */}
-              <div className="space-y-6">
-                {/* Passion Card */}
-                <div
-                  className="about-card-3d rounded-2xl p-6"
-                  style={{
-                    transform: `perspective(600px) rotateX(${
-                      mousePosition.y * -1.5
-                    }deg) rotateY(${mousePosition.x * -1.5}deg)`,
-                  }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <span
-                      className="emoji-3d text-3xl"
-                      style={{ color: accentColor }}
-                    >
-                      💡
-                    </span>
-                    <div>
-                      <h3
-                        className="text-xl md:text-2xl font-bold mb-3"
-                        style={{
-                          color: accentColor,
-                          textShadow: `0 0 15px ${accentColor}40`,
-                        }}
-                      >
-                        Innovation Drive
-                      </h3>
-                      <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        I'm passionate about pushing the boundaries of what's
-                        possible in web development, constantly exploring new
-                        technologies and methodologies to create cutting-edge
-                        solutions that make a real impact.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mission Card */}
-                <div
-                  className="about-card-3d rounded-2xl p-6"
-                  style={{
-                    transform: `perspective(600px) rotateX(${
-                      mousePosition.y * -1.2
-                    }deg) rotateY(${mousePosition.x * -1.2}deg)`,
-                  }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <span
-                      className="emoji-3d text-3xl"
-                      style={{ color: accentColor }}
-                    >
-                      🎯
-                    </span>
-                    <div>
-                      <h3
-                        className="text-xl md:text-2xl font-bold mb-3"
-                        style={{
-                          color: accentColor,
-                          textShadow: `0 0 15px ${accentColor}40`,
-                        }}
-                      >
-                        Mission
-                      </h3>
-                      <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        My mission is to bridge the gap between complex
-                        technology and user-friendly experiences, creating
-                        digital solutions that are both powerful and accessible
-                        to everyone.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Values Card */}
-                <div
-                  className="about-card-3d rounded-2xl p-6"
-                  style={{
-                    transform: `perspective(600px) rotateX(${
-                      mousePosition.y * -1.8
-                    }deg) rotateY(${mousePosition.x * -1.8}deg)`,
-                  }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <span
-                      className="emoji-3d text-3xl"
-                      style={{ color: accentColor }}
-                    >
-                      ⭐
-                    </span>
-                    <div>
-                      <h3
-                        className="text-xl md:text-2xl font-bold mb-3"
-                        style={{
-                          color: accentColor,
-                          textShadow: `0 0 15px ${accentColor}40`,
-                        }}
-                      >
-                        Core Values
-                      </h3>
-                      <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        Quality, innovation, and user-centric design are at the
-                        heart of everything I do. I believe in writing clean,
-                        maintainable code and creating experiences that truly
-                        serve the end user.
                       </p>
                     </div>
                   </div>

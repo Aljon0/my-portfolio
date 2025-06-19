@@ -3,116 +3,17 @@ import React, { useState } from "react";
 import { BiCategory } from "react-icons/bi";
 import { FaCalendarAlt, FaExternalLinkAlt, FaTrophy } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi";
+import {
+  certificates,
+  featuredProjects,
+  smallProjects,
+} from "../components/ProjectsData";
 
 // Mock theme context
 const useTheme = () => ({ theme: "dark" });
 
-// Projects data (using your provided data)
-const featuredProjects = [
-  {
-    id: 1,
-    title: "AI-Health Companion",
-    description:
-      "A smart healthcare assistant web app that uses Mistral AI and public medical APIs to help users check symptoms, track mental health, and access timely health advice.",
-    image: "/projects/AI-HealthCare.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
-    link: "https://projectbaymax.onrender.com/",
-    featured: true,
-    year: "2025",
-  },
-  {
-    id: 2,
-    title: "AI-Resume Builder",
-    description:
-      "An intelligent resume builder that uses Mistral AI for skill suggestions, customizable templates, and PDF export with Firebase integration.",
-    image: "/projects/AI-Resume Builder.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
-    link: "https://ai-rb-haee.onrender.com",
-    featured: true,
-    year: "2025",
-  },
-  {
-    id: 3,
-    title: "ED3C: Eternal Design",
-    description:
-      "Interactive 3D customization web application for memorial design and gravestone creation.",
-    image: "/projects/ed3c.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Three.js", "Firebase"],
-    link: "#",
-    featured: true,
-    year: "2024",
-  },
-];
-
-const smallProjects = [
-  {
-    id: 5,
-    title: "Expense Tracker",
-    description:
-      "A streamlined expense tracking application built with React and Appwrite to help users manage their personal finances effectively.",
-    image: "/projects/expensetracker.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Appwrite"],
-    link: "https://expensetracker-hrws.onrender.com",
-    featured: false,
-    year: "2025",
-  },
-  {
-    id: 6,
-    title: "Chat Sphere",
-    description:
-      "ChatSphere is a sleek, responsive chat app built with React, Vite, and Tailwind CSS, showcasing real-time messaging powered by Firebase.",
-    image: "/projects/chatsphere.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Firebase"],
-    link: "https://chat-web-app-1c91d.web.app/",
-    featured: false,
-    year: "2025",
-  },
-  {
-    id: 7,
-    title: "Task Master",
-    description:
-      "A responsive and efficient task management app built with React, TailwindCSS, and Supabase. It allows users to manage tasks with features like creation, filtering, and real-time updates via a RESTful API.",
-    image: "/projects/taskmanager.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Supabase"],
-    link: "https://task-manager-app-cwgb.onrender.com",
-    featured: false,
-    year: "2025",
-  },
-  {
-    id: 8,
-    title: "Movie Recommendation Chatbot",
-    description:
-      "An AI-powered movie recommendation chatbot built with React that lets users chat and receive personalized movie suggestions in real-time, no account required.",
-    image: "/projects/ai-mr.webp",
-    category: "Web App",
-    technologies: ["React", "Tailwind", "Express"],
-    link: "https://ai-movie.onrender.com",
-    featured: false,
-    year: "2025",
-  },
-];
-
-const certificates = [
-  {
-    id: 8,
-    title: "Introduction to Computer Networking",
-    image: "/certificates/ICN.png",
-    category: "Certificate",
-    issuer: "Simplilearn",
-    date: "2025",
-    year: "2025",
-  },
-];
-
 const Projects = () => {
   const { theme } = useTheme();
-  const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
 
@@ -126,19 +27,6 @@ const Projects = () => {
       description: `Certificate from ${c.issuer}`,
     })),
   ].sort((a, b) => parseInt(b.year) - parseInt(a.year));
-
-  const filters = ["All", "Featured", "Projects", "Certificates"];
-
-  const getFilteredItems = () => {
-    if (activeFilter === "All") return allItems;
-    if (activeFilter === "Featured")
-      return allItems.filter((item) => item.type === "featured");
-    if (activeFilter === "Projects")
-      return allItems.filter((item) => item.type === "project");
-    if (activeFilter === "Certificates")
-      return allItems.filter((item) => item.type === "certificate");
-    return allItems;
-  };
 
   const getTechBadgeColor = (tech) => {
     const colors = {
@@ -268,34 +156,6 @@ const Projects = () => {
             inset 0 2px 0 rgba(255, 255, 255, 0.2);
         }
 
-        .filter-button-3d {
-          background: linear-gradient(
-            135deg,
-            rgba(30, 30, 30, 0.9) 0%,
-            rgba(45, 45, 45, 0.95) 100%
-          );
-          border: 1px solid rgba(144, 213, 255, 0.3);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-          backdrop-filter: blur(10px);
-          transition: all 0.3s ease;
-        }
-
-        .filter-button-3d:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6),
-            0 0 20px rgba(144, 213, 255, 0.3);
-        }
-
-        .filter-button-3d.active {
-          background: linear-gradient(
-            135deg,
-            rgba(144, 213, 255, 0.2) 0%,
-            rgba(30, 64, 175, 0.3) 100%
-          );
-          border-color: rgba(144, 213, 255, 0.6);
-          animation: glow-pulse-timeline 2s ease-in-out infinite;
-        }
-
         .floating-animation-timeline {
           animation: float-timeline 6s ease-in-out infinite;
         }
@@ -316,6 +176,7 @@ const Projects = () => {
             0 0 60px rgba(144, 213, 255, 0.2);
           backdrop-filter: blur(20px);
         }
+
         .submit-btn {
           background: linear-gradient(
             135deg,
@@ -334,10 +195,80 @@ const Projects = () => {
             0 0 30px rgba(144, 213, 255, 0.5);
         }
 
-        /* Responsive styles */
+        .case-study-section {
+          background: rgba(20, 20, 20, 0.6);
+          border: 1px solid rgba(144, 213, 255, 0.2);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin: 1rem 0;
+        }
+
+        .case-study-title {
+          color: #90d5ff;
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .feature-list li {
+          position: relative;
+          padding-left: 1.5rem;
+          margin-bottom: 0.5rem;
+          color: #e5e7eb;
+        }
+
+        .feature-list li::before {
+          content: "•";
+          color: #90d5ff;
+          font-weight: bold;
+          position: absolute;
+          left: 0;
+        }
+
+        .tech-stack-item {
+          background: rgba(144, 213, 255, 0.1);
+          border: 1px solid rgba(144, 213, 255, 0.3);
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          color: #90d5ff;
+          font-size: 0.875rem;
+          margin: 0.25rem;
+          display: inline-block;
+        }
+
+        .problem-solution-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+          margin: 1rem 0;
+        }
+
+        .problem-section,
+        .solution-section {
+          background: rgba(25, 25, 25, 0.8);
+          padding: 1rem;
+          border-radius: 8px;
+          border: 1px solid rgba(144, 213, 255, 0.2);
+        }
+
+        .problem-section {
+          border-left: 4px solid #ef4444;
+        }
+
+        .solution-section {
+          border-left: 4px solid #10b981;
+        }
+
         @media (max-width: 1024px) {
           .project-card-3d:hover {
             transform: none;
+          }
+
+          .problem-solution-container {
+            grid-template-columns: 1fr;
           }
         }
 
@@ -378,6 +309,8 @@ const Projects = () => {
           .modal-content-3d {
             width: 95%;
             padding: 1.5rem;
+            max-height: 90vh;
+            overflow-y: auto;
           }
         }
 
@@ -388,15 +321,6 @@ const Projects = () => {
 
           .header-description {
             font-size: 1rem;
-          }
-
-          .filter-buttons {
-            gap: 0.5rem;
-          }
-
-          .filter-button-3d {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
           }
 
           .timeline-line {
@@ -452,11 +376,6 @@ const Projects = () => {
             font-size: 2rem;
           }
 
-          .filter-buttons {
-            flex-wrap: wrap;
-            justify-content: center;
-          }
-
           .project-card {
             margin-left: 2.5rem;
           }
@@ -494,32 +413,12 @@ const Projects = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              My Journey
+              Projects
             </h2>
             <p className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto header-description">
               Explore my projects and achievements through an interactive
               timeline
             </p>
-          </motion.div>
-
-          {/* Filter Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 md:mb-12 filter-buttons"
-          >
-            {filters.map((filter, index) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`filter-button-3d px-4 py-2 md:px-6 md:py-3 rounded-xl font-medium cursor-pointer text-sm md:text-base ${
-                  activeFilter === filter ? "active" : ""
-                }`}
-              >
-                <span className="text-gray-200">{filter}</span>
-              </button>
-            ))}
           </motion.div>
 
           {/* Timeline */}
@@ -534,7 +433,7 @@ const Projects = () => {
               animate="visible"
               className="space-y-8 md:space-y-12"
             >
-              {getFilteredItems().map((item, index) => (
+              {allItems.map((item, index) => (
                 <motion.div
                   key={`${item.type}-${item.id}`}
                   variants={itemVariants}
@@ -683,7 +582,7 @@ const Projects = () => {
                     </h3>
                     <button
                       onClick={() => setSelectedProject(null)}
-                      className="text-gray-400 hover:text-white transition-colors duration-200 text-2xl"
+                      className="text-gray-400 hover:text-white transition-colors duration-200 text-2xl cursor-pointer"
                     >
                       ×
                     </button>
