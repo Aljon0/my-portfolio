@@ -3,7 +3,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
-  
   /* Dark mode colors */
   --dark-primary-color: #90D5FF; /* Light blue for dark mode */
   --dark-primary-hover: #7ac1f0; /* Lighter blue for hover in dark mode */
@@ -163,6 +162,98 @@ body {
   margin-bottom: 0;
 }
 
+/* Project Timeline Specific Styles */
+.timeline-line {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(144, 213, 255, 0.6) 10%,
+    rgba(144, 213, 255, 0.8) 50%,
+    rgba(144, 213, 255, 0.6) 90%,
+    transparent 100%
+  );
+  box-shadow: 0 0 20px rgba(144, 213, 255, 0.4);
+}
+
+.timeline-dot {
+  background: radial-gradient(circle, #90d5ff 0%, #1e40af 70%);
+  box-shadow: 0 0 30px rgba(144, 213, 255, 0.8),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+  animation: glow-pulse-timeline 3s ease-in-out infinite;
+}
+
+.year-badge {
+  position: absolute;
+  left: 8rem;
+  top: -0.5rem;
+  z-index: 20;
+}
+
+.year-badge div {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, rgba(144, 213, 255, 0.5), rgba(30, 64, 175, 0.4));
+  border: 1px solid rgba(144, 213, 255, 0.375);
+  font-size: 0.75rem;
+}
+
+.project-card {
+  margin-left: 9rem;
+  margin-top: 0.5rem;
+}
+
+.project-card-3d {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 30, 0.95) 0%,
+    rgba(45, 45, 45, 0.98) 50%,
+    rgba(60, 60, 60, 0.95) 100%
+  );
+  border: 1px solid rgba(144, 213, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card-3d:hover {
+  transform: translateY(-20px) rotateX(8deg) rotateY(-3deg) scale(1.02);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8),
+    0 15px 35px rgba(0, 0, 0, 0.6), 0 0 50px rgba(144, 213, 255, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+@keyframes float-timeline {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(2deg);
+  }
+}
+
+@keyframes glow-pulse-timeline {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(144, 213, 255, 0.3),
+      0 0 40px rgba(144, 213, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(144, 213, 255, 0.5),
+      0 0 60px rgba(144, 213, 255, 0.3);
+  }
+}
+
+.floating-animation-timeline {
+  animation: float-timeline 6s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
   #home h1 {
     display: block !important;
@@ -172,5 +263,74 @@ body {
   
   #home h1 span {
     display: inline !important;
+  }
+
+  /* Timeline adjustments for mobile */
+  .timeline-line {
+    left: 1.5rem !important;
+  }
+
+  .timeline-dot {
+    left: 1.375rem !important;
+  }
+
+  .year-badge {
+    left: 3.5rem !important;
+    top: -0.75rem !important;
+  }
+
+  .year-badge div {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+    background: linear-gradient(45deg, rgba(144, 213, 255, 0.8), rgba(30, 64, 175, 0.6)) !important;
+    border: 1px solid rgba(144, 213, 255, 0.6) !important;
+  }
+
+  .project-card {
+    margin-left: 4.5rem !important;
+    margin-top: 1rem !important;
+  }
+
+  .project-content {
+    flex-direction: column !important;
+  }
+
+  .project-image {
+    width: 100% !important;
+  }
+
+  .project-details {
+    width: 100% !important;
+  }
+
+  .project-card-3d:hover {
+    transform: none !important;
+  }
+}
+
+/* Modal styles */
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.modal-content-3d {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 20, 0.98) 0%,
+    rgba(35, 35, 35, 0.99) 100%
+  );
+  border: 1px solid rgba(144, 213, 255, 0.4);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(144, 213, 255, 0.2);
+  backdrop-filter: blur(20px);
+}
+
+@media (max-width: 768px) {
+  .modal-content-3d {
+    width: 95% !important;
+    padding: 1.5rem !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
   }
 }

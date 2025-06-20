@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
@@ -6,9 +6,6 @@ const Testimonials = () => {
   const { theme } = useTheme();
   const scrollContainerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
 
@@ -83,7 +80,7 @@ const Testimonials = () => {
     return () => window.removeEventListener("resize", updateVisibleCards);
   }, []);
 
-  // Effect to scroll to the active index with smooth animation (only when pagination is clicked)
+  // Effect to scroll to the active index with smooth animation
   useEffect(() => {
     if (scrollContainerRef.current) {
       const cardWidth = scrollContainerRef.current.clientWidth / visibleCards;
@@ -98,69 +95,13 @@ const Testimonials = () => {
   // Calculate the number of pagination indicators needed
   const paginationCount = Math.max(1, totalCards - visibleCards + 1);
 
-  // Function to update active index based on current scroll position
-  const updateActiveIndexFromScroll = () => {
-    if (!scrollContainerRef.current) return;
-
-    const container = scrollContainerRef.current;
-    const cardWidth = container.clientWidth / visibleCards;
-    const scrollPosition = container.scrollLeft;
-
-    // Calculate nearest card index
-    const nearestIndex = Math.round(scrollPosition / cardWidth);
-
-    // Ensure index is within bounds
-    const boundedIndex = Math.max(
-      0,
-      Math.min(nearestIndex, paginationCount - 1)
-    );
-
-    // Update active index without forcing scroll
-    if (boundedIndex !== activeIndex) {
-      setActiveIndex(boundedIndex);
-    }
+  // Navigation functions
+  const goToNext = () => {
+    setActiveIndex((prev) => Math.min(prev + 1, paginationCount - 1));
   };
 
-  // Update active index based on scroll position (for non-drag scrolling)
-  const handleScroll = () => {
-    if (!scrollContainerRef.current || isDragging) return;
-    updateActiveIndexFromScroll();
-  };
-
-  // Mouse and touch event handlers for dragging/sliding
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleDragEnd = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      updateActiveIndexFromScroll();
-    }
+  const goToPrevious = () => {
+    setActiveIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const renderStars = (rating) => {
@@ -285,6 +226,28 @@ const Testimonials = () => {
           }
         }
 
+        @keyframes nav-button-glow {
+          0%,
+          100% {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 20px rgba(144, 213, 255, 0.2);
+          }
+          50% {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
+              0 0 30px rgba(144, 213, 255, 0.4);
+          }
+        }
+
+        @keyframes nav-button-pulse {
+          0%,
+          100% {
+            transform: translateZ(0px) scale(1);
+          }
+          50% {
+            transform: translateZ(10px) scale(1.05);
+          }
+        }
+
         .floating-shape-testimonial {
           position: absolute;
           border-radius: 30% 70% 40% 60%;
@@ -406,6 +369,49 @@ const Testimonials = () => {
           box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5),
             0 0 30px rgba(144, 213, 255, 0.5);
         }
+
+        .nav-button-3d {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.15) 0%,
+            rgba(30, 64, 175, 0.25) 50%,
+            rgba(0, 0, 0, 0.1) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.4);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(144, 213, 255, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(20px);
+          transform-style: preserve-3d;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-button-3d:hover {
+          transform: translateY(-5px) translateZ(15px) scale(1.1);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(144, 213, 255, 0.4),
+            inset 0 2px 0 rgba(255, 255, 255, 0.2);
+          animation: nav-button-glow 2s ease-in-out infinite;
+        }
+
+        .nav-button-3d:active {
+          transform: translateY(-2px) translateZ(10px) scale(1.05);
+          animation: nav-button-pulse 0.2s ease-in-out;
+        }
+
+        .nav-button-3d:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+          transform: none;
+          animation: none;
+        }
+
+        .nav-button-3d:disabled:hover {
+          transform: none;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(144, 213, 255, 0.2);
+          animation: none;
+        }
       `}</style>
 
       <div
@@ -471,27 +477,48 @@ const Testimonials = () => {
           </div>
 
           <div className="max-w-6xl mx-auto relative">
+            {/* Navigation Buttons */}
+            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-20">
+              <button
+                onClick={goToPrevious}
+                className="nav-button-3d w-14 h-14 rounded-xl flex items-center justify-center"
+                disabled={activeIndex === 0}
+                style={{
+                  color: accentColor,
+                  transform: `perspective(1000px) rotateX(${
+                    mousePosition.y * 1
+                  }deg) rotateY(${mousePosition.x * 1}deg)`,
+                }}
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft size={24} className="drop-shadow-lg" />
+              </button>
+            </div>
+
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-20">
+              <button
+                onClick={goToNext}
+                className="nav-button-3d w-14 h-14 rounded-xl flex items-center justify-center"
+                disabled={activeIndex === paginationCount - 1}
+                style={{
+                  color: accentColor,
+                  transform: `perspective(1000px) rotateX(${
+                    mousePosition.y * 1
+                  }deg) rotateY(${mousePosition.x * 1}deg)`,
+                }}
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={24} className="drop-shadow-lg" />
+              </button>
+            </div>
+
             <div
               ref={scrollContainerRef}
               className="flex overflow-x-auto scrollbar-hide scroll-smooth snap-x select-none"
               style={{
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
-                cursor: isDragging ? "grabbing" : "grab",
-                WebkitUserSelect: "none",
-                MozUserSelect: "none",
-                msUserSelect: "none",
-                userSelect: "none",
               }}
-              onScroll={handleScroll}
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleDragEnd}
-              onMouseUp={handleDragEnd}
-              onMouseMove={handleMouseMove}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleDragEnd}
-              onTouchMove={handleTouchMove}
-              onTouchCancel={handleDragEnd}
             >
               {testimonials.map((testimonial, index) => (
                 <div
