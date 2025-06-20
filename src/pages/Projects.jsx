@@ -5,7 +5,7 @@ import {
   certificates,
   featuredProjects,
   smallProjects,
-} from "../components/projectsData";
+} from "../components/ProjectsData";
 import TimelineItem from "../components/TimelineItem";
 
 // Mock theme context
