@@ -605,7 +605,7 @@ const Home = () => {
               <button className="download-btn-3d px-8 py-4 text-white rounded-2xl font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer text-base sm:text-lg">
                 <span className="flex items-center relative z-10">
                   <a
-                    href="/Aljon Santiago-CV.pdf"
+                    href="/Aljon_Santiago_CV.pdf"
                     download
                     className="flex gap-3 items-center"
                   >
