@@ -216,11 +216,40 @@ export const smallProjects = [
       ],
     },
   },
+  {
+    id: 9,
+    title: "QR Code Generator",
+    description:
+      "A minimalist QR code generator web app built with React and TypeScript, enabling users to create, preview, and download custom QR codes effortlessly.",
+    image: "/projects/QR_CODE_GENERATOR.png",
+    category: "Web App",
+    technologies: ["React", "TypeScript", "Tailwind CSS"],
+    link: "https://qr-generator-5cw3.onrender.com",
+    featured: false,
+    year: "2025",
+    caseStudy: {
+      title: "QR Code Generator",
+      overview:
+        "This QR Code Generator is a clean and responsive web tool designed for fast QR code creation. Built with React and TypeScript, it allows users to input any text or URL, generate a live preview, and download the QR code instantly. The minimalist UI ensures a smooth and focused user experience without distractions.",
+      features: [
+        "Text/URL Input: Easily enter any content to encode into a QR code.",
+        "Live Preview: Real-time display of the generated QR code.",
+        "Download QR Code: One-click download of the QR code as a PNG image.",
+        "Copy to Clipboard: Quickly copy the input text or URL.",
+        "Responsive Minimalist Design: Clean layout optimized for desktop and mobile.",
+      ],
+      technologyStack: [
+        "Frontend: React.js with TypeScript",
+        "Styling: Tailwind CSS",
+        "QR Code Library: react-qr-code",
+      ],
+    },
+  },
 ];
 
 export const certificates = [
   {
-    id: 9,
+    id: 10,
     title: "Introduction to Computer Networking",
     image: "/certificates/ICN.png",
     category: "Certificate",
