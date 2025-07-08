@@ -9,7 +9,6 @@ export const featuredProjects = [
     technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
     link: "https://projectbaymax.onrender.com/",
     featured: true,
-    year: "2025",
     caseStudy: {
       title: "BAYMAX – Your AI-Powered Health Companion",
       overview:
@@ -40,7 +39,6 @@ export const featuredProjects = [
     technologies: ["React", "Tailwind", "Firebase", "Express", "Mistral AI"],
     link: "https://ai-rb-haee.onrender.com",
     featured: true,
-    year: "2025",
     caseStudy: {
       title: "AI-Powered Resume Builder: Smarter Resume Creation",
       overview:
@@ -119,7 +117,6 @@ export const smallProjects = [
     technologies: ["React", "Tailwind", "Appwrite"],
     link: "https://expensetracker-hrws.onrender.com",
     featured: false,
-    year: "2025",
     caseStudy: {
       title: "Expense Tracker",
       overview:
@@ -144,7 +141,6 @@ export const smallProjects = [
     technologies: ["React", "Tailwind", "Firebase"],
     link: "https://chat-web-app-1c91d.web.app/",
     featured: false,
-    year: "2025",
     caseStudy: {
       title: "Chat Sphere",
       overview:
@@ -168,7 +164,6 @@ export const smallProjects = [
     technologies: ["React", "Tailwind", "Supabase"],
     link: "https://task-manager-app-cwgb.onrender.com",
     featured: false,
-    year: "2025",
     caseStudy: {
       title: "Task Master",
       overview:
@@ -195,7 +190,6 @@ export const smallProjects = [
     technologies: ["React", "Tailwind", "Express"],
     link: "https://ai-movie.onrender.com",
     featured: false,
-    year: "2025",
     caseStudy: {
       title: "AI-Powered Movie Recommendation Chatbot",
       overview:
@@ -226,7 +220,6 @@ export const smallProjects = [
     technologies: ["React", "TypeScript", "Tailwind CSS"],
     link: "https://qr-generator-5cw3.onrender.com",
     featured: false,
-    year: "2025",
     caseStudy: {
       title: "QR Code Generator",
       overview:
@@ -254,7 +247,5 @@ export const certificates = [
     image: "/certificates/ICN.png",
     category: "Certificate",
     issuer: "Simplilearn",
-    date: "2025",
-    year: "2025",
   },
 ];
