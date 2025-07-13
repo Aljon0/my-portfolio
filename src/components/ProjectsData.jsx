@@ -67,7 +67,7 @@ export const featuredProjects = [
     image: "/projects/ed3c.webp",
     category: "Web App",
     technologies: ["React", "Tailwind", "Three.js", "Firebase"],
-    link: "#",
+    link: "https://drive.google.com/drive/folders/1BVgAIsoATl8xZdG7Pe6fILOXIYuKNqvs?usp=sharing",
     featured: true,
     year: "2024",
     caseStudy: {
