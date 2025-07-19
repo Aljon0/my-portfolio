@@ -230,6 +230,24 @@ const Projects = () => {
           backdrop-filter: blur(10px);
         }
 
+        .submit-btn {
+          background: linear-gradient(
+            135deg,
+            rgba(144, 213, 255, 0.2) 0%,
+            rgba(30, 64, 175, 0.6) 100%
+          );
+          border: 1px solid rgba(144, 213, 255, 0.5);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(144, 213, 255, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(144, 213, 255, 0.5);
+        }
+
         @media (max-width: 1024px) {
           .project-card-3d:hover {
             transform: translateY(-5px) scale(1.01);

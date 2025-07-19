@@ -104,6 +104,36 @@ export const featuredProjects = [
       ],
     },
   },
+  {
+    id: 4,
+    title: "E-Commerce",
+    description:
+      "A e-commerce  with Stripe integration, product API, and Firebase backend for authentication and order tracking.",
+    image: "/projects/Shopsmart.png",
+    category: "Web App",
+    technologies: ["React", "Tailwind", "Firebase", "Stripe"],
+    link: "https://your-ecommerce-mvp-link.com", // Replace with actual link
+    featured: true,
+    caseStudy: {
+      title: "E-Commerce: Shopsmart",
+      overview:
+        "This web application serves as a modern and responsive e-commerce that pulls products from an API, supports secure checkout with Stripe, and allows users to manage their cart and complete orders with real-time confirmation. Firebase handles user authentication and order tracking, streamlining development without a heavy CMS.",
+      features: [
+        "API-based product catalog (no manual product entry)",
+        "Add-to-cart and quantity management",
+        "Stripe checkout integration for secure payments",
+        "Firebase authentication for login and checkout access",
+        "Order confirmation and success screen",
+        "Clean, aesthetic UI using Tailwind CSS",
+      ],
+      technologyStack: [
+        "Frontend: React.js + Tailwind CSS",
+        "Backend: Firebase",
+        "Payment Integration: Stripe API",
+        "Authentication: Firebase Authentication",
+      ],
+    },
+  },
 ];
 
 export const smallProjects = [
