@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
+import styles from "./About.module.css";
 
 const About = () => {
   const { theme } = useTheme();
@@ -23,264 +24,6 @@ const About = () => {
 
   return (
     <div>
-      <style jsx>{`
-        @keyframes float-shape-about {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg) scale(1);
-          }
-          25% {
-            transform: translateY(-15px) rotate(45deg) scale(1.1);
-          }
-          50% {
-            transform: translateY(-30px) rotate(90deg) scale(0.9);
-          }
-          75% {
-            transform: translateY(-15px) rotate(135deg) scale(1.05);
-          }
-        }
-
-        @keyframes float-shape-reverse-about {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(360deg) scale(1);
-          }
-          25% {
-            transform: translateY(-20px) rotate(270deg) scale(0.8);
-          }
-          50% {
-            transform: translateY(-40px) rotate(180deg) scale(1.2);
-          }
-          75% {
-            transform: translateY(-20px) rotate(90deg) scale(1);
-          }
-        }
-
-        @keyframes grid-pulse-about {
-          0%,
-          100% {
-            opacity: 0.15;
-          }
-          50% {
-            opacity: 0.4;
-          }
-        }
-
-        @keyframes card-glow {
-          0%,
-          100% {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
-              0 4px 16px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-          }
-          50% {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8),
-              0 6px 20px rgba(0, 0, 0, 0.6), 0 0 30px rgba(144, 213, 255, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.4);
-          }
-        }
-
-        @keyframes float-3d {
-          0%,
-          100% {
-            transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-          }
-          25% {
-            transform: translateY(-10px) rotateX(5deg) rotateY(-2deg);
-          }
-          50% {
-            transform: translateY(-15px) rotateX(0deg) rotateY(2deg);
-          }
-          75% {
-            transform: translateY(-8px) rotateX(-3deg) rotateY(-1deg);
-          }
-        }
-
-        @keyframes glow-pulse {
-          0%,
-          100% {
-            box-shadow: 0 0 20px rgba(144, 213, 255, 0.3),
-              0 0 40px rgba(144, 213, 255, 0.2),
-              inset 0 0 20px rgba(144, 213, 255, 0.1);
-          }
-          50% {
-            box-shadow: 0 0 30px rgba(144, 213, 255, 0.5),
-              0 0 60px rgba(144, 213, 255, 0.3),
-              inset 0 0 30px rgba(144, 213, 255, 0.2);
-          }
-        }
-
-        .floating-shape-about {
-          position: absolute;
-          border-radius: 30% 70% 60% 40%;
-          background: linear-gradient(
-            60deg,
-            rgba(144, 213, 255, 0.15),
-            rgba(30, 64, 175, 0.25)
-          );
-          border: 1px solid rgba(144, 213, 255, 0.4);
-          backdrop-filter: blur(15px);
-        }
-
-        .floating-shape-about:nth-child(1) {
-          width: 80px;
-          height: 80px;
-          top: 15%;
-          left: 8%;
-          animation: float-shape-about 7s ease-in-out infinite;
-          animation-delay: 0s;
-        }
-
-        .floating-shape-about:nth-child(2) {
-          width: 120px;
-          height: 120px;
-          top: 50%;
-          right: 10%;
-          animation: float-shape-reverse-about 9s ease-in-out infinite;
-          animation-delay: 1.5s;
-        }
-
-        .floating-shape-about:nth-child(3) {
-          width: 100px;
-          height: 100px;
-          bottom: 25%;
-          left: 12%;
-          animation: float-shape-about 11s ease-in-out infinite;
-          animation-delay: 3s;
-        }
-
-        .floating-shape-about:nth-child(4) {
-          width: 70px;
-          height: 70px;
-          top: 25%;
-          right: 25%;
-          animation: float-shape-reverse-about 8s ease-in-out infinite;
-          animation-delay: 4.5s;
-        }
-
-        .floating-shape-about:nth-child(5) {
-          width: 110px;
-          height: 110px;
-          bottom: 15%;
-          right: 8%;
-          animation: float-shape-about 10s ease-in-out infinite;
-          animation-delay: 2s;
-        }
-
-        .floating-shape-about:nth-child(6) {
-          width: 60px;
-          height: 60px;
-          top: 70%;
-          left: 20%;
-          animation: float-shape-reverse-about 6s ease-in-out infinite;
-          animation-delay: 5s;
-        }
-
-        .grid-background-about {
-          background-image: linear-gradient(
-              rgba(144, 213, 255, 0.12) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(144, 213, 255, 0.12) 1px,
-              transparent 1px
-            );
-          background-size: 60px 60px;
-          animation: grid-pulse-about 5s ease-in-out infinite;
-        }
-
-        .about-card-3d {
-          background: linear-gradient(
-            135deg,
-            rgba(30, 30, 30, 0.9) 0%,
-            rgba(45, 45, 45, 0.95) 50%,
-            rgba(60, 60, 60, 0.9) 100%
-          );
-          border: 1px solid rgba(144, 213, 255, 0.3);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
-            0 4px 16px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-          transform-style: preserve-3d;
-          transition: all 0.4s ease;
-          backdrop-filter: blur(10px);
-          position: relative;
-        }
-
-        .about-card-3d::before {
-          content: "";
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          background: linear-gradient(
-            45deg,
-            transparent,
-            rgba(144, 213, 255, 0.1),
-            transparent
-          );
-          border-radius: inherit;
-          z-index: -1;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .about-card-3d:hover::before {
-          opacity: 1;
-        }
-
-        .about-card-3d:hover {
-          transform: translateY(-10px) translateZ(20px) rotateX(5deg);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
-            0 10px 30px rgba(0, 0, 0, 0.6), 0 0 40px rgba(144, 213, 255, 0.4),
-            inset 0 2px 0 rgba(255, 255, 255, 0.2),
-            inset 0 -2px 0 rgba(0, 0, 0, 0.4);
-        }
-
-        .intro-card-3d {
-          background: linear-gradient(
-            135deg,
-            rgba(20, 20, 20, 0.95) 0%,
-            rgba(35, 35, 35, 0.98) 100%
-          );
-          border: 2px solid rgba(144, 213, 255, 0.4);
-          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
-            0 6px 20px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1),
-            0 0 30px rgba(144, 213, 255, 0.1);
-          transform-style: preserve-3d;
-          transition: all 0.4s ease;
-          backdrop-filter: blur(15px);
-        }
-
-        .intro-card-3d:hover {
-          transform: translateY(-8px) translateZ(15px) rotateX(3deg);
-          box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7),
-            0 0 40px rgba(144, 213, 255, 0.5);
-        }
-
-        .floating-animation {
-          animation: float-3d 6s ease-in-out infinite;
-        }
-
-        .emoji-3d {
-          display: inline-block;
-          font-size: 1.5em;
-          transform-style: preserve-3d;
-          transition: all 0.3s ease;
-          filter: drop-shadow(0 0 10px rgba(144, 213, 255, 0.5));
-        }
-
-        .emoji-3d:hover {
-          transform: translateZ(10px) rotateY(20deg) scale(1.2);
-          filter: drop-shadow(0 0 20px rgba(144, 213, 255, 0.8));
-        }
-      `}</style>
-
       <section
         id="about"
         className="min-h-screen flex flex-col justify-center relative overflow-hidden"
@@ -291,7 +34,7 @@ const About = () => {
       >
         <div className="w-full py-8 relative z-10">
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-center font-[poppins] floating-animation text-white"
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-center font-[poppins] ${styles.floatingAnimation} text-white`}
             style={{
               textShadow:
                 "0 0 20px rgba(144, 213, 255, 0.5), 0 0 40px rgba(144, 213, 255, 0.3)",
@@ -311,7 +54,7 @@ const About = () => {
             {/* Introduction Section */}
             <div className="mb-12">
               <div
-                className="intro-card-3d p-6 rounded-2xl"
+                className={`${styles.introCard3d} p-6 rounded-2xl`}
                 style={{
                   transform: `perspective(800px) rotateX(${
                     mousePosition.y * 2
@@ -343,7 +86,7 @@ const About = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* AI Focus */}
                 <div
-                  className="about-card-3d rounded-2xl p-6 min-h-[200px]"
+                  className={`${styles.aboutCard3d} rounded-2xl p-6 min-h-[200px]`}
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.5
@@ -354,7 +97,7 @@ const About = () => {
                 >
                   <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl flex-shrink-0"
+                      className={`${styles.emoji3d} text-3xl flex-shrink-0`}
                       style={{ color: accentColor }}
                     >
                       🔍
@@ -383,7 +126,7 @@ const About = () => {
 
                 {/* Expertise */}
                 <div
-                  className="about-card-3d rounded-2xl p-6 min-h-[200px]"
+                  className={`${styles.aboutCard3d} rounded-2xl p-6 min-h-[200px]`}
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.2
@@ -392,7 +135,7 @@ const About = () => {
                 >
                   <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl flex-shrink-0"
+                      className={`${styles.emoji3d} text-3xl flex-shrink-0`}
                       style={{ color: accentColor }}
                     >
                       ⚡
@@ -421,7 +164,7 @@ const About = () => {
               {/* Bottom Row - One Centered Card */}
               <div className="flex justify-center">
                 <div
-                  className="about-card-3d rounded-2xl p-6 min-h-[200px] w-full max-w-2xl"
+                  className={`${styles.aboutCard3d} rounded-2xl p-6 min-h-[200px] w-full max-w-2xl`}
                   style={{
                     transform: `perspective(600px) rotateX(${
                       mousePosition.y * 1.8
@@ -430,7 +173,7 @@ const About = () => {
                 >
                   <div className="flex items-start space-x-4 h-full">
                     <span
-                      className="emoji-3d text-3xl flex-shrink-0"
+                      className={`${styles.emoji3d} text-3xl flex-shrink-0`}
                       style={{ color: accentColor }}
                     >
                       🚀
