@@ -287,7 +287,7 @@ const Home = () => {
                         <h3 className="text-xl font-bold text-white">
                           AL-JON SANTIAGO
                         </h3>
-                        <p className="text-[#90D5FF]">Web Developer</p>
+                        <p className="text-[#90D5FF]">Full Stack Developer</p>
                       </div>
                     </div>
 
