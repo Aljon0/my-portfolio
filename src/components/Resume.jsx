@@ -135,25 +135,19 @@ const Resume = ({ isOpen, onClose }) => {
           <X size={20} />
         </button>
 
-        {/* Download button */}
+        {/* Download button - Updated to match Resume/CV button style */}
         <button
           onClick={handleDownload}
-          className="absolute top-6 right-20 px-4 py-2 bg-gradient-to-r cursor-pointer from-[#90D5FF] to-[#6AB7FF] text-white rounded-lg hover:shadow-lg hover:shadow-[#90D5FF]/25 transition-all duration-300 flex items-center gap-2 text-sm font-medium"
+          className="absolute top-6 right-20 px-8 py-4 text-white rounded-2xl font-semibold flex items-center justify-center group overflow-hidden cursor-pointer text-base sm:text-lg downloadBtn3d"
         >
-          <Download size={16} />
-          Download PDF
+          <span className="flex items-center relative z-10 gap-3">
+            <Download className="text-xl" /> Download PDF
+          </span>
         </button>
 
-        <div className="p-8 pt-20">
+        <div className="p-8 pt-24">
           {/* Header Section */}
           <div className="text-center mb-8 relative">
-            <div className="profile-image w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-[#90D5FF]/30 shadow-2xl shadow-[#90D5FF]/20">
-              <img
-                src="/Aljon.webp"
-                alt="Al-jon Santiago"
-                className="w-full h-full object-cover"
-              />
-            </div>
             <h1 className="gradient-text text-4xl font-bold mb-2">
               AL-JON SANTIAGO
             </h1>

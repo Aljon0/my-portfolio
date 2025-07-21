@@ -164,17 +164,19 @@ const ProjectModal = ({ selectedProject, onClose, getTechBadgeColor }) => {
             </div>
           )}
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Updated to match Resume/CV button style */}
           {selectedProject.link && selectedProject.link !== "#" && (
             <div className="flex gap-3 md:gap-4">
               <a
                 href={selectedProject.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="submit-btn flex items-center gap-1 md:gap-2 px-4 py-2 md:px-6 md:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors duration-300 font-medium text-sm md:text-base"
+                className="downloadBtn3d px-6 py-3 md:px-8 md:py-4 text-white rounded-2xl font-semibold flex items-center justify-center group relative overflow-hidden cursor-pointer text-sm md:text-base"
               >
-                <FaExternalLinkAlt className="w-3 h-3 md:w-4 md:h-4" />
-                View Live Project
+                <span className="flex items-center relative z-10 gap-2 md:gap-3">
+                  <FaExternalLinkAlt className="text-lg md:text-xl" />
+                  View Live Project
+                </span>
               </a>
             </div>
           )}

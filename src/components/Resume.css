@@ -154,3 +154,23 @@
     font-size: 2rem !important;
   }
 }
+
+.downloadBtn3d {
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(144, 213, 255, 0.2) 0%,
+    rgba(30, 64, 175, 0.4) 100%
+  );
+  border: 1px solid rgba(144, 213, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(144, 213, 255, 0.3);
+}
+
+.downloadBtn3d:hover {
+  transform: translateY(-5px) translateZ(10px) rotateX(5deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(144, 213, 255, 0.5);
+}
