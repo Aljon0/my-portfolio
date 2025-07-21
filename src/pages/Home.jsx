@@ -258,7 +258,7 @@ const Home = () => {
               <div className="p-6 md:p-8 relative">
                 <button
                   onClick={() => setContactExpanded(false)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/30 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 z-10"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/30 flex cursor-pointer items-center justify-center text-white transition-all duration-300 hover:scale-110 z-10"
                 >
                   <X size={20} />
                 </button>
