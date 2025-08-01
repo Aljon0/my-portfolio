@@ -112,7 +112,7 @@ export const featuredProjects = [
     image: "/projects/Shopsmart.png",
     category: "Web App",
     technologies: ["React", "Tailwind", "Firebase", "Stripe"],
-    link: "https://your-ecommerce-mvp-link.com", // Replace with actual link
+    link: "https://e-commerce-gkjf.onrender.com", // Replace with actual link
     featured: true,
     caseStudy: {
       title: "E-Commerce: Shopsmart",
