@@ -1,0 +1,146 @@
+/* StackStyles.css */
+@keyframes float-3d {
+    0%,
+    100% {
+      transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+      transform: translateY(-10px) rotateX(5deg) rotateY(-2deg);
+    }
+    50% {
+      transform: translateY(-15px) rotateX(0deg) rotateY(2deg);
+    }
+    75% {
+      transform: translateY(-8px) rotateX(-3deg) rotateY(-1deg);
+    }
+  }
+  
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(144, 213, 255, 0.3),
+        0 0 40px rgba(144, 213, 255, 0.2),
+        inset 0 0 20px rgba(144, 213, 255, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(144, 213, 255, 0.5),
+        0 0 60px rgba(144, 213, 255, 0.3),
+        inset 0 0 30px rgba(144, 213, 255, 0.2);
+    }
+  }
+  
+  .skill-container-3d {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  
+  .skill-card-3d {
+    background: linear-gradient(
+      135deg,
+      rgba(30, 30, 30, 0.9) 0%,
+      rgba(45, 45, 45, 0.95) 50%,
+      rgba(60, 60, 60, 0.9) 100%
+    );
+    border: 1px solid rgba(144, 213, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
+  
+  .skill-card-3d::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(144, 213, 255, 0.1),
+      transparent
+    );
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .skill-card-3d:hover::before {
+    opacity: 1;
+  }
+  
+  .skill-card-3d:hover {
+    transform: translateY(-15px) rotateX(10deg) rotateY(5deg) scale(1.05);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+      0 10px 30px rgba(0, 0, 0, 0.6),
+      0 0 40px var(--glow-color, rgba(144, 213, 255, 0.4)),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+  .skill-icon-3d {
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
+  
+  .skill-card-3d:hover .skill-icon-3d {
+    transform: translateZ(20px) rotateY(15deg);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+  }
+  
+  .category-button-3d {
+    background: linear-gradient(
+      135deg,
+      rgba(30, 30, 30, 0.9) 0%,
+      rgba(45, 45, 45, 0.95) 100%
+    );
+    border: 1px solid rgba(144, 213, 255, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+  
+  .category-button-3d:hover {
+    transform: translateY(-5px) rotateX(5deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(144, 213, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .category-button-3d.active {
+    background: linear-gradient(
+      135deg,
+      rgba(144, 213, 255, 0.2) 0%,
+      rgba(30, 64, 175, 0.3) 100%
+    );
+    border-color: rgba(144, 213, 255, 0.6);
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  .info-panel-3d {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(35, 35, 35, 0.98) 100%
+    );
+    border: 1px solid rgba(144, 213, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6),
+      0 6px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 30px rgba(144, 213, 255, 0.1);
+    backdrop-filter: blur(15px);
+    transform-style: preserve-3d;
+  }
+  
+  .floating-animation {
+    animation: float-3d 6s ease-in-out infinite;
+  }

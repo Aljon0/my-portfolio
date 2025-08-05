@@ -55,6 +55,42 @@ Additional Skills and Experience:
 - Skilled in developing e-commerce platforms
 - Capable of creating responsive and user-friendly interfaces
 - Strong problem-solving abilities and adaptability to new technologies
+
+AI-Powered Development / Prompt Engineering
+
+Developed skills in AI-assisted development using tools like ChatGPT and Claude.
+
+Specialized in prompt engineering to create full UI/UX and logic flows using low-code/no-code tools.
+
+2. AI Agents & Automation
+
+Started studying and working with AI Agents.
+
+Built MVPs using AI automation strategies, including business logic and task automation.
+
+Low-Code Tools
+
+Learned and applied tools like:
+
+n8n for backend automation
+
+Make.com and Zapier for workflow automation
+
+Created automation systems for client projects using these tools.
+
+System Architecture & Project Planning
+
+Gained experience in designing architectural layouts, MVP breakdowns, and feature plans.
+
+Learned to create professional client-facing documentation and proposals.
+
+Real Client Projects
+
+Developed AI-Driven Back Office Automation MVP (UI-focused).
+
+Built Bankruptcy Lead Scoring App with frontend and local data logic.
+
+Contributed to multiple client-facing dashboards, portals, and admin panels.
 `;
 
 export const getMistralResponse = async (userMessage, conversationHistory) => {

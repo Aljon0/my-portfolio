@@ -172,7 +172,7 @@ const Home = () => {
                 textShadow: "0 0 20px rgba(144, 213, 255, 0.3)",
               }}
             >
-              Full Stack Developer | AI-Integrated Web Solutions
+              Full Stack Developer | AI & Workflow Automation Specialist
             </h2>
 
             <p
@@ -183,8 +183,9 @@ const Home = () => {
                 }deg) rotateY(${mousePosition.x * 2}deg)`,
               }}
             >
-              Crafting modern web applications with integrated AI features using
-              tools like Hugging Face and Mistral AI.
+              Crafting modern, scalable web applications with AI-powered
+              features and automated workflows using tools like Hugging Face,
+              Mistral AI, Make.com, and n8n.
             </p>
 
             <div className="flex justify-center mt-6 sm:mt-8 space-x-6 sm:space-x-8">
@@ -287,7 +288,10 @@ const Home = () => {
                         <h3 className="text-xl font-bold text-white">
                           AL-JON SANTIAGO
                         </h3>
-                        <p className="text-[#90D5FF]">Full Stack Developer</p>
+                        <p className="text-[#90D5FF]">
+                          Full Stack Developer | AI & Workflow Automation
+                          Specialist
+                        </p>
                       </div>
                     </div>
 

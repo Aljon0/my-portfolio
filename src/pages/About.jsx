@@ -113,11 +113,13 @@ const About = () => {
                         AI Integration Focus
                       </h3>
                       <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        Recently, I've been focusing on integrating AI into web
-                        apps — building smart, responsive systems using tools
-                        like Hugging Face APIs and Mistral AI. From an
+                        Recently, I've been focusing on integrating AI and
+                        automation into web apps — building smart, responsive
+                        systems using tools like Hugging Face APIs, Mistral AI,
+                        and low-code platforms like Make.com and n8n. From an
                         AI-powered resume builder to a healthcare companion bot,
-                        I enjoy creating applications that go beyond CRUD and
+                        and now automating workflows for business operations, I
+                        enjoy creating applications that go beyond CRUD and
                         deliver real user intelligence.
                       </p>
                     </div>
@@ -152,9 +154,11 @@ const About = () => {
                       </h3>
                       <p className="leading-relaxed text-gray-300 text-sm md:text-base">
                         I specialize in building secure, responsive web
-                        applications solutions using modern technologies like
-                        React, Express.js, Node.js, and implementing best
-                        practices for application security and performance.
+                        applications and workflow automations using modern
+                        technologies like React, Express.js, Node.js, Make.com,
+                        and n8n. I apply best practices for security,
+                        performance, and business process automation, enabling
+                        clients to scale with minimal overhead.
                       </p>
                     </div>
                   </div>
