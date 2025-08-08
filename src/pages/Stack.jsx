@@ -103,7 +103,6 @@ const N8nIcon = ({ color, size, style }) => {
 const Stack = () => {
   const { theme } = useTheme();
   const [activeSkill, setActiveSkill] = useState(null);
-  const [activeCategory, setActiveCategory] = useState("Front End");
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
 
   const ReactNativeIcon = ({ color, size, style }) => {
@@ -186,10 +185,6 @@ const Stack = () => {
     setActiveSkill(activeSkill === skillName ? null : skillName);
   };
 
-  const handleCategoryClick = (category) => {
-    setActiveCategory(category);
-  };
-
   return (
     <div>
       <section
@@ -229,29 +224,28 @@ const Stack = () => {
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-6 mb-12">
-              {skillCategories.map((cat, index) => (
-                <button
-                  key={cat.category}
-                  onClick={() => handleCategoryClick(cat.category)}
-                  className={`category-button-3d px-6 py-3 rounded-xl font-medium cursor-pointer ${
-                    activeCategory === cat.category ? "active" : ""
-                  }`}
-                  style={{
-                    animationDelay: `${index * 0.1}s`,
-                  }}
-                >
-                  <span className="text-gray-200">{cat.category}</span>
-                </button>
-              ))}
-            </div>
+            {/* Display all categories vertically */}
+            <div className="space-y-16">
+              {skillCategories.map((category, categoryIndex) => (
+                <div key={category.category} className="space-y-8">
+                  {/* Category Title */}
+                  <h3
+                    className="text-3xl font-bold text-center text-white mb-8 floating-animation"
+                    style={{
+                      textShadow: "0 0 15px rgba(144, 213, 255, 0.4)",
+                      background: "linear-gradient(45deg, #90D5FF, #ffffff)",
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      animationDelay: `${categoryIndex * 0.3}s`,
+                    }}
+                  >
+                    {category.category}
+                  </h3>
 
-            {skillCategories
-              .filter((cat) => cat.category === activeCategory)
-              .map((selectedCategory) => (
-                <div key={selectedCategory.category} className="space-y-8">
+                  {/* Skills for this category */}
                   <div className="flex flex-wrap justify-center gap-8 skill-container-3d">
-                    {selectedCategory.skills.map((skill, index) => {
+                    {category.skills.map((skill, index) => {
                       const iconColor = getIconColor(skill.color, skill.name);
 
                       return (
@@ -260,7 +254,9 @@ const Stack = () => {
                           className="skill-card-3d group flex flex-col items-center justify-center px-6 py-6 rounded-2xl w-32 h-32 cursor-pointer"
                           style={{
                             "--glow-color": `${skill.color}40`,
-                            animationDelay: `${index * 0.1}s`,
+                            animationDelay: `${
+                              categoryIndex * 0.3 + index * 0.1
+                            }s`,
                           }}
                           onClick={() => handleSkillClick(skill.name)}
                         >
@@ -286,6 +282,7 @@ const Stack = () => {
                   </div>
                 </div>
               ))}
+            </div>
           </div>
         </div>
       </section>
