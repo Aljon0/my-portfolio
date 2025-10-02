@@ -172,7 +172,7 @@ const Home = () => {
                 textShadow: "0 0 20px rgba(144, 213, 255, 0.3)",
               }}
             >
-              Full Stack Developer | AI & Workflow Automation Specialist
+              Full Stack Developer | AI Integration & Automation
             </h2>
 
             <p
@@ -289,8 +289,7 @@ const Home = () => {
                           AL-JON SANTIAGO
                         </h3>
                         <p className="text-[#90D5FF]">
-                          Full Stack Developer | AI & Workflow Automation
-                          Specialist
+                          Full Stack Developer | AI Integration & Automation
                         </p>
                       </div>
                     </div>

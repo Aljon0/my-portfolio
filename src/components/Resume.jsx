@@ -282,7 +282,7 @@ const Resume = ({ isOpen, onClose }) => {
               Full Stack Developer
             </p>
             <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto text-sm">
-              AI & Workflow Automation Specialist
+              AI Integration & Automation
             </p>
 
             {/* Contact Info */}
