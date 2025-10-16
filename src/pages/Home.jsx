@@ -185,7 +185,7 @@ const Home = () => {
             >
               Crafting modern, scalable web applications with AI-powered
               features and automated workflows using tools like Hugging Face,
-              Mistral AI, Make.com.
+              Mistral AI, Make.com and n8n.
             </p>
 
             <div className="flex justify-center mt-6 sm:mt-8 space-x-6 sm:space-x-8">

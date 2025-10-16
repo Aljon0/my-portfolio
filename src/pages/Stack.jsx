@@ -80,6 +80,26 @@ const MakeIcon = ({ color, size, style }) => {
   );
 };
 
+// Custom n8n icon
+const N8nIcon = ({ color, size, style }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill={color}
+      style={style}
+    >
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      <circle cx="6" cy="9" r="1" />
+      <circle cx="18" cy="9" r="1" />
+      <circle cx="6" cy="15" r="1" />
+      <circle cx="18" cy="15" r="1" />
+    </svg>
+  );
+};
+
 const Stack = () => {
   const { theme } = useTheme();
   const [activeSkill, setActiveSkill] = useState(null);
@@ -144,7 +164,10 @@ const Stack = () => {
     },
     {
       category: "Automation Tools",
-      skills: [{ name: "Make.com", icon: MakeIcon, color: "#6B46F2" }],
+      skills: [
+        { name: "Make.com", icon: MakeIcon, color: "#6B46F2" },
+        { name: "n8n", icon: N8nIcon, color: "#EA4B71" },
+      ],
     },
     {
       category: "Other Technologies",
