@@ -322,7 +322,7 @@ const Resume = ({ isOpen, onClose }) => {
                 Motivated and self-taught Full Stack Developer specializing in
                 building scalable web platforms with AI-powered features and
                 workflow automations. Skilled in React, Node.js, Supabase,
-                Firebase, and low-code tools like Make.com. Experienced in
+                Firebase, and low-code tools like Make.com & n8n. Experienced in
                 creating real-world client projects, integrating AI APIs, and
                 delivering secure, production-ready solutions.
               </p>
