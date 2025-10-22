@@ -5,7 +5,6 @@ import {
   FaGithub,
   FaHtml5,
   FaJsSquare,
-  FaMobileAlt,
   FaNodeJs,
   FaPython,
   FaReact,
@@ -15,14 +14,15 @@ import {
   SiFirebase,
   SiMongodb,
   SiMysql,
+  SiPhp,
   SiPostgresql,
   SiPostman,
+  SiReplit,
   SiSupabase,
   SiTailwindcss,
   SiTypescript,
   SiVite,
 } from "react-icons/si";
-import "./StackStyles.css";
 
 // Mock theme context
 const useTheme = () => ({ theme: "dark" });
@@ -100,28 +100,28 @@ const N8nIcon = ({ color, size, style }) => {
   );
 };
 
+// Custom Lovable AI icon
+const LovableIcon = ({ color, size, style }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill={color}
+      style={style}
+    >
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      <circle cx="12" cy="12" r="3" fill="white" />
+      <path d="M12 10v4M10 12h4" stroke={color} strokeWidth="0.5" fill="none" />
+    </svg>
+  );
+};
+
 const Stack = () => {
   const { theme } = useTheme();
   const [activeSkill, setActiveSkill] = useState(null);
   const accentColor = theme === "light" ? "#1E40AF" : "#90D5FF";
-
-  const ReactNativeIcon = ({ color, size, style }) => {
-    return (
-      <div className="relative">
-        <FaReact color={color} size={size} style={style} />
-        <FaMobileAlt
-          color={color}
-          size={size * 0.4}
-          style={{
-            position: "absolute",
-            bottom: -2,
-            right: -4,
-            ...style,
-          }}
-        />
-      </div>
-    );
-  };
 
   const getIconColor = (baseColor, name) => {
     if (theme === "dark") {
@@ -149,6 +149,7 @@ const Stack = () => {
       skills: [
         { name: "Node.js", icon: FaNodeJs, color: "#68A063" },
         { name: "Express", icon: SiExpress, color: "#333333" },
+        { name: "PHP", icon: SiPhp, color: "#777BB4" },
         { name: "Python", icon: FaPython, color: "#3776AB" },
       ],
     },
@@ -163,19 +164,21 @@ const Stack = () => {
       ],
     },
     {
-      category: "Automation Tools",
+      category: "AI & Automation Tools",
       skills: [
+        { name: "Hugging Face", icon: HuggingFaceIcon, color: "#FFD21E" },
+        { name: "Mistral AI", icon: MistralIcon, color: "#6352D9" },
+        { name: "Lovable AI", icon: LovableIcon, color: "#FF6B9D" },
         { name: "Make.com", icon: MakeIcon, color: "#6B46F2" },
         { name: "n8n", icon: N8nIcon, color: "#EA4B71" },
       ],
     },
     {
-      category: "Other Technologies",
+      category: "Development Tools",
       skills: [
-        { name: "Hugging Face", icon: HuggingFaceIcon, color: "#FFD21E" },
-        { name: "Mistral AI", icon: MistralIcon, color: "#6352D9" },
         { name: "GitHub", icon: FaGithub, color: "#333333" },
         { name: "Git", icon: FaGit, color: "#F05032" },
+        { name: "Replit", icon: SiReplit, color: "#F26207" },
         { name: "Postman", icon: SiPostman, color: "#FF6C37" },
       ],
     },
@@ -195,6 +198,59 @@ const Stack = () => {
             "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)",
         }}
       >
+        <style jsx>{`
+          @keyframes float {
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+
+          .floating-animation {
+            animation: float 3s ease-in-out infinite;
+          }
+
+          .skill-card-3d {
+            background: linear-gradient(
+              145deg,
+              rgba(30, 30, 30, 0.8),
+              rgba(20, 20, 20, 0.9)
+            );
+            border: 1px solid rgba(144, 213, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+          }
+
+          .skill-card-3d:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 30px var(--glow-color),
+              0 0 20px var(--glow-color);
+            border-color: rgba(144, 213, 255, 0.4);
+          }
+
+          .skill-icon-3d {
+            transition: all 0.3s ease;
+          }
+
+          .skill-card-3d:hover .skill-icon-3d {
+            transform: scale(1.2) rotateY(180deg);
+          }
+
+          .info-panel-3d {
+            background: linear-gradient(
+              145deg,
+              rgba(30, 30, 30, 0.6),
+              rgba(20, 20, 20, 0.8)
+            );
+            border: 1px solid rgba(144, 213, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(144, 213, 255, 0.1);
+          }
+        `}</style>
+
         <div className="w-full">
           <h2
             className="text-5xl font-bold mb-10 text-center text-white floating-animation"
@@ -220,7 +276,8 @@ const Stack = () => {
                 <span className="font-semibold text-blue-300">
                   technical expertise
                 </span>{" "}
-                spans across web development and AI technologies.
+                spans across web development, AI technologies, and automation
+                tools.
               </p>
             </div>
 
@@ -244,7 +301,7 @@ const Stack = () => {
                   </h3>
 
                   {/* Skills for this category */}
-                  <div className="flex flex-wrap justify-center gap-8 skill-container-3d">
+                  <div className="flex flex-wrap justify-center gap-8">
                     {category.skills.map((skill, index) => {
                       const iconColor = getIconColor(skill.color, skill.name);
 

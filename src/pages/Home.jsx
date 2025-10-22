@@ -183,9 +183,11 @@ const Home = () => {
                 }deg) rotateY(${mousePosition.x * 2}deg)`,
               }}
             >
-              Crafting modern, scalable web applications with AI-powered
-              features and automated workflows using tools like Hugging Face,
-              Mistral AI, Make.com and n8n.
+              Building modern, scalable web applications with AI-powered
+              features and automated workflows. Leveraging low-code platforms
+              like Lovable AI and Replit, alongside powerful tools such as
+              Hugging Face, Mistral AI, Make.com, and n8n for rapid development
+              and intelligent automation.
             </p>
 
             <div className="flex justify-center mt-6 sm:mt-8 space-x-6 sm:space-x-8">

@@ -62,13 +62,28 @@ const Resume = ({ isOpen, onClose }) => {
       "OpenAI API",
       "Mistral AI",
       "Claude AI",
+      "Lovable AI",
       "Make.com",
       "n8n",
     ],
-    "Databases & Cloud": ["Firebase", "Supabase", "Node.js", "MongoDB"],
-    "Other Tools": [
+    "Databases & Cloud": [
+      "Firebase",
+      "Supabase",
+      "Node.js",
+      "MongoDB",
+      "MySQL",
+      "PostgreSQL",
+    ],
+    "Development Tools": [
+      "Git",
+      "GitHub",
+      "Replit",
+      "Postman",
+      "Vite",
       "HTML5",
       "CSS3",
+    ],
+    "Other Skills": [
       "API Integrations",
       "Stripe Payments",
       "Slack",
@@ -84,6 +99,8 @@ const Resume = ({ isOpen, onClose }) => {
     "Collaboration",
     "Adaptability",
     "Time Management",
+    "Self-Learning",
+    "Communication",
   ];
 
   const experiences = [
@@ -92,7 +109,7 @@ const Resume = ({ isOpen, onClose }) => {
       company: "Seiwa Kaiun Philippines, Golden Gate General Trias Cavite",
       period: "February 17, 2025 - May 16, 2025",
       responsibilities: [
-        "Developed and maintained backend functionalities for internal systems, including a Performance Evaluation System and Invoice Management System",
+        "Developed and maintained backend functionalities using PHP for internal systems, including a Performance Evaluation System and Invoice Management System",
         "Conducted system testing, bug fixing, and data validation to ensure reliability and optimal performance",
         "Collaborated with the MIS team to present project updates and implement feedback into system improvements",
       ],
@@ -102,9 +119,10 @@ const Resume = ({ isOpen, onClose }) => {
       company: "Remote",
       period: "2024 - Present",
       responsibilities: [
-        "Delivered AI-integrated web applications for international clients",
+        "Delivered AI-integrated web applications for international clients using React, Node.js, and various AI APIs",
         "Built and deployed SaaS-style features including authentication, subscriptions, and automated email delivery",
         "Designed and implemented custom workflow automations using Make.com and n8n to optimize client business processes",
+        "Utilized Lovable AI and Replit for rapid prototyping and collaborative development",
       ],
     },
   ];
@@ -126,7 +144,13 @@ const Resume = ({ isOpen, onClose }) => {
       name: "BAYMAX - AI Health Companion",
       tech: "Full Stack Development | React, Tailwind CSS, Firebase, Mistral AI, MedlinePlus API",
       description:
-        "Created an AI-powered app for symptom checking, journaling, and wellness reminders.",
+        "Created an AI-powered app for symptom checking, journaling, and wellness reminders with real-time health insights.",
+    },
+    {
+      name: "Workflow Automation Solutions",
+      tech: "Automation | Make.com, n8n, API Integration",
+      description:
+        "Designed and deployed custom automation workflows for clients, integrating multiple platforms and services to streamline business operations.",
     },
   ];
 
@@ -248,8 +272,8 @@ const Resume = ({ isOpen, onClose }) => {
           isAnimating ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
-          top: "64px", // Adjust this value based on your header height
-          height: "calc(100% - 64px)", // Subtract the header height from total height
+          top: "64px",
+          height: "calc(100% - 64px)",
           boxShadow:
             "0 0 50px rgba(144, 213, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
           borderRight: "1px solid rgba(144, 213, 255, 0.2)",
@@ -282,7 +306,7 @@ const Resume = ({ isOpen, onClose }) => {
               Full Stack Developer
             </p>
             <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto text-sm">
-              AI Integration & Automation
+              AI Integration & Automation Specialist
             </p>
 
             {/* Contact Info */}
@@ -321,10 +345,12 @@ const Resume = ({ isOpen, onClose }) => {
               <p className="text-gray-300 leading-relaxed text-sm">
                 Motivated and self-taught Full Stack Developer specializing in
                 building scalable web platforms with AI-powered features and
-                workflow automations. Skilled in React, Node.js, Supabase,
-                Firebase, and low-code tools like Make.com & n8n. Experienced in
-                creating real-world client projects, integrating AI APIs, and
-                delivering secure, production-ready solutions.
+                workflow automations. Skilled in React, Node.js, PHP, Supabase,
+                Firebase, and low-code tools like Make.com, n8n, Lovable AI, and
+                Replit. Experienced in creating real-world client projects,
+                integrating AI APIs, and delivering secure, production-ready
+                solutions. Proficient in rapid prototyping and collaborative
+                development using modern tools and frameworks.
               </p>
             </div>
           </div>
