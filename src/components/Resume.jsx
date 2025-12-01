@@ -66,6 +66,13 @@ const Resume = ({ isOpen, onClose }) => {
       "Make.com",
       "n8n",
     ],
+    "AI Engineering": [
+      "LLM API Integration (Mistral AI, Claude, OpenAI)",
+      "Structured Prompt Engineering",
+      "Domain-specific AI assistants",
+      "Knowledge-controlled AI responses (custom instructions, persona constraints)",
+      "API-augmented outputs (e.g., medical data, job skills).",
+    ],
     "Databases & Cloud": [
       "Firebase",
       "Supabase",
@@ -343,14 +350,14 @@ const Resume = ({ isOpen, onClose }) => {
             </div>
             <div className="bg-gradient-to-br from-[#90D5FF]/10 to-[#6AB7FF]/5 rounded-xl p-6 border border-[#90D5FF]/20 backdrop-blur-sm">
               <p className="text-gray-300 leading-relaxed text-sm">
-                Motivated and self-taught Full Stack Developer specializing in
-                building scalable web platforms with AI-powered features and
-                workflow automations. Skilled in React, Node.js, PHP, Supabase,
-                Firebase, and low-code tools like Make.com, n8n, Lovable AI, and
-                Replit. Experienced in creating real-world client projects,
-                integrating AI APIs, and delivering secure, production-ready
-                solutions. Proficient in rapid prototyping and collaborative
-                development using modern tools and frameworks.
+                Full Stack Developer & AI Engineer with hands-on experience
+                building real-world applications powered by modern LLMs. Skilled
+                in designing structured prompts, integrating AI APIs, and
+                creating domain-specific AI assistants for health, and
+                productivity use cases. Strong background in React, Node.js,
+                Supabase, Firebase, and building secure, scalable web
+                applications. Passionate about turning ideas into usable
+                AI-driven products.
               </p>
             </div>
           </div>

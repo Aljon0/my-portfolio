@@ -74,8 +74,8 @@ const About = () => {
                   >
                     Al-Jon Santiago
                   </span>{" "}
-                  , a Full Stack Web Developer from General Trias, Cavite,
-                  Philippines.
+                  , a Full Stack Web Developer & AI Engineer from General Trias,
+                  Cavite, Philippines.
                 </p>
               </div>
             </div>
@@ -110,17 +110,18 @@ const About = () => {
                           textShadow: `0 0 15px ${accentColor}40`,
                         }}
                       >
-                        AI Integration Focus
+                        AI Engineering Focus
                       </h3>
                       <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        Recently, I've been focusing on integrating AI and
-                        automation into web apps — building smart, responsive
-                        systems using tools like Hugging Face APIs, Mistral AI,
-                        and low-code platforms like Make.com and n8n. From an
-                        AI-powered resume builder to a healthcare companion bot,
-                        and now automating workflows for business operations, I
-                        enjoy creating applications that go beyond CRUD and
-                        deliver real user intelligence.
+                        I specialize in integrating Large Language Models (LLMs)
+                        and AI APIs into production web applications. From
+                        building AI-powered resume builders with structured
+                        prompt engineering to healthcare companion bots using
+                        Mistral AI and MedicinePlus API, I create intelligent
+                        systems that deliver real user value. My work includes
+                        implementing knowledge-controlled AI responses, custom
+                        instruction systems, and persona constraints for
+                        domain-specific AI assistants.
                       </p>
                     </div>
                   </div>
@@ -153,12 +154,13 @@ const About = () => {
                         Expertise
                       </h3>
                       <p className="leading-relaxed text-gray-300 text-sm md:text-base">
-                        I specialize in building secure, responsive web
-                        applications and workflow automations using modern
-                        technologies like React, Express.js, Node.js, Make.com,
-                        and n8n. I apply best practices for security,
-                        performance, and business process automation, enabling
-                        clients to scale with minimal overhead.
+                        I specialize in building secure, scalable full-stack web
+                        applications using modern technologies like React,
+                        Express.js, Node.js, Firebase, and Supabase. I design
+                        structured prompts, integrate AI APIs, and create
+                        domain-specific AI assistants for real-world
+                        productivity use cases, applying best practices for
+                        security, performance, and seamless user experiences.
                       </p>
                     </div>
                   </div>

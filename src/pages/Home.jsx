@@ -172,7 +172,7 @@ const Home = () => {
                 textShadow: "0 0 20px rgba(144, 213, 255, 0.3)",
               }}
             >
-              Full Stack Developer | AI Integration & Automation
+              Full Stack Web Developer | AI Engineer
             </h2>
 
             <p
@@ -183,11 +183,11 @@ const Home = () => {
                 }deg) rotateY(${mousePosition.x * 2}deg)`,
               }}
             >
-              Building modern, scalable web applications with AI-powered
-              features and automated workflows. Leveraging low-code platforms
-              like Lovable AI and Replit, alongside powerful tools such as
-              Hugging Face, Mistral AI, Make.com, and n8n for rapid development
-              and intelligent automation.
+              Specializing in building intelligent web applications powered by
+              Large Language Models and AI APIs. Expert in integrating Hugging
+              Face, Mistral AI, OpenAI, and Claude AI into full-stack solutions,
+              creating domain-specific AI assistants, and developing structured
+              prompt engineering systems for real-world applications.
             </p>
 
             <div className="flex justify-center mt-6 sm:mt-8 space-x-6 sm:space-x-8">
@@ -291,7 +291,7 @@ const Home = () => {
                           AL-JON SANTIAGO
                         </h3>
                         <p className="text-[#90D5FF]">
-                          Full Stack Developer | AI Integration & Automation
+                          Full Web Stack Developer | AI Engineer
                         </p>
                       </div>
                     </div>
